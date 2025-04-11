@@ -1,0 +1,17 @@
+.navbar-nav .nav-link {
+    color: white !important; /* Asegura que las letras sean blancas */
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: yellow !important; /* Cambia el color a amarillo al hacer hover */
+  }
+  
+  .navbar-brand {
+    color: white !important; /* Asegura que el logo y texto del navbar sean blancos */
+  }
+  
+  .navbar-brand:hover {
+    color: rgb(255, 230, 0) !important; /* Cambia el color a amarillo al hacer hover */
+  }
+  
+  

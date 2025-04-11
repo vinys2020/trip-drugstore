@@ -1,0 +1,140 @@
+/* Contenedor general del Swiper */
+.swiper-container {
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 450px; /* Ajusta la altura según necesidad */
+  overflow: hidden; /* Evita espacios extra arriba y abajo */
+}
+
+
+.swiper-section {
+  width: 100vw;          /* Ocupa todo el ancho de la ventana */
+  margin: 0;             /* Elimina cualquier margen */
+  padding: 0;            /* Elimina cualquier relleno adicional */
+  overflow: hidden;      /* Evita el desbordamiento que pueda generar barras de desplazamiento */
+  position: absolute;    /* Posiciona el elemento de manera absoluta */
+  top: 60px;             /* Alinea al borde superior de la ventana, debajo de la navbar */
+  left: 0;               /* Alinea al borde izquierdo de la ventana */
+
+}
+
+
+/* Estilo del Swiper */
+.custom-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ajustar imágenes dentro del slider */
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen sin distorsión */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* ----------- BOTONES DE NAVEGACIÓN ----------- */
+
+/* Flechas de navegación centradas verticalmente */
+.swiper-button-prev {
+  color: #fff;
+  font-size: 10px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  padding: 6px; /* Ajusta el padding para hacer el círculo un poco más pequeño */
+  border-radius: 0 20px 20px 0; /* Bordes redondeados solo en las esquinas superior derecha e inferior izquierda */
+  width: 55px; /* Ajuste de tamaño del círculo */
+  height: 55px; /* Ajuste de tamaño del círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: absolute;
+  transform: translateY(-50%); /* Centra verticalmente */
+  z-index: 10;
+  font-size: 18px; /* Ajusta el tamaño de la flecha dentro del botón */
+}
+
+.swiper-button-next {
+  color: #fff;
+  font-size: 10px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  padding: 6px; /* Ajusta el padding para hacer el círculo un poco más pequeño */
+  border-radius: 20px 0px 0px 20px; /* Bordes redondeados solo en las esquinas superior derecha e inferior izquierda */
+  width: 55px; /* Ajuste de tamaño del círculo */
+  height: 55px; /* Ajuste de tamaño del círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: absolute;
+  transform: translateY(-50%); /* Centra verticalmente */
+  z-index: 10;
+  font-size: 18px; /* Ajusta el tamaño de la flecha dentro del botón */
+}
+
+/* Ajustar posición lateral de las flechas */
+.swiper-button-prev {
+  left: 0px; /* Ajusta la distancia desde el borde */
+}
+
+.swiper-button-next {
+  right: 0px; /* Ajusta la distancia desde el borde */
+}
+
+/* Efecto hover en las flechas */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra pequeña */
+
+}
+
+/* ----------- PAGINACIÓN ----------- */
+
+/* Centrar los puntos de paginación en la parte inferior */
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px !important;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  transform: scale(1.1);
+}
+
+/* Diseño de los puntos de paginación */
+.swiper-pagination-bullet {
+  background-color: #fff;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+/* Puntos activos y efecto hover */
+.swiper-pagination-bullet-active,
+.swiper-pagination-bullet:hover {
+  background-color: #f39c12;
+  transform: scale(1.3);
+  opacity: 1;
+}
+
+.swiper-fullscreen {
+  position: relative;
+  width: 100vw; /* Ocupar todo el ancho */
+  height: 100vh; /* Ocupar toda la altura de la pantalla */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}

@@ -1,0 +1,50 @@
+.carousel-container {
+  width: 80%;                  /* El ancho se ajusta al 80% */
+  margin: auto;                /* Centrado automático */
+  overflow: hidden;            /* El scroll está oculto por defecto */
+  transition: overflow 0.3s ease-in-out;
+  padding: 10px 0;             /* Espaciado superior e inferior */
+  margin-top: 80px;            /* Margen superior */
+  position: relative;          /* Asegura que el desplazamiento se comporte como se espera */
+}
+
+/* Estilo para activar el desplazamiento con hover o touch */
+.carousel-container.scroll-enabled {
+  overflow-x: auto;           /* Permite desplazarse horizontalmente cuando el usuario interactúa */
+  cursor: grab;               /* Cambia el cursor cuando el carrusel está activo */
+  scrollbar-width: thin;       /* Hacer el scrollbar más pequeño */
+}
+
+/* Diseño de las imágenes y los elementos */
+.carousel-wrapper {
+  display: flex;              /* Uso de flexbox para alinear las imágenes en fila */
+  gap: 10px;                  /* Espaciado entre los elementos */
+  transition: transform 0.5s ease;  /* Suaviza el desplazamiento */
+}
+
+.carousel-item {
+  flex-shrink: 0;             /* Impide que las imágenes se achiquen */
+  text-align: center;
+  padding: 10px;              /* Espaciado alrededor de los elementos */
+}
+
+.carousel-item img {
+  width: 100%;                /* Asegura que la imagen ocupe el 100% del espacio disponible */
+  border-radius: 180px;       /* Bordes redondeados para un estilo más suave */
+}
+
+.carousel-item p {
+  font-size: 16px;            /* Tamaño de la fuente */
+  font-weight: bold;          /* Negrita */
+  margin-top: 10px;           /* Espaciado superior */
+}
+
+/* Diseño de la barra de desplazamiento (opcional) */
+.carousel-container::-webkit-scrollbar {
+  height: 6px;                /* Ancho del scrollbar */
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);  /* Color del thumb del scrollbar */
+  border-radius: 10px;        /* Bordes redondeados del thumb */
+}
