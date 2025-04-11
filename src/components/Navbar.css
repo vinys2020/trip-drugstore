@@ -14,4 +14,29 @@
     color: rgb(255, 230, 0) !important; /* Cambia el color a amarillo al hacer hover */
   }
   
-  
+/* Ajustes para el input y sugerencias en móvil */
+@media (max-width: 768px) {
+  .navbar .form-control {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .navbar .list-group {
+    z-index: 1050;
+  }
+
+  .navbar .position-relative {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Alineación mejorada de los íconos y espaciado general */
+.navbar .navbar-toggler {
+  margin-left: 10px;
+}
+
+.navbar .nav-link {
+  font-size: 16px;
+  padding: 10px 15px;
+}

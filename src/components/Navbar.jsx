@@ -75,7 +75,7 @@ const Navbar = () => {
         {/* Contenedor del carrito y el menú responsive SOLO en móviles */}
         <div className="d-flex d-lg-none  align-items-center">
           {/* Ícono de carrito (en móviles se alinea bien con flex-column) */}
-          <div className="me-3">
+          <div className="">
             <Link to="/carrito" className="text-white">
               <FaShoppingCart size={24} />
             </Link>
@@ -96,10 +96,10 @@ const Navbar = () => {
         </div>
 
         {/* Ícono de carrito en pantallas grandes */}
-        <div className="d-none d-lg-flex align-items-center order-lg-3 me-2">
-          <Link to="/carrito" className="text-white">
-            <FaShoppingCart size={24} />
-          </Link>
+        <div className="d-none d-lg-flex align-items-center order-lg-3">
+        <Link to="/carrito" className="text-white me-2">
+          <FaShoppingCart size={24} />
+        </Link>
         </div>
 
         
