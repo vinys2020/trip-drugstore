@@ -138,3 +138,18 @@
     display: none !important;
   }
 }
+
+
+@media (max-width: 768px) {
+
+  .swiper-container {
+    display: flex;
+    margin-top: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden; /* Evita espacios extra arriba y abajo */
+    height: 180px; /* Ajusta la altura según necesidad */
+  }
+
+}

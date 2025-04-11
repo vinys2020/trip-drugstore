@@ -3,10 +3,17 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
 import SwiperComponent from "../components/SwiperComponent"; // Importa el componente Swiper
-import promocion1 from "../assets/logito.png"; // Asegúrate de que estas imágenes existan
-import promocion2 from "../assets/logito.png";
-import promocion3 from "../assets/logito.png";
-import promocion4 from "../assets/logito.png";
+import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
+import promocion2 from "../assets/portada1.png";
+import promocion3 from "../assets/portada1.png";
+import promocion4 from "../assets/portada1.png";
+import bebida1 from "../assets/bebida1.jpg";
+import bebida2 from "../assets/bebida2.jpg";
+import bebida3 from "../assets/bebida3.jpg";
+import bebida4 from "../assets/bebida4.jpg";
+
+
+
 
 import Carousel from '../components/Carousel'; // Importamos el componente Carousel
 
@@ -26,11 +33,6 @@ const Home = () => {
           <SwiperComponent images={images} />
         </div>
       </div>
-
-    
-
-
-    
 
     <div className="container-fluid w-100 p-0" >
       
@@ -126,29 +128,59 @@ const Home = () => {
           <div className="container">
             <h2 className="text-center mb-4 text-white">¡ESPECIAL BEBIDAS! 🥂</h2>
 
-            <div className="splinter-row">
-              {/* Tarjeta 1 */}
-              <article className="bebida-card">
-                <div className="card-body"></div>
-              </article>
+            <div className="row g-3 justify-content-center">
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${bebida1})`,
 
-              {/* Tarjeta 2 */}
-              <article className="bebida-card">
-                <div className="card-body"></div>
-              </article>
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
 
-              {/* Tarjeta 3 */}
-              <article className="bebida-card">
-                <div className="card-body"></div>
-              </article>
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${bebida2})`,
 
-              {/* Tarjeta 4 */}
-              <article className="bebida-card">
-                <div className="card-body"></div>
-              </article>
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${bebida3})`,
+
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${bebida4})`,
+
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
             </div>
           </div>
         </section>
+
+
 
     </div>
     </>
