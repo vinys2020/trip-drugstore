@@ -7,6 +7,8 @@
     height: 200px; /* Ajusta la altura según sea necesario */
     border-radius: 8px; /* Opcional, por estilo */
     display: block; /* Asegura que la imagen de fondo ocupe el espacio completo */
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
   
   /* Estilo para la imagen en móviles */
@@ -55,10 +57,9 @@
     }
 
     .banner-large {
-        padding: 20px;
         width: 100%;
-        height: 150px;
-        border-radius: 6px;
+        height: 140px;
+        border-radius: 6px; /* Bordes redondeados */
       }
   
     /* Aumenta el tamaño del contenedor y la imagen */
@@ -70,7 +71,6 @@
         object-position: center; /* Centra la imagen */
         position: relative;
         left: 0; /* Elimina el desplazamiento hacia la izquierda */
-        transform: scale(1.2); /* Aplica zoom para acercar la imagen */
       }
   }
   

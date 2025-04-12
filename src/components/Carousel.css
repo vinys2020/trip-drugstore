@@ -1,9 +1,9 @@
 .carousel-container {
-  width: 80%;                  /* El ancho se ajusta al 80% */
+  width: 98%;                  /* El ancho se ajusta al 80% */
   margin: auto;                /* Centrado automático */
   overflow: hidden;            /* El scroll está oculto por defecto */
   transition: overflow 0.3s ease-in-out;
-  padding: 10px 0;             /* Espaciado superior e inferior */
+  padding: 0px 0;             /* Espaciado superior e inferior */
   position: relative;          /* Asegura que el desplazamiento se comporte como se espera */
 }
 
@@ -34,7 +34,7 @@
 
 .carousel-item p {
   font-size: 16px;            /* Tamaño de la fuente */
-  margin-top: 10px;
+  margin-top: 8px;
   color: white;           /* Espaciado superior */
 }
 

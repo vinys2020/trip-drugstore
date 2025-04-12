@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
 import BannerCard from "../components/BannerCard";
-import SwiperComponent from "../components/SwiperComponent"; // Importa el componente Swiper
+import SwiperComponent from "../components/SwiperComponent";
+import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
 import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
 import promocion2 from "../assets/portada1.png";
 import promocion3 from "../assets/portada1.png";
@@ -12,6 +13,13 @@ import bebida1 from "../assets/bebida1.jpg";
 import bebida2 from "../assets/bebida2.jpg";
 import bebida3 from "../assets/bebida3.jpg";
 import bebida4 from "../assets/bebida4.jpg";
+import almacen1 from "../assets/cafeteyerba.webp";
+import almacen2 from "../assets/almacen2.webp";
+import almacen3 from "../assets/limpieza.webp";
+import almacen4 from "../assets/descartable.webp";
+
+
+
 
 
 
@@ -44,7 +52,7 @@ const Home = () => {
       <section className=" d-flex justify-content-center align-items-center text-center py-5 mt-5">
         <div className="container">
           <div className="row justify-content-center">
-            <article className="col-12 col-lg-12">
+            <article className="col-12 col-lg-12 mt-md-4">
               <h1 className="fw-bold display-5  text-warning">
                 Bienvenido a <span className=" text-white">Trip Drugstore</span>
               </h1>
@@ -61,7 +69,7 @@ const Home = () => {
 
       <Carousel />
 
-      <div className="container">
+      <div className="container mt-3">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
         <BannerCard
           altText="Promo banner grande"
@@ -70,15 +78,10 @@ const Home = () => {
       </div>
 
 
-
-
-
-
-
-        {/* Sección Servicios */}
-        <section id="servicios" className="py-5">
-          <div className="container-fluid w-100 p-3">
-            <h2 className="text-center mb-4 text-white">☀️ VERANO EN TRIP ☀️</h2>
+                      {/* Sección Servicios */}
+        <section id="servicios" className="py-4">
+          <div className="container-fluid w-100 p-3 mt-md-4">
+            <h2 className="text-center mb-3 mb-md-4 text-white">☀️ VERANO EN TRIP ☀️</h2>
             <div className="row">
               {/* Tarjeta de Servicio 1 */}
               <article className="col-4 col-md-6 col-lg-4  d-flex justify-content-center align-items-center p-1">
@@ -135,10 +138,11 @@ const Home = () => {
           </div>
         </section>
 
+
         {/* Sección Especial Bebidas */}
-        <section id="bebidas" className="py-5">
-          <div className="container">
-            <h2 className="text-center mb-4 text-white">¡ESPECIAL BEBIDAS! 🥂</h2>
+        <section id="bebidas" className="">
+          <div className="container mt-md-4">
+            <h2 className="text-center mb-4 mb-md-4 text-white">¡ESPECIAL BEBIDAS! 🥂</h2>
 
             <div className="row g-3 justify-content-center">
               <div className="col-6 col-md-3">
@@ -191,6 +195,66 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <section id="recomendados" className="py-5">
+          <div className="container">
+            <h2 className="text-center mb-2 text-white">🛍️ Recomendados para vos</h2>
+            <article className="row">
+              <div className="col-12">
+                <HorizontalScroll />
+              </div>
+            </article>
+
+            {/* Sección Especial Bebidas */}
+            <div className="row g-3 justify-content-center p-2 p-md-3">
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${almacen1})`,
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${almacen2})`,
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${almacen3})`,
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+
+              <div className="col-6 col-md-3">
+                <article
+                  className="bebida-card"
+                  style={{
+                    backgroundImage: `url(${almacen4})`,
+                  }}
+                >
+                  <div className="card-body"></div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
 
 
 
