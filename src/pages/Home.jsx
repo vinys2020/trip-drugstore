@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
+import BannerCard from "../components/BannerCard";
 import SwiperComponent from "../components/SwiperComponent"; // Importa el componente Swiper
 import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
 import promocion2 from "../assets/portada1.png";
@@ -40,7 +41,7 @@ const Home = () => {
 
 
       {/* Sección Hero */}
-      <section className=" d-flex justify-content-center align-items-center text-center py-5 mb-5 mt-5">
+      <section className=" d-flex justify-content-center align-items-center text-center py-5 mt-5">
         <div className="container">
           <div className="row justify-content-center">
             <article className="col-12 col-lg-12">
@@ -59,6 +60,17 @@ const Home = () => {
       </section>
 
       <Carousel />
+
+      <div className="container">
+        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+        <BannerCard
+          altText="Promo banner grande"
+          large={true} // Esto controla si es una imagen grande
+        />
+      </div>
+
+
+
 
 
 

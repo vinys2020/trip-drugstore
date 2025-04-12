@@ -34,6 +34,7 @@ const App = () => {
         <Footer />
       </Router>
     </CartProvider>
+    
   );
 };
 

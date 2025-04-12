@@ -4,7 +4,6 @@
   overflow: hidden;            /* El scroll está oculto por defecto */
   transition: overflow 0.3s ease-in-out;
   padding: 10px 0;             /* Espaciado superior e inferior */
-  margin-top: 80px;            /* Margen superior */
   position: relative;          /* Asegura que el desplazamiento se comporte como se espera */
 }
 
@@ -35,8 +34,8 @@
 
 .carousel-item p {
   font-size: 16px;            /* Tamaño de la fuente */
-  font-weight: bold;          /* Negrita */
-  margin-top: 10px;           /* Espaciado superior */
+  margin-top: 10px;
+  color: white;           /* Espaciado superior */
 }
 
 /* Diseño de la barra de desplazamiento (opcional) */

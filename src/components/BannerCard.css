@@ -1,0 +1,76 @@
+/* Imagen de fondo para escritorio */
+.banner-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 200px; /* Ajusta la altura según sea necesario */
+    border-radius: 8px; /* Opcional, por estilo */
+    display: block; /* Asegura que la imagen de fondo ocupe el espacio completo */
+  }
+  
+  /* Estilo para la imagen en móviles */
+  .banner-card img {
+    width: 100%;
+    height: 100%;
+    display: cover;
+  }
+  
+  /* Asegurarse de que el contenedor sea relativo */
+  .banner-card {
+    position: relative;
+    width: 100%; /* Asegúrate de que el contenedor ocupe todo el ancho */
+    height: auto; /* Permite que la altura del contenedor se ajuste según la imagen */
+    overflow: hidden; /* Evita que la imagen se desborde */
+  }
+  
+  /* Imagen para móviles (oculta en pantallas grandes) */
+  .mobile-banner-image {
+    display: none; /* Inicialmente oculta en pantallas grandes */
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Estilo de banner grande */
+  .banner-large {
+    padding: 5px;
+    width: 100%;
+  }
+  
+  /* Estilo adicional para el contenedor de la tarjeta */
+  .andes-card {
+    overflow: hidden; /* Evita que la imagen se desborde */
+    border-radius: 8px;
+  }
+  
+  /* Estilo adicional de padding para tarjetas */
+  .andes-card--padding-16 {
+    padding: 0;
+  }
+  
+  /* Para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) {
+    .banner-image {
+      display: none; /* Oculta la imagen de fondo en móviles */
+    }
+
+    .banner-large {
+        padding: 20px;
+        width: 100%;
+        height: 150px;
+        border-radius: 6px;
+      }
+  
+    /* Aumenta el tamaño del contenedor y la imagen */
+    .mobile-banner-image {
+        display: block; /* Muestra la imagen en móviles */
+        width: 100%; /* Asegura que el contenedor tenga el ancho total de la pantalla */
+        height: 400px; /* Aumenta la altura del contenedor */
+        object-fit: cover; /* Asegura que la imagen cubra el área sin distorsión */
+        object-position: center; /* Centra la imagen */
+        position: relative;
+        left: 0; /* Elimina el desplazamiento hacia la izquierda */
+        transform: scale(1.2); /* Aplica zoom para acercar la imagen */
+      }
+  }
+  

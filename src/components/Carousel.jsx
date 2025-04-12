@@ -7,23 +7,33 @@ import "./Carousel.css"; // Archivo de estilos
 const images = [
   {
     src: "https://http2.mlstatic.com/D_Q_NP_2X_695687-MLA81364471168_122024-G.webp",
-    title: "SUPER OFERTAS",
+    title: "Ofertas",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Discount_20-100"
   },
   {
     src: "https://http2.mlstatic.com/D_Q_NP_2X_702985-MLA81633888259_122024-G.webp",
-    title: "CAPSULAS",
+    title: "Cafe",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_black-friday-capsulas"
   },
   {
     src: "https://http2.mlstatic.com/D_Q_NP_2X_646735-MLA81364443724_122024-G.webp",
-    title: "DESECHABLES",
+    title: "Limpieza",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_desechables"
   },
   {
     src: "https://http2.mlstatic.com/D_Q_NP_2X_799360-MLA82317787351_022025-G.webp",
-    title: "CONSUMO CONSCIENTE",
+    title: "Almacén",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_mk-saludables25-cpg"
+  },
+  {
+    src: "https://http2.mlstatic.com/D_Q_NP_2X_833202-MLA81364584956_122024-G.webp",
+    title: "Lacteos",
+    link: "https://listado.mercadolibre.com.ar/supermercado/leches-maternizadas"
+  },
+  {
+    src: "https://http2.mlstatic.com/D_Q_NP_2X_846703-MLA81564985462_012025-G.webp",
+    title: "Mascotas",
+    link: "https://listado.mercadolibre.com.ar/supermercado/mascotas"
   }
 ];
 
@@ -47,7 +57,7 @@ const Carousel = () => {
         dots={false}
         infinite={false} // Desactiva el movimiento infinito
         speed={500}
-        slidesToShow={4}
+        slidesToShow={6}
         slidesToScroll={1}
         autoplay={false} // Desactiva el autoplay
         arrows={false} // Oculta flechas
@@ -55,8 +65,8 @@ const Carousel = () => {
         touchMove={true} // Habilita el movimiento táctil
         responsive={[
           { breakpoint: 1024, settings: { slidesToShow: 3 } },
-          { breakpoint: 768, settings: { slidesToShow: 2 } },
-          { breakpoint: 480, settings: { slidesToShow: 2 } }
+          { breakpoint: 768, settings: { slidesToShow: 4 } },
+          { breakpoint: 480, settings: { slidesToShow: 3 } }
         ]}
       >
         {images.map((item, index) => (
