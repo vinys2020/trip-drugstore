@@ -1,10 +1,15 @@
 /* Establecer un color de fondo para toda la aplicación */
 #root {
-  background-color: #838383; /* Gris neutro */
+  background-color: #2c2b2b; /* Gris neutro */
   margin: 0;
   margin-left: 0;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
 
 }
+
+
 
 /* Estilos para el logo */
 .logo {

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
+import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
@@ -24,7 +25,6 @@ import almacen4 from "../assets/descartable.webp";
 
 
 
-import Carousel from '../components/Carousel'; // Importamos el componente Carousel
 
 
 
@@ -67,7 +67,17 @@ const Home = () => {
         </div>
       </section>
 
-      <Carousel />
+      <section id="recomendados" className="py-2">
+          <div className="container">
+            <article className="row">
+              <div className="col-12">
+                <HorizontalScroll2 />
+              </div>
+            </article>
+
+          </div>
+        </section>
+
 
       <div className="container mt-3">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
@@ -81,7 +91,7 @@ const Home = () => {
                       {/* Sección Servicios */}
         <section id="servicios" className="py-4">
           <div className="container-fluid w-100 p-3 mt-md-4">
-            <h2 className="text-center mb-3 mb-md-4 text-white">☀️ VERANO EN TRIP ☀️</h2>
+            <h3 className="text-start mb-2 mb-md-2 text-white">Tu compra semanal 📅</h3>
             <div className="row">
               {/* Tarjeta de Servicio 1 */}
               <article className="col-4 col-md-6 col-lg-4  d-flex justify-content-center align-items-center p-1">
