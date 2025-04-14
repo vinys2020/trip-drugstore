@@ -12,25 +12,25 @@ const items = [
     image: "https://http2.mlstatic.com/D_Q_NP_2X_702985-MLA81633888259_122024-G.webp",
     alt: "CAPSULAS",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_black-friday-capsulas",
-    title: "CAPSULAS"
+    title: "CAFÉ"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_646735-MLA81364443724_122024-G.webp",
-    alt: "DESCARTABLES",
+    alt: "Descartables",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_descartables-2025",
-    title: "DESCARTABLES"
+    title: "LIMPIEZA"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_799360-MLA82317787351_022025-G.webp",
     alt: "CONSUMO CONSCIENTE",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_mk-saludables25-cpg",
-    title: "CONSUMO CONSCIENTE"
+    title: "SALUDABLES"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_833202-MLA81364584956_122024-G.webp",
     alt: "LECHES MATERNIZADAS",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Container_mk-leches-maternizadas-cpg",
-    title: "LECHES MATERNIZADAS"
+    title: "LACTEOS"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_846703-MLA81564985462_012025-G.webp",

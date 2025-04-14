@@ -1,8 +1,8 @@
 .scroll-container-two {
     display: flex;
     overflow-x: auto;
+    gap: 25px;
     scroll-snap-type: x mandatory;
-    margin-left: 10px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
@@ -22,7 +22,7 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    width: 220px;
+    width: 240px;
     height: 240px;
     touch-action: pan-x;
     text-align: center;
@@ -45,7 +45,7 @@
   }
   
   .scroll-card-two img {
-    width: 80%; /* Ajustamos el tamaño de la imagen para que ocupe el 80% del contenedor */
+    width: 100%; /* Ajustamos el tamaño de la imagen para que ocupe el 80% del contenedor */
     height: 100%;
     object-fit: cover;
     display: block;
@@ -80,6 +80,13 @@
     .scroll-card-two {
       width: 40%;
       height: auto;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .scroll-container-two {
+      gap: 6px;
+      margin-left: 10px;
     }
   }
   
