@@ -13,24 +13,6 @@ const productos = [
       link: "https://www.mercadolibre.com.ar/huevo-kinder-gran-sorpresa-rosa-150g/p/MLA20018967",
     },
     {
-        nombre: "Michelob Ultra Rubia 6 unidades 473ml",
-        imagen: "https://http2.mlstatic.com/D_Q_NP_2X_703807-MLA79481347418_102024-P.webp",
-        precioAnterior: 9000,
-        precioActual: 7650,
-        descuento: "15% OFF",
-        descripcion: "Cerveza lager sin gluten, pack de 6 latas de 473ml.",
-        link: "#",
-    },
-    {
-      nombre: "Alfajor Rasta Chocolate Negro Caja X 18Un",
-      imagen: "https://http2.mlstatic.com/D_Q_NP_2X_855039-MLA82920173813_032025-P.webp",
-      precioAnterior: 9600,
-      precioActual: 7900,
-      descuento: "17% OFF",
-      descripcion: "Caja con 18 alfajores Rasta de chocolate negro.",
-      link: "#",
-    },
-    {
       nombre: "Chocolate Mini Conejos Bonafide X 140g",
       imagen: "https://http2.mlstatic.com/D_Q_NP_2X_621667-MLA83502158303_042025-P.webp",
       precioAnterior: 5800,
@@ -58,6 +40,15 @@ const productos = [
       link: "#",
     },
     {
+        nombre: "Alfajor Rasta Chocolate Negro Caja X 18Un",
+        imagen: "https://http2.mlstatic.com/D_Q_NP_2X_855039-MLA82920173813_032025-P.webp",
+        precioAnterior: 9600,
+        precioActual: 7900,
+        descuento: "17% OFF",
+        descripcion: "Caja con 18 alfajores Rasta de chocolate negro.",
+        link: "#",
+    },
+    {
       nombre: "Cerveza Miller Genuine Draft Lata 473ml Pack X24",
       imagen: "https://http2.mlstatic.com/D_Q_NP_2X_979024-MLU72732453523_112023-P.webp",
       precioAnterior: 45000,
@@ -75,6 +66,15 @@ const productos = [
       descripcion: "Detergente concentrado con aroma a limón.",
       link: "#",
     },
+    {
+        nombre: "Michelob Ultra Rubia 6 unidades 473ml",
+        imagen: "https://http2.mlstatic.com/D_Q_NP_2X_703807-MLA79481347418_102024-P.webp",
+        precioAnterior: 9000,
+        precioActual: 7650,
+        descuento: "15% OFF",
+        descripcion: "Cerveza lager sin gluten, pack de 6 latas de 473ml.",
+        link: "#",
+    }
   ];
   
 
@@ -137,10 +137,10 @@ const HorizontalCarousel = () => {
                 </div>
               </div>
 
-              <h6 className="scroll-producto-titulo">{producto.nombre}</h6>
+              <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
           </a>
-          <button className="scroll-producto-boton mt-1">
+          <button className="scroll-producto-boton mt-md-2 mt-0">
             Agregar al carrito
           </button>
         </div>

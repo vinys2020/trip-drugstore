@@ -70,7 +70,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 2.6em; /* Ajusta esto según el tamaño de fuente */
   }
   
 
@@ -151,8 +150,8 @@
 /* Estilos Responsivos */
 @media (max-width: 768px) {
     .scroll-producto-card {
-        min-width: 160px;
-        max-width: 170px;
+        min-width: 260px;
+        max-width: 270px;
         padding: 10px;
     }
 
@@ -201,18 +200,18 @@
     .scroll-producto-contenedor {
         gap: 0.75rem;
         padding-left: 0.5rem;
-        margin-left: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .scroll-producto-card {
-        min-width: 140px;
-        max-width: 158px;
+        min-width: 162px;
+        max-width: 162px;
+        height: 340px;
     }
 
     .scroll-producto-img {
-        height: 120px;
+        height: 180px;
     }
 
     .scroll-producto-titulo {
