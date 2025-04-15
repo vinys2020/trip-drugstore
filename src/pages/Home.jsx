@@ -82,7 +82,7 @@ const Home = () => {
         </section>
 
 
-      <div className="container mt-3">
+      <div className="container mt-3 mb-3">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
         <BannerCard
           altText="Promo banner grande"
@@ -93,7 +93,7 @@ const Home = () => {
 
         {/* Sección Servicios */}
         <section id="servicios" className="py-4">
-          <div className="container-fluid w-100 p-3 mt-md-4">
+          <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-white mb-0">
               Tu compra semanal 📅
               <a
@@ -112,7 +112,7 @@ const Home = () => {
 
 
         {/* Sección Especial Bebidas */}
-        <section id="bebidas" className="">
+        <section id="bebidas" className="mt-2">
           <div className="container mt-md-4">
             <h3 className="text-center mb-4 mb-md-4 text-white">¡Especial Bebidas! 🥂</h3>
 
@@ -168,9 +168,9 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="recomendados" className="py-5">
+        <section id="recomendados" className="py-4">
           <div className="container">
-            <h3 className="text-center mb-2 text-white">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mb-0 mt-md-4 mt-3 text-white">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="col-12">
                 <HorizontalScroll />
@@ -227,8 +227,8 @@ const Home = () => {
         </section>
 
 
-        <section id="servicios" className="py-4">
-          <div className="container-fluid w-100 p-3 mt-md-4">
+        <section id="servicios" className="">
+          <div className="container-fluid w-100 mt-3">
             <h3 className="text-start text-white mb-0">
               Ofertas Del Dia 💣
               <a
@@ -246,7 +246,7 @@ const Home = () => {
         </section>
 
         <section id="servicios" className="py-4">
-          <div className="container-fluid w-100 p-3 mt-md-4">
+          <div className="container-fluid w-100 mt-md-4 mt-0">
             <h3 className="text-start text-white mb-0">
             Snacks y Dulces 🍫
               <a
