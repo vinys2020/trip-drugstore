@@ -24,8 +24,8 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    width: 240px;
-    height: 240px;
+    width: 150px;
+    height: 200px;
     touch-action: pan-x;
     text-align: center;
     display: flex;
@@ -70,11 +70,6 @@
       justify-content: center;
       flex-wrap: nowrap;
     }
-  
-    .scroll-card-two {
-      width: 140px;
-      height: 180px;
-    }
   }
   
   /* En Móviles */
@@ -82,6 +77,8 @@
     .scroll-card-two {
       width: 40%;
       height: auto;
+      width: 105px;
+      height: 150px;
     }
   }
 

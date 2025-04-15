@@ -6,7 +6,7 @@ const items = [
     image: "https://http2.mlstatic.com/D_Q_NP_2X_695687-MLA81364471168_122024-G.webp",
     alt: "SUPER OFERTAS",
     link: "https://listado.mercadolibre.com.ar/supermercado/_Discount_20-100#c_container_id=not_apply",
-    title: "SUPER OFERTAS"
+    title: "OFERTAS"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_702985-MLA81633888259_122024-G.webp",

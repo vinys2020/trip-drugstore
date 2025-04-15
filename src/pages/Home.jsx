@@ -5,6 +5,8 @@ import "./Home.css";
 import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
 import HorizontalCarousel from "../components/HorizontalCarousel"; // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
+import BannerCard2 from "../components/BannerCard2";
+
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
 import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
@@ -91,17 +93,28 @@ const Home = () => {
 
         {/* Sección Servicios */}
         <section id="servicios" className="py-4">
-            <div className="container-fluid w-100 p-3 mt-md-4">
-                <h3 className="text-start mb-2 mb-md-2 text-white">Tu compra semanal 📅</h3>
-                <HorizontalCarousel />
-            </div>
+          <div className="container-fluid w-100 p-3 mt-md-4">
+            <h3 className="text-start text-white mb-0">
+              Tu compra semanal 📅
+              <a
+                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
+                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+                target="_self"
+                style={{ color: "#3483fa" }}
+              >
+                Ver más
+              </a>
+            </h3>
+            <HorizontalCarousel />
+          </div>
+
         </section>
 
 
         {/* Sección Especial Bebidas */}
         <section id="bebidas" className="">
           <div className="container mt-md-4">
-            <h2 className="text-center mb-4 mb-md-4 text-white">¡ESPECIAL BEBIDAS! 🥂</h2>
+            <h3 className="text-center mb-4 mb-md-4 text-white">¡Especial Bebidas! 🥂</h3>
 
             <div className="row g-3 justify-content-center">
               <div className="col-6 col-md-3">
@@ -157,7 +170,7 @@ const Home = () => {
 
         <section id="recomendados" className="py-5">
           <div className="container">
-            <h2 className="text-center mb-2 text-white">🛍️ Recomendados para vos</h2>
+            <h3 className="text-center mb-2 text-white">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="col-12">
                 <HorizontalScroll />
@@ -212,6 +225,51 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+
+        <section id="servicios" className="py-4">
+          <div className="container-fluid w-100 p-3 mt-md-4">
+            <h3 className="text-start text-white mb-0">
+              Ofertas Del Dia 💣
+              <a
+                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
+                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+                target="_self"
+                style={{ color: "#3483fa" }}
+              >
+                Ver más
+              </a>
+            </h3>
+            <HorizontalCarousel />
+          </div>
+
+        </section>
+
+        <section id="servicios" className="py-4">
+          <div className="container-fluid w-100 p-3 mt-md-4">
+            <h3 className="text-start text-white mb-0">
+            Snacks y Dulces 🍫
+              <a
+                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
+                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+                target="_self"
+                style={{ color: "#3483fa" }}
+              >
+                Ver más
+              </a>
+            </h3>
+            <HorizontalCarousel />
+          </div>
+
+        </section>
+
+        <div className="container mt-3 mb-5">
+        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+        <BannerCard2
+          altText="Promo banner grande"
+          large={true} // Esto controla si es una imagen grande
+        />
+      </div>
 
 
 
