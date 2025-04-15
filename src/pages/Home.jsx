@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
 import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalCarousel from "../components/HorizontalCarousel"; // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
@@ -88,64 +89,12 @@ const Home = () => {
       </div>
 
 
-                      {/* Sección Servicios */}
+        {/* Sección Servicios */}
         <section id="servicios" className="py-4">
-          <div className="container-fluid w-100 p-3 mt-md-4">
-            <h3 className="text-start mb-2 mb-md-2 text-white">Tu compra semanal 📅</h3>
-            <div className="row">
-              {/* Tarjeta de Servicio 1 */}
-              <article className="col-4 col-md-6 col-lg-4  d-flex justify-content-center align-items-center p-1">
-                <div className="card shadow-sm w-100 p-0">
-                  <div 
-                    className="card-body w-100"
-                    style={{
-                      backgroundImage: `url(${promocion4})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "200px", // Ajusta la altura según sea necesario
-                      width: "100%",
-                    }}
-                  >
-                  </div>
-                </div>
-              </article>
-
-              {/* Tarjeta de Servicio 2 */}
-              <article className="col-4 col-md-6 col-lg-4  d-flex justify-content-center align-items-center p-1">
-                <div className="card shadow-sm w-100">
-                  <div 
-                    className="card-body w-100"
-                    style={{
-                      backgroundImage: `url(${promocion4})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "200px", // Ajusta la altura según sea necesario
-                      width: "100%" // Asegura que el contenedor no se encoja
-                    }}
-                  >
-                  </div>
-                </div>
-              </article>
-
-
-              {/* Tarjeta de Servicio 3 */}
-              <article className="col-4 col-md-6 col-lg-4  d-flex justify-content-center align-items-center p-1">
-                <div className="card shadow-sm w-100">
-                  <div 
-                    className="card-body w-100"
-                    style={{
-                      backgroundImage: `url(${promocion4})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "200px", // Ajusta la altura según sea necesario
-                      width: "100%" // Asegura que el contenedor no se encoja
-                    }}
-                  >
-                  </div>
-                </div>
-              </article>
+            <div className="container-fluid w-100 p-3 mt-md-4">
+                <h3 className="text-start mb-2 mb-md-2 text-white">Tu compra semanal 📅</h3>
+                <HorizontalCarousel />
             </div>
-          </div>
         </section>
 
 

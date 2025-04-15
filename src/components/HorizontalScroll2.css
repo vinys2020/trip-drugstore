@@ -2,6 +2,7 @@
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
+    margin-bottom: 20px;
     gap: 25px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -88,6 +89,7 @@
     .scroll-container-two {
       gap: 6px;
       margin-left: 10px;
+      margin-bottom: 20px;
     }
   }
   

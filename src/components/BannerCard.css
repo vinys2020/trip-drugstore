@@ -8,7 +8,7 @@
     border-radius: 8px; /* Opcional, por estilo */
     display: block; /* Asegura que la imagen de fondo ocupe el espacio completo */
     margin-top: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   
   /* Estilo para la imagen en móviles */

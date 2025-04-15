@@ -1,0 +1,244 @@
+/* Scroll horizontal contenedor */
+.scroll-producto-contenedor {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overflow-y: hidden;
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+}
+
+.text-decoration-line-through {
+    font-size: 0.9rem;
+}
+
+.scroll-producto-contenedor::-webkit-scrollbar {
+    display: none;
+}
+
+/* Card de producto */
+.scroll-producto-card {
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #fff;
+    min-width: 250px;
+    max-width: 200px;
+    font-family: "Proxima Nova", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.scroll-producto-descuento {
+    font-size: 0.8rem;
+    color: #28a745;
+    font-weight: bold;
+}
+
+
+.scroll-producto-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 26px 12px rgba(35, 34, 34, 0.15);
+}
+
+
+/* Imagen de producto */
+.scroll-producto-img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 0.px solid;
+}
+
+/* Cuerpo */
+.scroll-producto-body {
+    padding: 1px 1px 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Título */
+.scroll-producto-titulo {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;       /* máximo 2 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2.6em; /* Ajusta esto según el tamaño de fuente */
+  }
+  
+
+
+/* Envolver precios para alinearlos bien */
+.scroll-producto-precio-wrapper {
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+/* Precio anterior más compacto */
+.scroll-producto-precio-anterior {
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    color: #999;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+/* Precio actual alineado con anterior */
+.scroll-producto-precio {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dynamic-carousel__shipping-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #00a650;
+    font-weight: bold;
+}
+
+.dynamic-carousel__shipping-container-fulfillment {
+    fill: #00a650;
+}
+
+
+
+/* Botón */
+.scroll-producto-boton {
+    font-size: 0.9rem;
+    background-color: #ffd814;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: 500;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+
+.scroll-producto-boton:hover {
+    background-color: #000;
+    color: #ffd814;
+    cursor: pointer;
+}
+.scroll-producto-boton {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    .scroll-producto-card {
+        min-width: 160px;
+        max-width: 170px;
+        padding: 10px;
+    }
+
+    .scroll-producto-img {
+        height: 140px;
+    }
+    .dynamic-carousel__shipping-container {
+        font-size: 12px;
+
+    }
+    .scroll-producto-boton {
+        background-color: #ffd814;
+        border: none;
+        padding: 0px;
+        border-radius: 6px;
+        width: 100%;
+        font-weight: 400;
+        display: block;
+    }
+
+
+
+    .scroll-producto-titulo {
+        font-size: 0.95rem;
+    }
+
+    .scroll-producto-precio {
+        font-size: 13px;
+    }
+
+    .scroll-producto-precio-anterior {
+        font-size: 12px;
+    }
+
+    .scroll-producto-desconto {
+        font-size: 0.75rem;
+    }
+
+    .scroll-producto-boton {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        margin-bottom: 5px;
+    }
+
+    .scroll-producto-contenedor {
+        gap: 0.75rem;
+        padding-left: 0.5rem;
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-producto-card {
+        min-width: 140px;
+        max-width: 150px;
+    }
+
+    .scroll-producto-img {
+        height: 120px;
+    }
+
+    .scroll-producto-titulo {
+        font-size: 0.85rem;
+    }
+
+    .scroll-producto-precio {
+        font-size: 0.95rem;
+    }
+
+    .scroll-producto-oldprice {
+        font-size: 0.85rem;
+    }
+
+    .scroll-producto-desconto {
+        font-size: 0.7rem;
+    }
+
+    .scroll-producto-boton {
+        font-size: 0.8rem;
+    }
+
+    .scroll-producto-contenedor {
+        gap: 0.5rem;
+    }
+}
