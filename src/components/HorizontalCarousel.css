@@ -6,6 +6,8 @@
     overflow-y: hidden;
     display: flex;
     padding: 10px;
+    margin-left: 18px;
+    margin-right: 18px;
 }
 
 .text-decoration-line-through {
@@ -29,18 +31,25 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .scroll-producto-descuento {
     font-size: 0.8rem;
     color: #28a745;
     font-weight: bold;
+    border-radius: 4px;
+    line-height: 1;
+    background-color: #fef3c7;
+    padding: 2px 6px;
+    white-space: nowrap;
+    display: inline-block; /* o flex si querés control adicional */
+      
 }
 
 
 .scroll-producto-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 26px 12px rgba(35, 34, 34, 0.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.45);
 }
 
 
@@ -147,12 +156,15 @@
 
 
 
+
 /* Estilos Responsivos */
 @media (max-width: 768px) {
     .scroll-producto-card {
         min-width: 260px;
         max-width: 270px;
-        padding: 10px;
+        padding: 8px;
+        margin-bottom: 10px;
+
     }
 
     .scroll-producto-img {
@@ -199,15 +211,21 @@
 
     .scroll-producto-contenedor {
         gap: 0.75rem;
-        padding-left: 0.5rem;
+        padding-left: 30px;
+        margin-left: 0px;
+        margin-right: 0px;
     }
 }
 
 @media (max-width: 480px) {
     .scroll-producto-card {
-        min-width: 162px;
-        max-width: 162px;
+        min-width: 166px;
+        max-width: 166px;
         height: 340px;
+    }
+
+    .scroll-producto-card:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.15);
     }
 
     .scroll-producto-img {
@@ -240,3 +258,50 @@
 }
 
 
+/* HorizontalCarousel.css */
+.scroll-producto-contenedor::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-producto-contenedor {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+
+  
+/* Estilos para los botones con fondo rojo */
+
+
+
+/* Flechas con estilo */
+.prev-button svg,
+.next-button svg {
+    margin-right: -50px;
+    margin-left: -50px;
+  width: 60px;
+  height: 60px;
+  fill: #1435f1; /* Azul vibrante */
+  background-color: #ffffff; /* Fondo blanco puro */
+  border-radius: 50%; /* Círculo perfecto */
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra suave */
+}
+
+
+/* Mostrar botones en hover */
+.position-relative:hover .prev-button,
+.position-relative:hover .next-button {
+  opacity: 1;
+
+}
+
+
+
+/* Ocultar en móvil */
+@media (max-width: 768px) {
+  .prev-button,
+  .next-button {
+    display: none;
+  }
+}

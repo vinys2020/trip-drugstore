@@ -3,12 +3,13 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 100%;
+    width: 98%;
     height: 200px; /* Ajusta la altura según sea necesario */
     border-radius: 8px; /* Opcional, por estilo */
     display: block; /* Asegura que la imagen de fondo ocupe el espacio completo */
     margin-top: 30px;
     margin-bottom: 0px;
+    margin-left: 15px;    
   }
   
   /* Estilo para la imagen en móviles */
@@ -54,6 +55,7 @@
   @media (max-width: 768px) {
     .banner-image {
       display: none; /* Oculta la imagen de fondo en móviles */
+
     }
 
     .banner-large {

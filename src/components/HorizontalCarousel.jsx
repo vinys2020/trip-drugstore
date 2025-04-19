@@ -1,5 +1,4 @@
-// components/HorizontalCarousel.jsx
-import React from "react";
+import React, { useState, useRef } from "react";
 import "./HorizontalCarousel.css";
 
 const productos = [
@@ -78,72 +77,122 @@ const productos = [
 ];
 
 const HorizontalCarousel = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      const scrollStep = clientWidth * 2.9; // Más rápido pero no violento
+  
+      let targetScroll = direction === "next"
+        ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
+        : Math.max(scrollLeft - scrollStep, 0);
+  
+      scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
+    }
+  };
+  
+
   return (
     <div
-      className="scroll-producto-contenedor d-flex overflow-auto"
-      style={{
-        scrollSnapType: "x mandatory",
-        gap: "12px",
-        paddingBottom: "8px",
-      }}
+      className="position-relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {productos.map((producto, index) => (
-        <div
-          key={index}
-          className="scroll-producto-card flex-shrink-0"
-          style={{
-            scrollSnapAlign: "start",
-          }}
+      {/* Botón Prev */}
+      {isHovered && (
+        <button
+          className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute start-0 top-50 translate-middle-y z-3 prev-button"
+          onClick={() => scroll("prev")}
+          style={{ background: "transparent", border: "none" }}
+          aria-label="Anterior"
         >
-          <a
-            href={producto.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-decoration-none text-dark"
+          <svg
+            aria-hidden="true"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="rgba(0, 0, 0, 0.9)"
           >
-            <img
-              src={producto.imagen}
-              alt={producto.nombre}
-              className="scroll-producto-img"
-            />
-            <div className="scroll-producto-body">
-              <div className="scroll-producto-precio-wrapper">
-                <p className="scroll-producto-precio-anterior">
-                  ${producto.precioAnterior.toLocaleString()}
-                </p>
-                <p className="scroll-producto-precio">
-                  ${producto.precioActual.toLocaleString()}
-                  <span className="scroll-producto-descuento">
-                    {producto.descuento}
-                  </span>
-                </p>
+            <path d="M20.057 25L11.0617 16.0047L20.0664 7L19.0057 5.93933L8.94038 16.0047L18.9964 26.0607L20.057 25Z" />
+          </svg>
+        </button>
+      )}
 
-                <div className="dynamic-carousel__shipping-container">
-                  <span>Envío gratis </span>
-                  <svg
-                    viewBox="0 0 56 18"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="dynamic-carousel__shipping-container-fulfillment"
-                    width="38px"
-                    height="12px"
-                  >
-                    <path
-                      d="M3.545 0L0 10.286h5.91L3.544 18 13 6.429H7.09L10.637 0zm14.747 14H15.54l2.352-10.672h7.824l-.528 2.4h-5.072l-.352 1.664h4.944l-.528 2.4h-4.96L18.292 14zm13.32.192c-3.28 0-4.896-1.568-4.896-3.808 0-.176.048-.544.08-.704l1.408-6.352h2.8l-1.392 6.288c-.016.08-.048.256-.048.448.016.88.688 1.728 2.048 1.728 1.472 0 2.224-.928 2.496-2.176L35.5 3.328h2.784l-1.392 6.336c-.576 2.592-1.984 4.528-5.28 4.528zM45.844 14h-7.04l2.352-10.672h2.752L42.1 11.6h4.272l-.528 2.4zm9.4 0h-7.04l2.352-10.672h2.752L51.5 11.6h4.272l-.528 2.4z"
-                      fill="#00a650"
-                      fillRule="evenodd"
-                    />
-                  </svg>
+      {/* Carrusel */}
+      <div
+        ref={scrollRef}
+        className="scroll-producto-contenedor d-flex overflow-auto"
+        style={{
+          scrollSnapType: "x mandatory",
+          gap: "12px",
+          paddingBottom: "8px",
+        }}
+      >
+        {productos.map((producto, index) => (
+          <div
+            key={index}
+            className="scroll-producto-card flex-shrink-0"
+            style={{ scrollSnapAlign: "start" }}
+          >
+            <a
+              href={producto.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none text-dark"
+            >
+              <img
+                src={producto.imagen}
+                alt={producto.nombre}
+                className="scroll-producto-img"
+              />
+              <div className="scroll-producto-body">
+                <div className="scroll-producto-precio-wrapper">
+                  <p className="scroll-producto-precio-anterior">
+                    ${producto.precioAnterior.toLocaleString()}
+                  </p>
+                  <p className="scroll-producto-precio">
+                    ${producto.precioActual.toLocaleString()}
+                    <span className="scroll-producto-descuento">
+                      {producto.descuento}
+                    </span>
+                  </p>
+                  <div className="dynamic-carousel__shipping-container mt-1">
+                    <span>Envío gratis </span>
+                    {/* SVG de Envío */}
+                  </div>
                 </div>
+                <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
               </div>
+            </a>
+            <button className="scroll-producto-boton mt-md-4 mt-0">
+              Agregar al carrito
+            </button>
+          </div>
+        ))}
+      </div>
 
-              <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
-            </div>
-          </a>
-          <button className="scroll-producto-boton mt-md-2 mt-0">
-            Agregar al carrito
-          </button>
-        </div>
-      ))}
+      {/* Botón Next */}
+      {isHovered && (
+        <button
+          className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute end-0 top-50 translate-middle-y z-3 next-button"
+          onClick={() => scroll("next")}
+          style={{ background: "transparent", border: "none" }}
+          aria-label="Siguiente"
+        >
+          <svg
+            aria-hidden="true"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="rgba(0, 0, 0, 0.9)"
+          >
+            <path d="M11.943 6.99999L20.9383 15.9953L11.9336 25L12.9943 26.0607L23.0596 15.9953L13.0036 5.93933L11.943 6.99999Z" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 };

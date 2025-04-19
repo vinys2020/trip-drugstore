@@ -7,6 +7,8 @@ import { FaShoppingCart } from 'react-icons/fa'; // Importa el ícono del carrit
 import './navbar.css';
 
 
+
+
 const productosData = [
   { id: 1, nombre: "Paracetamol", precio: 5, categoria: "Medicamentos" },
   { id: 2, nombre: "Ibuprofeno", precio: 8, categoria: "Medicamentos" },
@@ -51,7 +53,7 @@ const Navbar = () => {
             style={{ width: "92%"}}
             type="text"
             className="form-control"
-            placeholder="Buscar producto..."
+            placeholder="Que estas buscando?"
             value={busqueda}
             onChange={handleBusqueda}
           />
@@ -109,22 +111,32 @@ const Navbar = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/productos" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
-                🛍️ Productos
+              🗂️ Categorias
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/ofertas" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
-                🔥 Ofertas
+              🔥 Ofertas
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/contacto" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
-                📞 Contacto
+              🛍️ Mis Compras
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/acerca" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
-                ℹ️ Acerca de
+              🧑‍💻 Mi Cuenta
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/acerca" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
+              🧑‍🔧 Creá tu cuenta
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/acerca" onClick={() => document.getElementById('navbarNav').classList.remove('show')}>
+              ❓ Ayuda
               </Link>
             </li>
           </ul>

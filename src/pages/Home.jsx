@@ -6,7 +6,8 @@ import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de
 import HorizontalCarousel from "../components/HorizontalCarousel"; // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
 import BannerCard2 from "../components/BannerCard2";
-
+import BannerCard3 from "../components/BannerCard3";
+import VerticalCarousel from "../components/VerticalCarousel";
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
 import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
@@ -115,7 +116,6 @@ const Home = () => {
         <section id="bebidas" className="mt-2">
           <div className="container mt-md-4">
             <h3 className="text-center mb-4 mb-md-4 text-white">¡Especial Bebidas! 🥂</h3>
-
             <div className="row g-3 justify-content-center">
               <div className="col-6 col-md-3">
                 <article
@@ -178,7 +178,7 @@ const Home = () => {
             </article>
 
             {/* Sección Especial Bebidas */}
-            <div className="row g-3 justify-content-center p-2 p-md-3">
+            <div className="row g-3 justify-content-center  p-md-3">
               <div className="col-6 col-md-3">
                 <article
                   className="bebida-card"
@@ -264,12 +264,138 @@ const Home = () => {
         </section>
 
         <div className="container mt-3 mb-5">
-        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard2
-          altText="Promo banner grande"
-          large={true} // Esto controla si es una imagen grande
-        />
-      </div>
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard2
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
+        <section id="servicios" className="mb-md-5 mt-md-0 mb-4">
+          <div className="container-fluid w-100 mt-md-4 mt-0">
+            <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
+>
+            Snacks y Dulces 🍫
+
+            </h3>
+            <VerticalCarousel />
+
+            <div
+            style={{
+              backgroundColor: "white",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+              padding: "10px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <a
+              className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5"
+              href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+              target="_self"
+              style={{
+                color: "#3483fa",
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              Ver más <span style={{ fontSize: "1.2rem" }}>{'>'}</span>
+            </a>
+          </div>
+
+          </div>
+
+        </section>
+
+        <section id="servicios" className="mb-md-5 mt-md-0 mb-4">
+          <div className="container-fluid w-100 mt-md-4 mt-0">
+            <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
+>
+            Snacks y Dulces 🍫
+
+            </h3>
+            <VerticalCarousel />
+
+            <div
+            style={{
+              backgroundColor: "white",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+              padding: "10px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <a
+              className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5"
+              href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+              target="_self"
+              style={{
+                color: "#3483fa",
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              Ver más <span style={{ fontSize: "1.2rem" }}>{'>'}</span>
+            </a>
+          </div>
+
+          </div>
+
+        </section>
+
+        <div className="container mt-3 mb-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
+
+        <section id="servicios" className="mb-md-5 mt-md-0">
+          <div className="container-fluid w-100 mt-md-4 mt-0">
+            <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
+>
+            Snacks y Dulces 🍫
+
+            </h3>
+            <VerticalCarousel />
+
+            <div
+            style={{
+              backgroundColor: "white",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
+              padding: "10px",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <a
+              className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5"
+              href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+              target="_self"
+              style={{
+                color: "#3483fa",
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              Ver más <span style={{ fontSize: "1.2rem" }}>{'>'}</span>
+            </a>
+          </div>
+
+          </div>
+
+        </section>
 
 
 

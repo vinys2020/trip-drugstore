@@ -10,28 +10,58 @@ const Footer = () => {
           {/* Logo y descripción */}
           <div className="col-md-4 text-center text-md-start mb-3 mb-md-0">
             <h4 className="fw-bold">Trip Drugstore</h4>
-            <p className="text-white">Tu Drugstore de confianza con productos frescos y ofertas increíbles.</p>
+
+            <p className="mb-0">
+              🫶🏼Escápate de lo ordinario
+              <br />
+              📍Terminal de Ómnibus Concepción, Tucumán
+              <br />
+              🚍Local N°1 - <a href="https://www.instagram.com/tripconcep/" target="_blank" rel="noreferrer" className="text-decoration-underline text-info">@tripconcep</a>
+              <br />
+              ⏳ Horario de atención: 6:30hs a 00:00hs
+            </p>
+
           </div>
 
-            {/* Enlaces rápidos */}
-            <div className="col-md-4 text-center mb-3 mb-md-0">
+          {/* Enlaces rápidos */}
+          <div className="col-md-4 text-center mb-3 mb-md-0">
             <h5 className="fw-bold text">Enlaces</h5>
             <ul className="list-unstyled d-flex justify-content-center flex-wrap">
-                <li className="mx-2"><a href="/productos" className="footer-link">Productos</a></li>
-                <li className="mx-2"><a href="/ofertas" className="footer-link">Ofertas</a></li>
-                <li className="mx-2"><a href="/contacto" className="footer-link">Contacto</a></li>
-                <li className="mx-2"><a href="/nosotros" className="footer-link">Nosotros</a></li>
+              <li className="mx-2">
+                <a href="/productos" className="footer-link">Categorías</a>
+              </li>
+              <li className="mx-2">
+                <a href="/ofertas" className="footer-link">Ofertas</a>
+              </li>
+              <li className="mx-2">
+                <a href="/contacto" className="footer-link">Mis Compras</a>
+              </li>
+              <li className="mx-2">
+                <a href="/contacto" className="footer-link">Ayuda</a>
+              </li>
+              <li className="mx-2">
+                <a href="/ingresa" className="footer-link">Mi Cuenta</a>
+              </li>
+              <li className="mx-2">
+                <a href="/creatucuenta" className="footer-link">Creá tu cuenta</a>
+              </li>
             </ul>
-            </div>
+          </div>
 
           {/* Redes sociales */}
           <div className="col-md-4 text-center text-md-end">
-            <h5 className="fw-bold">Síguenos</h5>
+            <h5 className="fw-bold">Contactanos</h5>
             <div className="d-flex justify-content-center justify-content-md-end gap-3">
               <a href="https://facebook.com" className="social-icon"><i className="bi bi-facebook"></i></a>
               <a href="https://instagram.com" className="social-icon"><i className="bi bi-instagram"></i></a>
-              <a href="https://twitter.com" className="social-icon"><i className="bi bi-twitter"></i></a>
-              <a href="https://youtube.com" className="social-icon"><i className="bi bi-youtube"></i></a>
+              <a
+                href="https://wa.me/5493812024221?text=Hola%20Trip%20concep!%20Quisiera%20hacer%20una%20consulta."
+                className="social-icon"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <i className="bi bi-whatsapp"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -40,10 +70,13 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center">
-            <p class="mb-0">© 2025 Trip Drugstore - Página creada por <a href="https://www.instagram.com/publik.tuc/" class="text-link text-decoration-underline" target="_blank">Publik</a>.</p>
+          <p className="mb-0">
+            © 2025 Trip Drugstore - Página creada por <a href="https://www.instagram.com/publik.tuc/" className="text-info text-decoration-underline" target="_blank" rel="noreferrer">Publik.</a>
+          </p>
         </div>
       </div>
     </footer>
+
   );
 };
 

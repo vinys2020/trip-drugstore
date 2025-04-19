@@ -1,0 +1,237 @@
+.vc-carousel-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 0rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE y Edge */
+    -webkit-overflow-scrolling: touch; /* Suaviza en iOS */
+}
+
+.vc-carousel-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+  
+.vc-product-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 0rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Proxima Nova", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    flex: 0 0 auto; /* Necesario para scroll horizontal */
+}
+  
+.vc-product-img-wrapper {
+    width: 60%;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: cover;
+    justify-content: center;
+}
+  
+.vc-product-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    padding: 1px 0px 0px 0px;
+}
+  
+.vc-product-body {
+    width: 70%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+  
+.vc-product-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.vc-precio-wrapper {
+    margin-top: 0.5rem;
+}
+  
+.vc-precio-anterior {
+    text-decoration: line-through;
+    color: #9ca3af;
+    font-size: 0.95rem;
+    margin: 0;
+}
+  
+.vc-price-current {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+  
+.vc-precio-actual {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+  
+.vc-descuento {
+    font-size: 0.8rem;
+    color: #28a745;
+    font-weight: bold;
+    border-radius: 4px;
+    line-height: 1;
+    background-color: #fef3c7;
+    padding: 2px 6px;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-block;
+}
+  
+.dynamic-carousel__shipping-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0px;
+    font-size: 14px;
+    color: #00a650;
+    font-weight: bold;
+}
+  
+.dynamic-carousel__shipping-container-fulfillment {
+    fill: #00a650;
+}
+  
+.vc-product-boton {
+    padding: 1rem 1.25rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.2s ease;
+}
+  
+.vc-product-boton:hover {
+    background-color: #2563eb;
+}
+
+.vc-carousel-wrapper {
+    overflow-x: auto; /* scroll horizontal en PC */
+    overflow-y: hidden;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+}
+
+/* === Estilos para MÓVIL === */
+@media (max-width: 768px) {
+    .vc-carousel-container {
+        flex-direction: column; /* vertical en móvil */
+        gap: 1px;
+    }
+
+    .vc-product-boton {
+        padding: 0.2rem 1.25rem;
+    }
+    .vc-carousel-container .vc-product-card:nth-child(n+4) {
+        display: none; /* Ocultar los elementos a partir del quinto */
+    }
+
+    .vc-descuento {
+        font-size: 0.75rem;
+        padding: 2px 6px;
+    }
+
+    .vc-precio-actual {
+        font-size: 1.2rem;
+    }
+
+    .vc-product-title {
+        font-size: 0.95rem;
+        margin: auto;
+    }
+}
+
+/* === Estilos para DESKTOP === */
+@media (min-width: 769px) {
+    .vc-carousel-container {
+        flex-direction: row; /* horizontal en desktop */
+        gap: 1rem;
+        padding: 1rem 2rem;
+    }
+
+    .vc-product-card {
+        max-width: 500px;
+        border-radius: 1rem;
+        flex-direction: row;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vc-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .vc-product-img-wrapper {
+        width: 100%;
+        background-color: #f9fafb;
+    }
+
+    .vc-product-body {
+        width: 50%;
+        padding: 2rem;
+        justify-content: center;
+    }
+
+    .vc-product-title {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        -webkit-line-clamp: 2;
+    }
+
+    .vc-precio-wrapper {
+        margin-top: 1rem;
+    }
+
+    .vc-precio-actual {
+        font-size: 1.5rem;
+    }
+
+    .vc-descuento {
+        font-size: 0.9rem;
+        padding: 4px 8px;
+    }
+
+    .vc-product-boton {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    .dynamic-carousel__shipping-container {
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+}
