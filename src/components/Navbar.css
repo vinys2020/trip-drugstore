@@ -13,6 +13,19 @@
   .navbar-brand:hover {
     color: rgb(255, 230, 0) !important; /* Cambia el color a amarillo al hacer hover */
   }
+  .navbar {
+    transition: top 0.3s;
+  }
+  
+  .navbar-hidden {
+    top: -110px; /* Asegúrate de que coincida con el valor de la altura de la navbar */
+  }
+  
+  .navbar-visible {
+    top: 0px; /* Cuando la navbar es visible, vuelve a su posición inicial */
+  }
+  
+
   
 /* Ajustes para el input y sugerencias en móvil */
 @media (max-width: 768px) {

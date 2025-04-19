@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    padding: 0rem;
     overflow-x: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* IE y Edge */
@@ -175,9 +174,11 @@
 /* === Estilos para DESKTOP === */
 @media (min-width: 769px) {
     .vc-carousel-container {
-        flex-direction: row; /* horizontal en desktop */
-        gap: 1rem;
+        flex-direction: row;
+        flex-wrap: wrap; /* permite múltiples filas */
+        gap: 0.7em;
         padding: 1rem 2rem;
+        justify-content: center;
     }
 
     .vc-product-card {
@@ -234,4 +235,34 @@
         font-size: 1rem;
         margin-top: 1rem;
     }
+}
+
+.vc-product-card {
+    position: relative;
+}
+
+.vc-product-buttons {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.vc-btn-move-left,
+.vc-btn-move-right {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 4px 6px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.vc-product-card:hover .vc-product-buttons {
+    opacity: 1;
 }

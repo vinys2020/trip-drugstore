@@ -26,13 +26,6 @@ import almacen4 from "../assets/descartable.webp";
 
 
 
-
-
-
-
-
-
-
 const Home = () => {
   const images = [promocion1, promocion2, promocion3, promocion4]; // Array de imágenes
   const images1 = [promocion1, promocion2, promocion3]; // Array de imágenes
@@ -53,7 +46,7 @@ const Home = () => {
 
 
       {/* Sección Hero */}
-      <section className=" d-flex justify-content-center align-items-center text-center py-5 mt-5">
+      <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-md-4 mt-md-2">
         <div className="container">
           <div className="row justify-content-center">
             <article className="col-12 col-lg-12 mt-md-4">
@@ -245,8 +238,8 @@ const Home = () => {
 
         </section>
 
-        <section id="servicios" className="py-4">
-          <div className="container-fluid w-100 mt-md-4 mt-0">
+        <section id="servicios" className="py-md-4">
+          <div className="container-fluid w-100 mt-md-4 mt-2">
             <h3 className="text-start text-white mb-0">
             Snacks y Dulces 🍫
               <a
@@ -271,11 +264,11 @@ const Home = () => {
           />
         </div>
 
-        <section id="servicios" className="mb-md-5 mt-md-0 mb-4">
+        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2">
           <div className="container-fluid w-100 mt-md-4 mt-0">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
-            Snacks y Dulces 🍫
+            Trip Café ☕
 
             </h3>
             <VerticalCarousel />
@@ -310,11 +303,11 @@ const Home = () => {
 
         </section>
 
-        <section id="servicios" className="mb-md-5 mt-md-0 mb-4">
-          <div className="container-fluid w-100 mt-md-4 mt-0">
+        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2">
+          <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
-            Snacks y Dulces 🍫
+            Trip Sandwitches 🥪
 
             </h3>
             <VerticalCarousel />
@@ -349,7 +342,7 @@ const Home = () => {
 
         </section>
 
-        <div className="container mt-3 mb-5">
+        <div className="container mt-5 mb-5">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard3
             altText="Promo banner grande"
@@ -357,12 +350,11 @@ const Home = () => {
           />
         </div>
 
-
-        <section id="servicios" className="mb-md-5 mt-md-0">
-          <div className="container-fluid w-100 mt-md-4 mt-0">
+        <section id="servicios" className="mt-md-0 mb-4 ms-md-3 mx-md-2 mb-5">
+          <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
-            Snacks y Dulces 🍫
+            Trip Super Combos
 
             </h3>
             <VerticalCarousel />
@@ -397,8 +389,13 @@ const Home = () => {
 
         </section>
 
-
-
+        <div className="container mt-5 mb-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
 
 
     </div>
