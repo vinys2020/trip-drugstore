@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import logo from "../assets/logotrippc.png"; // Ajusta la ruta según tu estructura de carpetas
-import logito from "../assets/logopostmovil.png"; // Ajusta la ruta según tu estructura de carpetas
-import { FaShoppingCart } from 'react-icons/fa'; // Importa el ícono del carrito
+import logo from "../assets/logotrippc.png";
+import logito from "../assets/logopostmovil.png";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../config/firebase";
+import { FaShoppingCart } from 'react-icons/fa';
 import './navbar.css';
 
 const productosData = [
@@ -12,16 +14,21 @@ const productosData = [
   { id: 3, nombre: "Omeprazol", precio: 10, categoria: "Gastrointestinal" },
 ];
 
-const Navbar = () => {
+const adminEmail = "faculez07@gmail.com";
+
+const Navbar = ({ busqueda, setBusqueda }) => {
   const { agregarAlCarrito } = useContext(CartContext);
-  const [busqueda, setBusqueda] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
   const [scrollingUp, setScrollingUp] = useState(false);
   const [scrollingDown, setScrollingDown] = useState(false);
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
-  const navbarHeight = 110; // Ajusta este valor según la altura de tu navbar
-  const thresholdUp = 800; // Píxeles necesarios para mostrar la navbar al subir
-  const thresholdDown = 200; // Píxeles necesarios para ocultar la navbar al bajar
+  const navbarHeight = 110;
+  const thresholdUp = 800;
+  const thresholdDown = 200;
+
+  const navbarRef = useRef(null);  // Nueva referencia para el navbar
 
   const handleBusqueda = (e) => {
     const query = e.target.value;
@@ -37,53 +44,72 @@ const Navbar = () => {
     }
   };
 
+  // Función para cerrar el navbar si se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const navbar = document.getElementById("navbarNav");
+      const toggler = document.querySelector(".navbar-toggler");
+
+      if (
+        navbar &&
+        navbar.classList.contains("show") &&
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target) &&
+        !toggler.contains(event.target)
+      ) {
+        navbar.classList.remove("show");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let accumulatedScrollUp = 0;
     let accumulatedScrollDown = 0;
-  
+
     const isMobile = window.innerWidth <= 768;
-    const mobileThresholdUp = 40; // más sensible en móviles
+    const mobileThresholdUp = 40;
     const desktopThresholdUp = thresholdUp;
-  
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const thresholdUpValue = isMobile ? mobileThresholdUp : desktopThresholdUp;
-  
+
       if (currentScrollY > lastScrollY) {
-        // Desplazamiento hacia abajo
         accumulatedScrollUp = 0;
         accumulatedScrollDown += currentScrollY - lastScrollY;
-  
+
         if (accumulatedScrollDown >= thresholdDown) {
           setScrollingDown(true);
-          setScrollingUp(false); // Oculta si baja
+          setScrollingUp(false);
         }
       } else {
-        // Desplazamiento hacia arriba
         accumulatedScrollDown = 0;
         accumulatedScrollUp += lastScrollY - currentScrollY;
-  
+
         if (accumulatedScrollUp >= thresholdUpValue) {
           setScrollingUp(true);
-          setScrollingDown(false); // Muestra si sube
+          setScrollingDown(false);
         }
       }
-  
+
       lastScrollY = currentScrollY;
     };
-  
+
     window.addEventListener("scroll", handleScroll);
-  
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrollingDown, scrollingUp, thresholdUp, thresholdDown]);
-  
 
   return (
     <nav
       className={`navbar sticky-top navbar-expand-lg navbar-dark bg-dark shadow${
-        scrollingDown ? "navbar-hidden" : ""
-      } ${scrollingUp ? "navbar-visible" : ""}`}
+        scrollingDown ? " navbar-hidden" : ""
+      } ${scrollingUp ? " navbar-visible" : ""}`}
       style={{ top: scrollingDown ? `-${navbarHeight}px` : "0px" }}
     >
       <div className="container d-flex align-items-center justify-content-between">
@@ -91,12 +117,10 @@ const Navbar = () => {
           <img src={logo} alt="Trip Drugstore" height="50" />
         </Link>
 
-        {/* Logo y título */}
         <Link className="navbar-brand d-md-none" to="/">
           <img src={logito} alt="Trip Drugstore" width="50" height="55" />
         </Link>
 
-        {/* Contenedor de búsqueda con position-relative */}
         <div className="position-relative flex-grow-1">
           <input
             style={{ width: "92%" }}
@@ -106,18 +130,21 @@ const Navbar = () => {
             value={busqueda}
             onChange={handleBusqueda}
           />
-          {/* Mostrar sugerencias bien alineadas */}
           {sugerencias.length > 0 && (
             <ul
               className="list-group position-absolute start-0 mt-1 shadow"
-              style={{ width: "92%" }}
+              style={{ width: "92%", zIndex: 10 }}
             >
               {sugerencias.map((producto) => (
                 <li
                   key={producto.id}
                   className="list-group-item"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setBusqueda(producto.nombre)}
+                  onClick={() => {
+                    setBusqueda(producto.nombre);
+                    setSugerencias([]);
+                    navigate("/productos");
+                  }}
                 >
                   {producto.nombre} - ${producto.precio}
                 </li>
@@ -126,16 +153,13 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Contenedor del carrito y el menú responsive SOLO en móviles */}
         <div className="d-flex d-lg-none align-items-center">
-          {/* Ícono de carrito (en móviles se alinea bien con flex-column) */}
-          <div className="">
+          <div>
             <Link to="/carrito" className="text-white">
               <FaShoppingCart size={24} />
             </Link>
           </div>
 
-          {/* Botón del menú responsive */}
           <button
             className="navbar-toggler"
             type="button"
@@ -149,82 +173,78 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Ícono de carrito en pantallas grandes */}
         <div className="d-none d-lg-flex align-items-center order-lg-3 ms-md-2">
           <Link to="/carrito" className="text-white me-2">
             <FaShoppingCart size={24} />
           </Link>
         </div>
 
-        {/* Menú de navegación */}
-        <div className="collapse navbar-collapse ms-2" id="navbarNav">
+        <div className="collapse navbar-collapse ms-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/productos"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
+              <Link className="nav-link" to="/productos" onClick={() =>
+                document.getElementById("navbarNav").classList.remove("show")
+              }>
                 Categorias
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/ofertas"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
+              <Link className="nav-link" to="/ofertas" onClick={() =>
+                document.getElementById("navbarNav").classList.remove("show")
+              }>
                 Ofertas
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/contacto"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
+              <Link className="nav-link" to="/contacto" onClick={() =>
+                document.getElementById("navbarNav").classList.remove("show")
+              }>
                 Mis Compras
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/acerca"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
-                Mi Cuenta
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/acerca"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
-                Creá tu cuenta
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                to="/acerca"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
+              <Link className="nav-link" to="/acerca" onClick={() =>
+                document.getElementById("navbarNav").classList.remove("show")
+              }>
                 Ayuda
               </Link>
             </li>
+
+            {/* Mostrar enlace Admin si el usuario es el administrador */}
+            {user && user.email === adminEmail && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/admin" onClick={() =>
+                  document.getElementById("navbarNav").classList.remove("show")
+                }>
+                  Admin
+                </Link>
+              </li>
+            )}
+
+            {/* Usuario logueado o no */}
+            {user ? (
+              <li className="nav-item">
+                <Link className="nav-link d-flex align-items-center" to="/perfil" onClick={() =>
+                  document.getElementById("navbarNav").classList.remove("show")
+                }>
+                  <img
+                    src={user.photoURL || "https://via.placeholder.com/40"}
+                    alt="Avatar"
+                    className="avatar-img me-2"
+                    style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                  />
+                  {user.displayName || user.email}
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login" onClick={() =>
+                  document.getElementById("navbarNav").classList.remove("show")
+                }>
+                  Iniciar Sesión
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

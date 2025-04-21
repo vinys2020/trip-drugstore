@@ -44,6 +44,20 @@
   }
 }
 
+@media (max-width: 991.98px) {
+  #navbarNav {
+    position: absolute;
+    top: 100%;
+    left: -8.2px;
+    width: 100%;
+    background-color: #212529; /* mismo color que tu navbar bg-dark */
+    z-index: 1000;
+  }
+
+  .navbar-collapse.show {
+    display: block !important;
+  }
+}
 
 
 /* Alineación mejorada de los íconos y espaciado general */

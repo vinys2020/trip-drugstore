@@ -7,9 +7,8 @@ import Carrito from "./pages/Carrito";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 import Carousel from "./components/Carousel";
-import Login from "./pages/Login";
+import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
