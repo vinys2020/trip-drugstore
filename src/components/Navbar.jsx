@@ -221,9 +221,17 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </li>
             )}
 
+            {user && (
+              <li className="nav-item">
+                <button className="nav-link btn" onClick={() => auth.signOut()}>
+                  Cerrar sesión
+                </button>
+              </li>
+            )}
+
             {/* Usuario logueado o no */}
             {user ? (
-              <li className="nav-item">
+              <li className="nav-item align-items-center">
                 <Link className="nav-link d-flex align-items-center" to="/perfil" onClick={() =>
                   document.getElementById("navbarNav").classList.remove("show")
                 }>
@@ -232,7 +240,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                     alt="Avatar"
                     className="avatar-img me-2"
                     style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                  />
+                  />  
                   {user.displayName || user.email}
                 </Link>
               </li>
@@ -245,6 +253,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 </Link>
               </li>
             )}
+
+
           </ul>
         </div>
       </div>

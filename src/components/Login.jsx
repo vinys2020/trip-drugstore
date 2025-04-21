@@ -6,6 +6,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./login.css"; // Importación del CSS
@@ -49,7 +50,14 @@ const Login = () => {
     e.preventDefault();
     try {
       if (esRegistro) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Asignar foto de perfil por defecto si no se usa Google
+        const fotoPorDefecto = "https://img.freepik.com/vector-gratis/circulo-azul-usuario-blanco_78370-4707.jpg?t=st=1745268533~exp=1745272133~hmac=ceb5b23372c895f6c8ad07220ed483a63e25133f8909bc50fab0db73567368fb&w=1380";
+        await updateProfile(user, {
+          photoURL: fotoPorDefecto,
+        });
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }

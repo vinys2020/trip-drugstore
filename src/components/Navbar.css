@@ -59,6 +59,23 @@
   }
 }
 
+@media (max-width: 868px) {
+  .navbar .form-control {
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .navbar .position-relative {
+    width: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .list-group.position-absolute {
+    width: 100% !important;
+  }
+}
 
 /* Alineación mejorada de los íconos y espaciado general */
 .navbar .navbar-toggler {
