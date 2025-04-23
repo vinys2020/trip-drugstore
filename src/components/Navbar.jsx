@@ -6,6 +6,7 @@ import logito from "../assets/logopostmovil.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase";
 import { FaShoppingCart } from 'react-icons/fa';
+import { signOut } from "firebase/auth"; // Importa signOut de Firebase
 import './navbar.css';
 
 const productosData = [
@@ -21,7 +22,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
   const [sugerencias, setSugerencias] = useState([]);
   const [scrollingUp, setScrollingUp] = useState(false);
   const [scrollingDown, setScrollingDown] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Inicializa useNavigate
   const [user] = useAuthState(auth);
 
   const navbarHeight = 110;
@@ -42,6 +43,17 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     } else {
       setSugerencias([]);
     }
+  };
+
+  // Función de cerrar sesión que redirige a la página principal
+  const cerrarSesion = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/"); // Redirige al home luego de cerrar sesión
+      })
+      .catch((error) => {
+        console.error("Error al cerrar sesión:", error);
+      });
   };
 
   // Función para cerrar el navbar si se hace clic fuera de él
@@ -223,7 +235,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
             {user && (
               <li className="nav-item">
-                <button className="nav-link btn" onClick={() => auth.signOut()}>
+                <button className="nav-link btn" onClick={cerrarSesion}>
                   Cerrar sesión
                 </button>
               </li>
@@ -253,8 +265,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 </Link>
               </li>
             )}
-
-
           </ul>
         </div>
       </div>
