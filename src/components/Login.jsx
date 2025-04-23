@@ -10,6 +10,8 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./login.css"; // Importación del CSS
+import userimgdef from "../assets/userimgdef.webp"; // o .png
+
 
 const Login = () => {
   const [user, setUser] = useState(null);
@@ -52,9 +54,9 @@ const Login = () => {
       if (esRegistro) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
-        // Asignar foto de perfil por defecto si no se usa Google
-        const fotoPorDefecto = "https://img.freepik.com/vector-gratis/circulo-azul-usuario-blanco_78370-4707.jpg?t=st=1745268533~exp=1745272133~hmac=ceb5b23372c895f6c8ad07220ed483a63e25133f8909bc50fab0db73567368fb&w=1380";
+  
+        // Convertir la imagen local en una URL para Firebase
+        const fotoPorDefecto = userimgdef;
         await updateProfile(user, {
           photoURL: fotoPorDefecto,
         });
@@ -82,7 +84,7 @@ const Login = () => {
         {/* Tarjeta de login */}
         <div className="col-12 col-lg-7 d-flex justify-content-center align-items-center my-3">
           <div className="login-card p-4 shadow-lg rounded-4 text-white bg-dark ">
-           <h2 className="text-center mb-4 text-white">Bienvenido a TripPlataform</h2>
+           <h2 className="text-center mb-4 text-white">Bienvenido a Trip Platform</h2>
 
 
             {user ? (

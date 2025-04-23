@@ -9,6 +9,8 @@ import { CartProvider } from "./context/CartContext";
 import Carousel from "./components/Carousel";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import Ayuda from "./pages/Ayuda";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -27,6 +29,8 @@ const App = () => {
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/ayuda" element={<Ayuda />} />
+            
           </Routes>
         </div>
 

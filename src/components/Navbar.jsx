@@ -203,7 +203,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/acerca" onClick={() =>
+              <Link className="nav-link" to="/ayuda" onClick={() =>
                 document.getElementById("navbarNav").classList.remove("show")
               }>
                 Ayuda
