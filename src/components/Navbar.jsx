@@ -126,11 +126,11 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     >
       <div className="container d-flex align-items-center justify-content-between">
         <Link className="navbar-brand d-none d-md-block" to="/">
-          <img src={logo} alt="Trip Drugstore" height="50" />
+          <img src={logo} alt="Trip Drugstore" height="60" />
         </Link>
 
         <Link className="navbar-brand d-md-none" to="/">
-          <img src={logito} alt="Trip Drugstore" width="50" height="55" />
+          <img src={logito} alt="Trip Drugstore" width="60" height="60" />
         </Link>
 
         <div className="position-relative flex-grow-1">

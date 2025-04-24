@@ -1,135 +1,221 @@
-.login-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100vh;
-    padding: 2rem;
-  }
-
-#root {
-    background-color: #2c2b2b; /* Gris neutro */
-    margin: 0;
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
-  
-  .login-card {
-    color: white;
-    padding: 2rem;
-    max-width: 500px;
-    width: 100%;
-    background-color: #1e1e1e;
-    border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-  }
-  .login-card:hover {
-    transform: scale(1.02);
-  }
-  
-  .login-title {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #ffd700;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .user-avatar {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin: 0 auto;
-    display: block;
-  }
-  
-  .user-name {
-    margin-top: 1rem;
-    color: #ffd700;
-    text-align: center;
-    font-weight: 500;
-  }
-  
-  .toggle-registro {
-    margin-top: 1rem;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: underline;
-    color: #ffd700;
-    font-weight: 600;
-    transition: color 0.2s;
-  }
-  .toggle-registro:hover {
-    color: #fff;
-  }
-  
-  .info-card {
-    color: white;
-    padding: 2rem;
-    max-width: 800px;
-    width: 100%;
-    background-color: #333;
-    border-radius: 16px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease;
-  }
-  .info-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .info-title {
-    color: #ffd700;
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .info-text {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #f0f0f0;
-    text-align: center;
-  }
-  
-  .btn-primary {
-    display: block;
-    margin: 1.5rem auto 0 auto;
-    padding: 0.75rem 1.5rem;
-    background-color: #ffd700;
-    color: #1f1f1f;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .btn-primary:hover {
-    background-color: #e6c200;
-  }
-  
-
-  .login-section {
-    min-height: 100vh;
-    background-color: #2c2b2b; /* Gris neutro */
+/* Contenedor principal */
+.login-page {
+  display: flex;
+  height: 100vh;
+  background-color: #ede7e7;
+  flex-direction: column; /* Establecer en fila en pantallas grandes */
+  justify-content: space-between;
 }
-  
-  .login-card input.form-control:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+
+.como-funciona-articulo {
+  background-color: white;
+  padding: 1rem;
+}
+
+.como-funciona-contenedor {
+  max-width: 800px;
+  margin: 1rem auto 0 auto;
+}
+
+.como-funciona-titulo {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* En pantallas grandes, alinea el texto un poco más a la izquierda */
+@media (min-width: 1024px) {
+  .como-funciona-titulo {
+    text-align: left;
+    margin-left: 8rem; /* ajustá este valor según prefieras */
   }
-  
+}
 
-  @media (max-width: 768px) {
+.login-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 400px; /* Ajusta según sea necesario */
+  background: linear-gradient(135deg, #3e3b3b 0%, #1e1e1e 100%);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
 
-    .login-section {
-        margin-top: 10px;
-        margin-bottom: 400px;
-        margin-left: 0px;
-        
-    }
-    
+.login-main {
+  flex-grow: 1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin-left: 340px; /* Ancho del sidebar */
+  position: relative; /* Añadir para posicionar el banner dentro de este contenedor */
+}
 
+/* Contenedor para BannerCard */
+.extra-content {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 300px; /* Ajustar el tamaño máximo del banner */
+  z-index: 2; /* Asegurarse de que esté sobre otros elementos */
+}
+
+/* Estilo para las tarjetas de información */
+.info-container {
+  display: flex;
+  flex-direction: row; /* En escritorio, las tarjetas estarán en fila */
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.info-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 5px;
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.login-sidebar {
+  background-color: #000;
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.login-logo {
+  color: white;
+}
+
+.login-subtitle {
+  color: white;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.login-section {
+  margin-bottom: 2rem;
+}
+
+.login-label {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-btn.ingresar {
+  background-color: white;
+  color: black;
+}
+
+.login-btn.ingresar:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.login-btn.registrarse {
+  background-color: yellow;
+  color: black;
+}
+
+.login-btn.registrarse:hover {
+  background-color: white;
+  color: black;
+}
+
+.login-extra-info {
+  margin-top: 3rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.contact-info {
+  margin-top: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.social-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  color: yellow;  /* O el color que prefieras para el hover */
+}
+
+
+
+/* Estilo para móviles */
+@media (max-width: 1368px) {
+  .login-page {
+    flex-direction: column; /* En móviles estará en columna */
+    height: auto;
   }
-  
+
+  .login-sidebar {
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: none;
+    z-index: auto;
+  }
+
+  .login-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    height: auto;
+  }
+
+  .info-container {
+    flex-direction: column; /* En móviles, las tarjetas estarán en columna */
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .info-card {
+    max-width: 100%;
+    padding: 6px;
+  }
+}
+
+.title-margin {
+  margin-top: 80px; /* Margen superior para pantallas grandes */
+}
+
+@media (max-width: 767px) {
+  .title-margin {
+    margin-top: 0px; /* Eliminar margen en pantallas pequeñas */
+  }
+}
