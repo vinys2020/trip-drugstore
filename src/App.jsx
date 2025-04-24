@@ -27,8 +27,8 @@ const AppContent = () => {
       <Link className="navbar-brand d-none d-md-block p-1" to="/" style={{ marginLeft: 100, marginTop: 10 }}>
         <img src={logo} alt="Trip Drugstore" height="60"/>
       </Link>
-      <Link className="navbar-brand d-md-none ms-1 mt-1" to="/">
-        <img src={logito} alt="Trip Drugstore" width="60" height="60" />
+      <Link className="navbar-brand d-md-none " to="/" style={{ marginLeft: 154, marginTop: 5 }}>
+        <img src={logito} alt="Trip Drugstore" width="70" height="60" />
       </Link>
     </div>
   );
