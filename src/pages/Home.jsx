@@ -40,14 +40,14 @@ const Home = () => {
         </div>
       </div>
 
-    <div className="container-fluid w-100 p-0" >
+     <div className="container-fluid w-100 p-0 app-scroll-container" >
       
 
 
 
       {/* Sección Hero */}
       <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-md-4 mt-md-2">
-        <div className="container">
+        <div className="container ">
           <div className="row justify-content-center">
             <article className="col-12 col-lg-12 mt-md-4">
               <h1 className="fw-bold display-5  text-warning">

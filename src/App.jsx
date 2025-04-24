@@ -9,12 +9,10 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
-
 import logo from "./assets/logotrippc.png";
-import logito from "./assets/logopostmovil.png";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./App.css"; // Asegurate de tener este import para que cargue los estilos
 
 // Componente que maneja Navbar y Footer según la ruta
 const AppContent = () => {
@@ -22,12 +20,11 @@ const AppContent = () => {
   const location = useLocation();
 
   const soloLogoNavbar = (
-    <div className="nav-bounds  sticky-top bg-dark d-flex justify-content-start p-2"   style={{ zIndex: 2, position: 'relative' }}
-    >
+    <div className="nav-bounds sticky-top bg-dark d-flex justify-content-start p-2" style={{ zIndex: 2, position: 'relative' }}>
       <Link className="navbar-brand d-none d-md-block p-1" to="/" style={{ marginLeft: 100, marginTop: 10 }}>
-        <img src={logo} alt="Trip Drugstore" height="60"/>
+        <img src={logo} alt="Trip Drugstore" height="60" />
       </Link>
-      <Link className="navbar-brand d-md-none " to="/" style={{ marginLeft: 95, marginTop: 5 }}>
+      <Link className="navbar-brand d-md-none" to="/" style={{ marginLeft: 95, marginTop: 5 }}>
         <img src={logo} alt="Trip Drugstore" width="200" height="60" />
       </Link>
     </div>
@@ -39,7 +36,7 @@ const AppContent = () => {
         ? soloLogoNavbar
         : <Navbar setBusqueda={setBusqueda} />}
 
-      <div className="container w-100 p-0">
+      <div className="w-100 p-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos busqueda={busqueda} />} />
@@ -59,7 +56,9 @@ const App = () => {
   return (
     <CartProvider>
       <Router>
-        <AppContent />
+        <div className="app-root-wrapper">
+          <AppContent />
+        </div>
       </Router>
     </CartProvider>
   );
