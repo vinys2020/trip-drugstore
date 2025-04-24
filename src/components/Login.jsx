@@ -89,7 +89,7 @@ const Login = () => {
       <h1
         className="text-white text-center mb-3 title-margin"
         style={{
-          fontSize: "3rem",
+          fontSize: "5rem",
           fontWeight: "900",
           textShadow: "2px 2px 0 black, 4px 4px 0 yellow",
           letterSpacing: "2px",
@@ -98,7 +98,7 @@ const Login = () => {
       >
           TRIP
         </h1>
-        <h2 className="text-center mb-4 text-white">¡Bienvenido a Trip Platform!</h2>
+        <h4 className="text-center mb-4 text-white">¡Bienvenido a Trip Platform!</h4>
 
         <div className="text-center mb-4">
           <h5 className="text-white mb-3">¿Ya tienes cuenta?</h5>
@@ -133,10 +133,7 @@ const Login = () => {
             </div>
 
             <div className="info-item">
-              <div>
-                <h4>Take Away</h4>
-                <p>llegás, retirás y te lo llevás a disfrutar. Pensado para que tu viaje arranque con el pie derecho.</p>
-              </div>
+
             </div>
 
           <div className="contact-info">
@@ -291,7 +288,7 @@ const Login = () => {
                 <h1
                   className="text-white text-center mb-3 title-margin"
                   style={{
-                    fontSize: "3rem",
+                    fontSize: "5rem",
                     fontWeight: "900",
                     textShadow: "2px 2px 0 black, 4px 4px 0 yellow",
                     letterSpacing: "2px",
