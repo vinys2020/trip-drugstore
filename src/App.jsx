@@ -9,7 +9,6 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
-import logo from "./assets/logotrippc.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css"; // Asegurate de tener este import para que cargue los estilos
@@ -19,22 +18,9 @@ const AppContent = () => {
   const [busqueda, setBusqueda] = useState("");
   const location = useLocation();
 
-  const soloLogoNavbar = (
-    <div className="nav-bounds sticky-top bg-dark d-flex justify-content-start p-2" style={{ zIndex: 2, position: 'relative' }}>
-      <Link className="navbar-brand d-none d-md-block p-1" to="/" style={{ marginLeft: 100, marginTop: 10 }}>
-        <img src={logo} alt="Trip Drugstore" height="60" />
-      </Link>
-      <Link className="navbar-brand d-md-none" to="/" style={{ marginLeft: 95, marginTop: 5 }}>
-        <img src={logo} alt="Trip Drugstore" width="200" height="60" />
-      </Link>
-    </div>
-  );
-
   return (
     <>
-      {location.pathname === "/login"
-        ? soloLogoNavbar
-        : <Navbar setBusqueda={setBusqueda} />}
+      {location.pathname !== "/login" && <Navbar setBusqueda={setBusqueda} />}
 
       <div className="w-100 p-0">
         <Routes>

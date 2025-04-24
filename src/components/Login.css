@@ -4,12 +4,21 @@
   height: 100vh;
   flex-direction: column; /* Establecer en fila en pantallas grandes */
   justify-content: space-between;
+  min-height: 100vh; /* cambia esto */
+
 }
 
 .info-cardbaner{
   margin-left: 400px;
 
 }
+.container-main {
+  width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+}
+
 
 
 .como-funciona-articulo {
@@ -89,9 +98,8 @@
 }
 
 .info-card {
-  max-width: 400px;
+  max-width: 100%;
   width: 100%;
-  padding: 5px;
   background-color: #1e1e1e;
   border-radius: 16px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -189,12 +197,17 @@
 }
 
 /* Estilo para móviles */
-@media (max-width: 1046px) {
+@media (max-width: 1206px) {
   .login-page {
     flex-direction: column; /* En móviles estará en columna */
     height: auto;
   }
 
+  .sin-margen {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  
 
 
   .comofunciona {
@@ -236,7 +249,7 @@
 }
 
 /* Estilo para móviles */
-@media (max-width: 1268px) {
+@media (max-width: 1208px) {
   .login-page {
     flex-direction: column; /* En móviles estará en columna */
     height: auto;
@@ -299,7 +312,7 @@
   margin-top: 80px; /* Margen superior para pantallas grandes */
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1207px) {
   .title-margin {
     margin-top: 0px; /* Eliminar margen en pantallas pequeñas */
   }
@@ -317,7 +330,7 @@
 }
 
 
-@media (min-width: 1024px) {
+@media (min-width: 1224px) {
   .container-promos {
     width: 1000px;
     display: flex;
@@ -329,58 +342,8 @@
 }
 
 
-/* Estilo para tablets (pantallas entre 768px y 1024px) */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .login-page {
-    flex-direction: column; /* En tablets estará en columna */
-    height: auto;
-  }
-
-  .maincont {
-    margin-left: 0px;
-  }
-
-  .login-sidebar {
-    position: relative;
-    height: auto;
-    width: 100%;
-    padding: 1.5rem;
-    box-shadow: none;
-    z-index: auto;
-  }
-
-  .login-main {
-    margin-left: 0;
-    width: 100%;
-    padding: 1rem;
-    height: auto;
-  }
-
-  .info-container {
-    flex-direction: column; /* En tablets, las tarjetas estarán en columna */
-    gap: 1rem;
-    justify-content: center;
-    margin-left: 0px;
-  }
-
-  .info-card {
-    max-width: 100%;
-    padding: 6px;
-  }
-
-  /* Ajuste de márgenes y tamaños de texto */
-  .comofunciona {
-    margin-left: 0px;
-    font-size: 1.8rem;
-  }
-
-  .login-btn {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-  }
 
 
-}
 
 /* Estilo para pantallas más grandes (por ejemplo, televisores o monitores ultra anchos) */
 @media (min-width: 1600px) {
@@ -415,10 +378,11 @@
   }
 
 
+
 }
 
 /* Estilo para pantallas más pequeñas, como dispositivos móviles (menos de 768px) */
-@media (max-width: 767px) {
+@media (max-width: 1067px) {
   .login-page {
     flex-direction: column; /* En dispositivos móviles, mantener todo en columna */
     height: auto;
