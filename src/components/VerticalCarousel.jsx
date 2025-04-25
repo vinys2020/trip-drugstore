@@ -30,20 +30,6 @@ const productos = [
     precioAnterior: "199.99",
     descuento: "20% OFF",
     imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  },
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  },
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
   }
 ];
 

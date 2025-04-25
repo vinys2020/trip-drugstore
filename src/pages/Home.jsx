@@ -76,7 +76,7 @@ const Home = () => {
         </section>
 
 
-      <div className="container mt-3 mb-3">
+      <div className="mt-3 mb-3 mx-lg-5 mx-2">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
         <BannerCard
           altText="Promo banner grande"
@@ -86,7 +86,7 @@ const Home = () => {
 
 
         {/* Sección Servicios */}
-        <section id="servicios" className="py-4">
+        <section id="servicios" className="py-4 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-white mb-0">
               Tu compra semanal 📅
@@ -220,7 +220,7 @@ const Home = () => {
         </section>
 
 
-        <section id="servicios" className="">
+        <section id="servicios" className="mx-lg-5">
           <div className="container-fluid w-100 mt-3">
             <h3 className="text-start text-white mb-0">
               Ofertas Del Dia 💣
@@ -238,7 +238,7 @@ const Home = () => {
 
         </section>
 
-        <section id="servicios" className="py-md-4">
+        <section id="servicios" className="py-md-4 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4 mt-2">
             <h3 className="text-start text-white mb-0">
             Snacks y Dulces 🍫
@@ -256,7 +256,7 @@ const Home = () => {
 
         </section>
 
-        <div className="container mt-3 mb-5">
+        <div className="mt-3 mb-5 mx-lg-5 mx-2">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard2
             altText="Promo banner grande"
@@ -264,7 +264,7 @@ const Home = () => {
           />
         </div>
 
-        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2">
+        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4 mt-0">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
@@ -303,7 +303,15 @@ const Home = () => {
 
         </section>
 
-        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2">
+        <div className="mt-5 mb-5 mx-lg-5 mx-2">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
+        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
@@ -325,7 +333,7 @@ const Home = () => {
           >
             <a
               className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5"
-              href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+              href="#"
               target="_self"
               style={{
                 color: "#3483fa",
@@ -342,7 +350,7 @@ const Home = () => {
 
         </section>
 
-        <div className="container mt-5 mb-5">
+        <div className="mt-5 mb-5 mx-lg-5 mx-2">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard3
             altText="Promo banner grande"
@@ -350,7 +358,7 @@ const Home = () => {
           />
         </div>
 
-        <section id="servicios" className="mt-md-0 mb-4 ms-md-3 mx-md-2 mb-5">
+        <section id="servicios" className="mt-md-0 mb-4 ms-md-3 mx-md-2 mb-5 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4">
             <h3 className="text-start text-black mb-0"style={{ color: "#3483fa" , backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", padding: "10px" }}
 >
@@ -389,7 +397,7 @@ const Home = () => {
 
         </section>
 
-        <div className="container mt-5 mb-5">
+        <div className="mt-5 mb-5 mx-lg-5 mx-2">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard3
             altText="Promo banner grande"
