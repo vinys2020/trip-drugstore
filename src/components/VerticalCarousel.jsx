@@ -38,7 +38,7 @@ const VerticalCarousel = () => {
     <div className="vc-carousel-wrapper">
       <div className="vc-carousel-container">
         {productos.map((producto, index) => (
-          <div className="vc-product-card" key={index}>
+          <div className="vc-product-card p-lg-0" key={index}>
             <div className="vc-product-img-wrapper">
               <img
                 src={producto.imagen}

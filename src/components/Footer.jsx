@@ -12,8 +12,6 @@ const Footer = () => {
             <h4 className="fw-bold">Trip Drugstore</h4>
 
             <p className="mb-0">
-              🫶🏼Escápate de lo ordinario
-              <br />
               📍Terminal de Ómnibus Concepción, Tucumán
               <br />
               🚍Local N°1 - <a href="https://www.instagram.com/tripconcep/" target="_blank" rel="noreferrer" className="text-decoration-underline text-info">@tripconcep</a>
