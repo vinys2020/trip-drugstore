@@ -1,84 +1,12 @@
 import React, { useState, useRef } from "react";
+import useProductosLimpieza from "../hooks/useProductosLimpieza";
 import "./HorizontalCarousel.css";
-
-const productos = [
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-    precioAnterior: 25000,
-    precioActual: 18500,
-    descuento: "26% OFF",
-    descripcion: "Un huevo de chocolate con sorpresa de regalo.",
-    link: "https://www.mercadolibre.com.ar/huevo-kinder-gran-sorpresa-rosa-150g/p/MLA20018967",
-  },
-  {
-    nombre: "Chocolate Mini Conejos Bonafide X 140g",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_621667-MLA83502158303_042025-P.webp",
-    precioAnterior: 5800,
-    precioActual: 4600,
-    descuento: "21% OFF",
-    descripcion: "Conejitos de chocolate ideales para Pascuas o regalar.",
-    link: "#",
-  },
-  {
-    nombre: "Jägermeister 700ml - Licor De Hierbas",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_623875-MLU74543092615_022024-P.webp",
-    precioAnterior: 26000,
-    precioActual: 22900,
-    descuento: "12% OFF",
-    descripcion: "Licor de hierbas alemán ideal para shots fríos.",
-    link: "#",
-  },
-  {
-    nombre: "Gillette Proshield Repuestos 4 unidades",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_983565-MLU78766127637_082024-P.webp",
-    precioAnterior: 16800,
-    precioActual: 14300,
-    descuento: "15% OFF",
-    descripcion: "Repuestos para afeitar Gillette Proshield x4.",
-    link: "#",
-  },
-  {
-    nombre: "Alfajor Rasta Chocolate Negro Caja X 18Un",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_855039-MLA82920173813_032025-P.webp",
-    precioAnterior: 9600,
-    precioActual: 7900,
-    descuento: "17% OFF",
-    descripcion: "Caja con 18 alfajores Rasta de chocolate negro.",
-    link: "#",
-  },
-  {
-    nombre: "Cerveza Miller Genuine Draft Lata 473ml Pack X24",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_979024-MLU72732453523_112023-P.webp",
-    precioAnterior: 45000,
-    precioActual: 38500,
-    descuento: "14% OFF",
-    descripcion: "Pack de 24 latas de cerveza Miller de 473ml.",
-    link: "#",
-  },
-  {
-    nombre: "Detergente Magistral Ultra Limón Botella 1400 Ml",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_771902-MLA81774714817_012025-P.webp",
-    precioAnterior: 7200,
-    precioActual: 6300,
-    descuento: "13% OFF",
-    descripcion: "Detergente concentrado con aroma a limón.",
-    link: "#",
-  },
-  {
-    nombre: "Michelob Ultra Rubia 6 unidades 473ml",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_703807-MLA79481347418_102024-P.webp",
-    precioAnterior: 9000,
-    precioActual: 7650,
-    descuento: "15% OFF",
-    descripcion: "Cerveza lager sin gluten, pack de 6 latas de 473ml.",
-    link: "#",
-  }
-];
 
 const HorizontalCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
+
+  const { productos, loading } = useProductosLimpieza();
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -93,7 +21,10 @@ const HorizontalCarousel = () => {
       scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
   };
-  
+
+  if (loading) {
+    return <p>Cargando productos...</p>; // Mensaje mientras carga los productos
+  }
 
   return (
     <div
@@ -138,7 +69,7 @@ const HorizontalCarousel = () => {
             style={{ scrollSnapAlign: "start" }}
           >
             <a
-              href={producto.link}
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-decoration-none text-dark"
@@ -150,13 +81,10 @@ const HorizontalCarousel = () => {
               />
               <div className="scroll-producto-body">
                 <div className="scroll-producto-precio-wrapper">
-                  <p className="scroll-producto-precio-anterior">
-                    ${producto.precioAnterior.toLocaleString()}
-                  </p>
                   <p className="scroll-producto-precio">
-                    ${producto.precioActual.toLocaleString()}
+                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
                     <span className="scroll-producto-descuento">
-                      {producto.descuento}
+                      {producto.descuento || "Sin descuento"}
                     </span>
                   </p>
                   <div className="dynamic-carousel__shipping-container mt-1">
