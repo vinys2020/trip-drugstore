@@ -46,7 +46,7 @@ const Home = () => {
 
 
       {/* Sección Hero */}
-      <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-md-4 mt-md-2">
+      <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 mt-lg-3">
         <div className="container ">
           <div className="row justify-content-center">
             <article className="col-12 col-lg-12 mt-md-4">
@@ -56,7 +56,7 @@ const Home = () => {
               <p className="lead mt-3 text-white">
                 Tu drugstore online de confianza, con envíos rápidos y productos de calidad.
               </p>
-              <Link to="/productos" className="btn custom-btn btn-lg mt-3">
+              <Link to="/productos" className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2">
                 Ver Productos 🛒
               </Link>
             </article>
@@ -85,30 +85,11 @@ const Home = () => {
       </div>
 
 
-        {/* Sección Servicios */}
-        <section id="servicios" className="py-4 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4">
-            <h3 className="text-start text-white mb-0">
-              Tu compra semanal 📅
-              <a
-                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
-                target="_self"
-                style={{ color: "#3483fa" }}
-              >
-                Ver más
-              </a>
-            </h3>
-            <HorizontalCarousel />
-          </div>
-
-        </section>
-
 
         {/* Sección Especial Bebidas */}
-        <section id="bebidas" className="mt-2">
+        <section id="bebidas" className="mt-5">
           <div className="container mt-md-4">
-            <h3 className="text-center mb-4 mb-md-4 text-white">¡Especial Bebidas! 🥂</h3>
+            <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas! 🥂</h3>
             <div className="row g-3 justify-content-center">
               <div className="col-6 col-md-3">
                 <article
@@ -163,7 +144,7 @@ const Home = () => {
 
         <section id="recomendados" className="py-4">
           <div className="container">
-            <h3 className="text-center mb-0 mt-md-4 mt-3 text-white">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mt-md-4 mt-3 text-white">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="col-12">
                 <HorizontalScroll />

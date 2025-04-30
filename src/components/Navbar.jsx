@@ -193,20 +193,32 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
         <div className="collapse navbar-collapse ms-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/productos" onClick={() =>
+          <li className="nav-item dropdown">
+            <Link 
+              className="nav-link dropdown-toggle" 
+              to="/productos" 
+              id="navbarDropdown" 
+              role="button" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false"
+              onClick={() =>
                 document.getElementById("navbarNav").classList.remove("show")
-              }>
-                Categorias
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/ofertas" onClick={() =>
-                document.getElementById("navbarNav").classList.remove("show")
-              }>
-                Ofertas
-              </Link>
-            </li>
+              }
+            >
+              Categorías
+            </Link>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><Link className="dropdown-item" to="/productos/articulos-limpieza">Ofertas</Link></li>
+              <li><Link className="dropdown-item" to="/productos/articulos-limpieza">Bebidas</Link></li>
+              <li><Link className="dropdown-item" to="/productos/almacen">Almacén</Link></li>
+              <li><Link className="dropdown-item" to="/productos/bebidas">Lácteos</Link></li>
+              <li><Link className="dropdown-item" to="/productos/sandwiches">Sándwiches</Link></li>
+              <li><Link className="dropdown-item" to="/productos/snacks-salados">Cafetería</Link></li>
+              <li><Link className="dropdown-item" to="/productos/infusiones">Infusiones</Link></li>
+              <li><Link className="dropdown-item" to="/productos/articulos-varios">Limpieza</Link></li>
+              <li><Link className="dropdown-item" to="/productos/cafeteria">Otros</Link></li>
+            </ul>
+          </li> 
             <li className="nav-item">
               <Link className="nav-link" to="/contacto" onClick={() =>
                 document.getElementById("navbarNav").classList.remove("show")

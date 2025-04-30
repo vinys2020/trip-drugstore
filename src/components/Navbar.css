@@ -26,6 +26,48 @@
   }
   
 
+  /* Estilo para el dropdown */
+.nav-item.dropdown {
+  position: relative; /* Necesario para el comportamiento del dropdown */
+}
+
+/* El menú desplegable inicialmente está oculto */
+.nav-item.dropdown .dropdown-menu {
+  display: none; /* Inicialmente oculto */
+  background-color: #333; /* Fondo oscuro */
+  border-color: #444; /* Bordes más claros */
+  position: absolute; /* Posiciona el dropdown debajo del enlace */
+  top: 100%; /* Aparece justo debajo del elemento de la lista */
+  left: 0;
+  right: 0;
+}
+
+/* Mostrar el menú cuando el mouse pasa por encima del item */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block; /* Mostrar el menú cuando se pasa el mouse */
+}
+
+/* Estilo para los items dentro del dropdown */
+.nav-item.dropdown .dropdown-menu .dropdown-item {
+  color: #fff; /* Texto blanco */
+}
+
+/* Estilo al pasar el mouse por los items */
+.nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: #f8c300; /* Fondo amarillo al pasar el mouse */
+  color: #333; /* Texto oscuro */
+}
+
+/* Estilo para el enlace "Categorías" */
+.navbar .nav-link.dropdown-toggle {
+  color: #fff; /* Texto blanco para el toggle */
+}
+
+.navbar .nav-link.dropdown-toggle:hover {
+  color: #f8c300; /* Amarillo al pasar el mouse */
+}
+
+
   
 /* Ajustes para el input y sugerencias en móvil */
 @media (max-width: 768px) {

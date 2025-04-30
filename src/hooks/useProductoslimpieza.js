@@ -1,7 +1,7 @@
 // hooks/useProductosLimpieza.js
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../config/firebase"; // Asegúrate de importar db correctamente
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 const useProductosLimpieza = () => {
   const [productos, setProductos] = useState([]);
@@ -9,9 +9,11 @@ const useProductosLimpieza = () => {
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const productosCollection = collection(db, "Categoriasid", "Articuloslimpiezaid", "Productosid");
+      const productosRef = collection(db, "Categoriasid", "Articuloslimpiezaid", "Productosid");
+      const q = query(productosRef, where("activo", "==", true)); // 👈 FILTRA solo activos
+
       try {
-        const snapshot = await getDocs(productosCollection);
+        const snapshot = await getDocs(q);
         const productosData = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
