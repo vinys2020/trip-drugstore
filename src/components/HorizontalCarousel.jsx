@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
-import useProductosLimpieza from "../hooks/useProductosLimpieza";
+import React, { useState, useRef, useContext } from "react";
+import useProductosLimpieza from "../hooks/useProductoslimpieza";
+import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
 
 const HorizontalCarousel = () => {
@@ -7,6 +8,8 @@ const HorizontalCarousel = () => {
   const scrollRef = useRef(null);
 
   const { productos, loading } = useProductosLimpieza();
+  const { agregarAlCarrito } = useContext(CartContext);
+
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -95,9 +98,13 @@ const HorizontalCarousel = () => {
                 <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
               </div>
             </a>
-            <button className="scroll-producto-boton mt-md-4 mt-0">
+            <button
+              className="scroll-producto-boton mt-md-4 mt-0"
+              onClick={() => agregarAlCarrito(producto)}
+            >
               Agregar al carrito
             </button>
+
           </div>
         ))}
       </div>

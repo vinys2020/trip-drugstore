@@ -230,7 +230,7 @@ const AdminDashboard = () => {
               <th>Imagen</th>
               <th>Marca</th>
               <th>Stock</th>
-              <th>Activo</th>
+              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>

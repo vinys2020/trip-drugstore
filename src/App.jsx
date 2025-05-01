@@ -9,6 +9,7 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
+import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css"; // Asegurate de tener este import para que cargue los estilos
@@ -30,7 +31,10 @@ const AppContent = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/ayuda" element={<Ayuda />} />
+
         </Routes>
+        <FloatingCart />
+
       </div>
 
       {location.pathname !== "/login" && <Footer />}
