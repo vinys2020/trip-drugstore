@@ -8,6 +8,8 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [discount, setDiscount] = useState(0); // Estado para manejar el descuento
   const [coupon, setCoupon] = useState(""); // Estado para manejar el código de cupón
+  const [telefonoUsuario, setTelefonoUsuario] = useState("");
+
 
   // Agregar un producto al carrito
   const agregarAlCarrito = (producto) => {
@@ -78,6 +80,9 @@ export const CartProvider = ({ children }) => {
         coupon,
         setCoupon,
         discount,
+        telefonoUsuario,
+        setTelefonoUsuario,
+
       }}
     >
       {children}

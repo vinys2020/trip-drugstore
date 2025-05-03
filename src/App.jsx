@@ -21,7 +21,7 @@ const AppContent = () => {
 
   return (
     <>
-      {location.pathname !== "/login" && <Navbar setBusqueda={setBusqueda} />}
+      {location.pathname !== "/login" && <Navbar busqueda={busqueda} setBusqueda={setBusqueda} />}
 
       <div className="w-100 p-0">
         <Routes>

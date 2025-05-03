@@ -13,7 +13,9 @@ const FloatingCart = () => {
     aplicarCupon, 
     coupon, 
     setCoupon, 
-    discount, 
+    discount,
+    telefonoUsuario,
+    setTelefonoUsuario, 
     agregarAlCarrito 
   } = useContext(CartContext);
 
@@ -81,6 +83,16 @@ const FloatingCart = () => {
               ))
             )}
 
+            <div className="telefono-container">
+              <input
+                type="tel"
+                placeholder="Tu número de teléfono"
+                value={telefonoUsuario}
+                onChange={(e) => setTelefonoUsuario(e.target.value)}
+                className="telefono-input"
+              />
+            </div>
+
             {/* Sección del cupón */}
             <div className="coupon-container">
               <input
@@ -95,6 +107,8 @@ const FloatingCart = () => {
               </button>
               {discount > 0 && <p className="discount-text">Descuento aplicado: {discount}%</p>}
             </div>
+
+
 
             {/* Total y botón para pagar */}
             <div className="floating-cart-total">

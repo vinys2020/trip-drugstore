@@ -31,30 +31,13 @@ const data = [
   { name: "Domingo", pedidos: 80 },
 ];
 
-const obtenerUsuarios = async () => {
-  const auth = getAuth();
-  try {
-    const users = [];
-    const result = await listUsers(auth);
-    result.users.forEach((user) => {
-      users.push({
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        providerId: user.providerData[0]?.providerId,
-      });
-    });
-    setUsuarios(users);
-  } catch (error) {
-    console.error("Error al obtener los usuarios", error);
-  }
-};
+
 
 const AdminDashboard = () => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Articuloslimpiezaid");
+  const [busqueda, setBusqueda] = useState("");
   const [nuevoProducto, setNuevoProducto] = useState({
     nombre: "",
     precio: "",
@@ -101,15 +84,15 @@ const AdminDashboard = () => {
       await updateDoc(productoDoc, {
         [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
       });
-  
+
       // Actualizar producto localmente en el estado sin recargar toda la lista
       setProductos((prev) =>
         prev.map((p) =>
           p.id === id
             ? {
-                ...p,
-                [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
-              }
+              ...p,
+              [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
+            }
             : p
         )
       );
@@ -117,7 +100,7 @@ const AdminDashboard = () => {
       console.error("Error al actualizar el producto:", error);
     }
   };
-  
+
 
   const eliminarProducto = async (id) => {
     const productoDoc = doc(db, `Categoriasid/${categoriaSeleccionada}/Productosid`, id);
@@ -126,7 +109,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <section className="admin-dashboard py-5">
+    <section className="admin-dashboard py-5 mt-lg-5">
       <div className="container-fluid px-4 px-md-5">
         <header className="text-center mb-5">
           <h1 className="fw-bold display-5">Panel de Administración</h1>
@@ -161,163 +144,191 @@ const AdminDashboard = () => {
           </article>
         </section>
 
-                        {/* Selector de categoría */}
-        <section className="mb-5">
-          <h2 className="text-center mb-4 text-white">Gestion de Productos</h2>
-          <div className="d-flex justify-content-center">
-            <div className="col-md-6">
-              <div className="card shadow-lg rounded-4 p-4 bg-dark scale">
-                <div className="mb-4">
-                  <h5 className="text-white">Elige la categoría de productos que deseas gestionar:</h5>
-                  <select
-                    className="form-select form-select-lg"
-                    value={categoriaSeleccionada}
-                    onChange={(e) => setCategoriaSeleccionada(e.target.value)}
-                  >
-                    {categorias.map((categoria) => (
-                      <option key={categoria} value={categoria}>
-                        {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
-                      </option>
-                    ))}
-                  </select>
+
+
+        {/* CRUD de productos */}
+        <section className="row mt-5">
+          <article className="col-12 mt-lg-5">
+            <h2 className="text-center mb-4 text-white">Gestiona tus Productos</h2>
+
+            <div className="cards shadow-sm rounded-4">
+
+              <div className="d-flex justify-content-center">
+                <div className="w-100">
+                  <div className="card  rounded-4 p-4 bg-primary">
+                    <div className="mb-4">
+                      <h5 className="text-white mb-3">Elige una categoría:</h5>
+                      <select
+                        className="form-select form-select-lg"
+                        value={categoriaSeleccionada}
+                        onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+                      >
+                        {categorias.map((categoria) => (
+                          <option key={categoria} value={categoria}>
+                            {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <h3 className="mb-0 text-black text-center mt-5">
+                <i className="bi bi-gear"></i> {/* Este es el ícono de configuración */}
+                {categoriaSeleccionada}
+              </h3>
+              <hr className="bg-dark mb-4" />
+
+              {/* Formulario de nuevo producto */}
+              <div className="row g-2 mb-4">
+                <h4 className="text-black d-flex align-items-center gap-2 mb-3">
+                  <i className="bi bi-plus-circle"></i>
+                  Agregar producto
+                </h4>
+
+                {["nombre", "precio", "imagen", "marca", "stock"].map((campo) => (
+                  <div className="col-md-4" key={campo}>
+                    <input
+                      className="form-control"
+                      placeholder={campo}
+                      value={nuevoProducto[campo]}
+                      onChange={(e) =>
+                        setNuevoProducto({
+                          ...nuevoProducto,
+                          [campo]: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                ))}
+                <div className="col-md-4 d-grid">
+                  <button onClick={crearProducto} className="btn btn-success">
+                    ➕ Agregar
+                  </button>
+                </div>
+              </div>
+
+              <h4 className="mb-3 text-black d-flex align-items-center gap-2 mt-3">
+                <i className="bi bi-pencil-square"></i>
+                Modificar productos
+              </h4>
+
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Buscar producto por nombre..."
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                />
+              </div>
+
+
+
+              {/* Tabla de productos */}
+              <div className="table-responsive">
+
+                <table className="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Precio</th>
+                      <th>Imagen</th>
+                      <th>Marca</th>
+                      <th>Stock</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productos
+                      .filter((producto) =>
+                        producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+                      )
+                      .map((producto) => (
+                        <tr key={producto.id}>
+                          <td>
+                            <input
+                              className="form-control"
+                              value={producto.nombre}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "nombre", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+                              type="number"
+                              value={producto.precio}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "precio", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+                              value={producto.imagen}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "imagen", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+                              value={producto.marca}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "marca", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+                              type="number"
+                              value={producto.stock}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "stock", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td className="text-center">
+                            <button
+                              className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"
+                                }`}
+                              onClick={() =>
+                                actualizarProducto(producto.id, "activo", !producto.activo)
+                              }
+                            >
+                              {producto.activo ? "Activo" : "Inactivo"}
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => eliminarProducto(producto.id)}
+                            >
+                              Eliminar
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          </article>
         </section>
 
 
-{/* CRUD de productos */}
-<section className="row mt-5">
-  <article className="col-12">
-    <div className="card p-4 shadow-sm rounded-4">
-      <h4 className="mb-4 text-black d-flex align-items-center">
-        <i className="bi bi-gear me-2"></i> {/* Este es el ícono de configuración */}
-        {categoriaSeleccionada}
-      </h4>
-
-      {/* Formulario de nuevo producto */}
-      <div className="row g-2 mb-4">
-        {["nombre", "precio", "imagen", "marca", "stock"].map((campo) => (
-          <div className="col-md-4" key={campo}>
-            <input
-              className="form-control"
-              placeholder={campo}
-              value={nuevoProducto[campo]}
-              onChange={(e) =>
-                setNuevoProducto({
-                  ...nuevoProducto,
-                  [campo]: e.target.value,
-                })
-              }
-            />
-          </div>
-        ))}
-        <div className="col-md-4 d-grid">
-          <button onClick={crearProducto} className="btn btn-success">
-            ➕ Agregar
-          </button>
-        </div>
-      </div>
-
-      {/* Tabla de productos */}
-      <div className="table-responsive">
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Imagen</th>
-              <th>Marca</th>
-              <th>Stock</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {productos.map((producto) => (
-              <tr key={producto.id}>
-                <td>
-                  <input
-                    className="form-control"
-                    value={producto.nombre}
-                    onChange={(e) =>
-                      actualizarProducto(producto.id, "nombre", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="number"
-                    value={producto.precio}
-                    onChange={(e) =>
-                      actualizarProducto(producto.id, "precio", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    value={producto.imagen}
-                    onChange={(e) =>
-                      actualizarProducto(producto.id, "imagen", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    value={producto.marca}
-                    onChange={(e) =>
-                      actualizarProducto(producto.id, "marca", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="number"
-                    value={producto.stock}
-                    onChange={(e) =>
-                      actualizarProducto(producto.id, "stock", e.target.value)
-                    }
-                  />
-                </td>
-                <td className="text-center">
-                  <button
-                    className={`btn btn-sm ${
-                      producto.activo ? "btn-success" : "btn-secondary"
-                    }`}
-                    onClick={() =>
-                      actualizarProducto(producto.id, "activo", !producto.activo)
-                    }
-                  >
-                    {producto.activo ? "Activo" : "Inactivo"}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => eliminarProducto(producto.id)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </article>
-</section>
-
-
-                {/* Últimos pedidos */}
-        <section className="row mb-5 ">
+        {/* Últimos pedidos */}
+        <section className="row mb-5 mt-5">
           <article className="col-12 mt-5">
-          <h2 className="text-center mb-4 text-white ">Detalle de los Pedidos</h2>
+            <h2 className="text-center mb-4 text-white ">Detalle de los Pedidos</h2>
 
             <div className="card card-orders-list p-4 shadow-sm rounded-4 scale">
               <h4 className="mb-4">🛒 Últimos pedidos</h4>
@@ -342,7 +353,7 @@ const AdminDashboard = () => {
         {/* Gráfico de pedidos por día */}
         <section className="row py-5 mb-5">
           <article className="col-12">
-          <h2 className="text-center mb-4 text-white mt-lg-3">Estadisticas</h2>
+            <h2 className="text-center mb-4 text-white mt-lg-3">Estadisticas</h2>
             <div className="card mb-0 shadow-sm rounded-4">
               <h4 className="mb-4 text-black">📊 Pedidos por día</h4>
               <ResponsiveContainer width="100%" height={400}>

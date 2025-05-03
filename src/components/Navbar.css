@@ -67,6 +67,12 @@
   color: #f8c300; /* Amarillo al pasar el mouse */
 }
 
+.list-group-item:hover {
+  background-color: #f8c300; /* Amarillo como el hover del navbar */
+  color: #212529; /* Texto oscuro para contraste */
+  font-weight: 500;
+}
+
 
   
 /* Ajustes para el input y sugerencias en móvil */
@@ -75,6 +81,7 @@
     font-size: 14px;
     padding: 8px;
   }
+
 
   .navbar .list-group {
     z-index: 1050;
@@ -115,7 +122,7 @@
   }
 
   .list-group.position-absolute {
-    width: 100% !important;
+    width: 92% !important;
   }
 }
 

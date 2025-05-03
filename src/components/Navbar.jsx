@@ -5,39 +5,36 @@ import logo from "../assets/logotrippc.png";
 import logito from "../assets/logopostmovil.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase";
-import { FaShoppingCart } from 'react-icons/fa';
-import { signOut } from "firebase/auth"; // Importa signOut de Firebase
-import './navbar.css';
-
-const productosData = [
-  { id: 1, nombre: "Paracetamol", precio: 5, categoria: "Medicamentos" },
-  { id: 2, nombre: "Ibuprofeno", precio: 8, categoria: "Medicamentos" },
-  { id: 3, nombre: "Omeprazol", precio: 10, categoria: "Gastrointestinal" },
-];
+import { signOut } from "firebase/auth";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import useProductos from "../hooks/useProductos"; // Hook que trae todos los productos activos
+import "./navbar.css";
 
 const adminEmail = "faculez07@gmail.com";
 
 const Navbar = ({ busqueda, setBusqueda }) => {
   const { agregarAlCarrito } = useContext(CartContext);
+  const { productos, loading } = useProductos();
   const [sugerencias, setSugerencias] = useState([]);
   const [scrollingUp, setScrollingUp] = useState(false);
   const [scrollingDown, setScrollingDown] = useState(false);
-  const navigate = useNavigate(); // Inicializa useNavigate
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+  const navbarRef = useRef(null);
 
   const navbarHeight = 110;
   const thresholdUp = 800;
   const thresholdDown = 200;
-
-  const navbarRef = useRef(null);  // Nueva referencia para el navbar
 
   const handleBusqueda = (e) => {
     const query = e.target.value;
     setBusqueda(query);
 
     if (query) {
-      const productosFiltrados = productosData.filter((producto) =>
-        producto.nombre.toLowerCase().includes(query.toLowerCase())
+      // Filtrar los productos activos según la búsqueda
+      const productosFiltrados = productos.filter((producto) =>
+        producto.nombre && producto.nombre.toLowerCase().includes(query.toLowerCase())
       );
       setSugerencias(productosFiltrados);
     } else {
@@ -45,23 +42,28 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     }
   };
 
-  // Función de cerrar sesión que redirige a la página principal
+  const ejecutarBusqueda = () => {
+    if (busqueda) {
+      const productosFiltrados = productos.filter((producto) =>
+        producto.nombre && producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+      );
+      setSugerencias(productosFiltrados);
+    } else {
+      setSugerencias([]);
+    }
+  };
+  
+
   const cerrarSesion = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/"); // Redirige al home luego de cerrar sesión
-      })
-      .catch((error) => {
-        console.error("Error al cerrar sesión:", error);
-      });
+      .then(() => navigate("/"))
+      .catch((error) => console.error("Error al cerrar sesión:", error));
   };
 
-  // Función para cerrar el navbar si se hace clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       const navbar = document.getElementById("navbarNav");
       const toggler = document.querySelector(".navbar-toggler");
-
       if (
         navbar &&
         navbar.classList.contains("show") &&
@@ -72,11 +74,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         navbar.classList.remove("show");
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -95,7 +94,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
       if (currentScrollY > lastScrollY) {
         accumulatedScrollUp = 0;
         accumulatedScrollDown += currentScrollY - lastScrollY;
-
         if (accumulatedScrollDown >= thresholdDown) {
           setScrollingDown(true);
           setScrollingUp(false);
@@ -103,25 +101,23 @@ const Navbar = ({ busqueda, setBusqueda }) => {
       } else {
         accumulatedScrollDown = 0;
         accumulatedScrollUp += lastScrollY - currentScrollY;
-
         if (accumulatedScrollUp >= thresholdUpValue) {
           setScrollingUp(true);
           setScrollingDown(false);
         }
       }
-
       lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrollingDown, scrollingUp, thresholdUp, thresholdDown]);
+  }, []);
 
   return (
     <nav
-      className={`navbar sticky-top navbar-expand-lg navbar-dark bg-dark shadow${
-        scrollingDown ? " navbar-hidden" : ""
-      } ${scrollingUp ? " navbar-visible" : ""}`}
+      className={`navbar sticky-top navbar-expand-lg navbar-dark bg-dark shadow ${
+        scrollingDown ? "navbar-hidden" : ""
+      } ${scrollingUp ? "navbar-visible" : ""}`}
       style={{ top: scrollingDown ? `-${navbarHeight}px` : "0px" }}
     >
       <div className="container d-flex align-items-center justify-content-between">
@@ -134,46 +130,71 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         </Link>
 
         <div className="position-relative flex-grow-1">
-          <input
-            style={{ width: "92%" }}
-            type="text"
-            className="form-control"
-            placeholder="Que estas buscando?"
-            value={busqueda}
-            onChange={handleBusqueda}
-          />
-          {sugerencias.length > 0 && (
-            <ul
-              className="list-group position-absolute start-0 mt-1 shadow"
-              style={{ width: "92%", zIndex: 10 }}
+          <div className="input-group" style={{ width: "92%" }}>
+            <input
+              type="text"
+              className="form-control "
+              placeholder="¿Qué estás buscando?"
+              value={busqueda}
+              onChange={handleBusqueda}
+            />
+            <button
+              className="btn btn-outline-secondary border border-light"
+              type="button"
+              onClick={ejecutarBusqueda}
             >
-              {sugerencias.map((producto) => (
-                <li
-                  key={producto.id}
-                  className="list-group-item"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setBusqueda(producto.nombre);
-                    setSugerencias([]);
-                    navigate("/productos");
-                  }}
-                >
-                  {producto.nombre} - ${producto.precio}
-                </li>
-              ))}
-            </ul>
+              <FaSearch />
+            </button>
+          </div>
+
+          {busqueda && (
+            loading ? (
+              <div
+                className="position-absolute start-0 mt-1 shadow bg-light text-center py-2"
+                style={{ width: "92%", zIndex: 10 }}
+              >
+                Cargando productos...
+              </div>
+            ) : sugerencias.length > 0 ? (
+              <ul
+                className="list-group position-absolute start-0 shadow bg-dark p-lg-2 border border-light"
+                style={{ width: "92%", zIndex: 10 }}
+              >
+                {sugerencias.map((producto) => (
+                  <li
+                    key={producto.id}
+                    className="list-group-item text-white p-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setBusqueda("");
+                      setSugerencias([]);
+                      navigate(`/productos/${producto.categoria}/${producto.id}`);
+                    }}
+                  >
+                    {producto.nombre} - ${producto.precio}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div
+                className="position-absolute start-0 mt-0 shadow bg-dark text-center py-2 text-white border border-light rounded-2"
+                style={{ width: "92%", zIndex: 10 }}
+              >
+                No se encontraron resultados.
+              </div>
+
+            )
           )}
         </div>
 
-        <div className="d-flex d-lg-none align-items-center">
-          <div>
-            <Link to="/carrito" className="text-white">
-              <FaShoppingCart size={24} />
-            </Link>
-          </div>
 
+
+        <div className="d-flex d-lg-none align-items-center">
+          <Link to="/carrito" className="text-white me-2">
+            <FaShoppingCart size={24} />
+          </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler border border-light"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -193,32 +214,33 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
         <div className="collapse navbar-collapse ms-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
-          <li className="nav-item dropdown">
-            <Link 
-              className="nav-link dropdown-toggle" 
-              to="/productos" 
-              id="navbarDropdown" 
-              role="button" 
-              data-bs-toggle="dropdown" 
-              aria-expanded="false"
-              onClick={() =>
-                document.getElementById("navbarNav").classList.remove("show")
-              }
-            >
-              Categorías
-            </Link>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><Link className="dropdown-item" to="/productos/articulos-limpieza">Ofertas</Link></li>
-              <li><Link className="dropdown-item" to="/productos/articulos-limpieza">Bebidas</Link></li>
-              <li><Link className="dropdown-item" to="/productos/almacen">Almacén</Link></li>
-              <li><Link className="dropdown-item" to="/productos/bebidas">Lácteos</Link></li>
-              <li><Link className="dropdown-item" to="/productos/sandwiches">Sándwiches</Link></li>
-              <li><Link className="dropdown-item" to="/productos/snacks-salados">Cafetería</Link></li>
-              <li><Link className="dropdown-item" to="/productos/infusiones">Infusiones</Link></li>
-              <li><Link className="dropdown-item" to="/productos/articulos-varios">Limpieza</Link></li>
-              <li><Link className="dropdown-item" to="/productos/cafeteria">Otros</Link></li>
-            </ul>
-          </li> 
+            <li className="nav-item dropdown">
+              <Link
+                className="nav-link dropdown-toggle "
+                to="/productos"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                onClick={() =>
+                  document.getElementById("navbarNav").classList.remove("show")
+                }
+              >
+                Categorías
+              </Link>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><Link className="dropdown-item" to="/productos/ofertas">Ofertas</Link></li>
+                <li><Link className="dropdown-item" to="/productos/bebidas">Bebidas</Link></li>
+                <li><Link className="dropdown-item" to="/productos/almacen">Almacén</Link></li>
+                <li><Link className="dropdown-item" to="/productos/lacteos">Lácteos</Link></li>
+                <li><Link className="dropdown-item" to="/productos/sandwiches">Sándwiches</Link></li>
+                <li><Link className="dropdown-item" to="/productos/cafeteria">Cafetería</Link></li>
+                <li><Link className="dropdown-item" to="/productos/infusiones">Infusiones</Link></li>
+                <li><Link className="dropdown-item" to="/productos/limpieza">Limpieza</Link></li>
+                <li><Link className="dropdown-item" to="/productos/otros">Otros</Link></li>
+              </ul>
+            </li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/contacto" onClick={() =>
                 document.getElementById("navbarNav").classList.remove("show")
@@ -234,7 +256,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </Link>
             </li>
 
-            {/* Mostrar enlace Admin si el usuario es el administrador */}
             {user && user.email === adminEmail && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin" onClick={() =>
@@ -245,29 +266,27 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </li>
             )}
 
-            {user && (
-              <li className="nav-item">
-                <button className="nav-link btn" onClick={cerrarSesion}>
-                  Cerrar sesión
-                </button>
-              </li>
-            )}
-
-            {/* Usuario logueado o no */}
             {user ? (
-              <li className="nav-item align-items-center">
-                <Link className="nav-link d-flex align-items-center" to="/perfil" onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }>
-                  <img
-                    src={user.photoURL || "https://via.placeholder.com/40"}
-                    alt="Avatar"
-                    className="avatar-img me-2"
-                    style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                  />  
-                  {user.displayName || user.email}
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <button className="nav-link btn" onClick={cerrarSesion}>
+                    Cerrar sesión
+                  </button>
+                </li>
+                <li className="nav-item align-items-center">
+                  <Link className="nav-link d-flex align-items-center" to="/perfil" onClick={() =>
+                    document.getElementById("navbarNav").classList.remove("show")
+                  }>
+                    <img
+                      src={user.photoURL || "https://via.placeholder.com/40"}
+                      alt="Avatar"
+                      className="avatar-img me-2"
+                      style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                    />
+                    {user.displayName || user.email}
+                  </Link>
+                </li>
+              </>
             ) : (
               <li className="nav-item">
                 <Link className="nav-link" to="/login" onClick={() =>
