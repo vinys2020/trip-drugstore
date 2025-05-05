@@ -2,8 +2,8 @@
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 16px;
-    padding: 20px;
+    gap: 20px;
+    padding: 0px;
     -webkit-overflow-scrolling: touch;
   
     scrollbar-width: none; /* Firefox */
@@ -23,11 +23,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 410px;
     max-width: 230px;
+    margin-top: 8px;
   }
   
   .scroll-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
   }
   
   .scroll-card img {
@@ -55,6 +56,8 @@
     .scroll-card {
       min-width: 290px;  /* Reducir el tamaño mínimo */
       max-width: 290px;  /* Ajustar el máximo para que sea más pequeño */
+      margin-top: 0px;
+
     }
   }
   

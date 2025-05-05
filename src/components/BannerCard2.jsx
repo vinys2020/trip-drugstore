@@ -7,19 +7,21 @@ import promocioncell from "../assets/movilmascota.webp";
 
 const BannerCard = ({ altText, large }) => {
   return (
-    <div className={`andes-card banner-card andes-card--animated andes-card--flat andes-card--padding-16 ${large ? "banner-large" : ""}`}>
-      {/* Imagen de fondo para escritorio */}
-      <div
-        className="banner-image"
-        style={{ backgroundImage: `url(${promocion})` }}
-        alt={altText}
-      />
-      {/* Imagen para móviles */}
-      <img
-        src={promocioncell}
-        alt={altText}
-        className="mobile-banner-image"
-      />
+    <div className="container my-4">
+      <div className={`andes-card banner-card andes-card--animated andes-card--flat andes-card--padding-16 ${large ? "banner-large" : ""}`}>
+        {/* Imagen de fondo para escritorio */}
+        <div
+          className="banner-image"
+          style={{ backgroundImage: `url(${promocion})` }}
+          alt={altText}
+        />
+        {/* Imagen para móviles */}
+        <img
+          src={promocioncell}
+          alt={altText}
+          className="mobile-banner-image"
+        />
+      </div>
     </div>
   );
 };
