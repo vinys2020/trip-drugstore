@@ -133,7 +133,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           <div className="input-group" style={{ width: "92%" }}>
             <input
               type="text"
-              className="form-control "
+              className="form-control"
               placeholder="¿Qué estás buscando?"
               value={busqueda}
               onChange={handleBusqueda}

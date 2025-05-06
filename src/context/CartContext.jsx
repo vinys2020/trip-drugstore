@@ -57,6 +57,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+
   // Calcular el total a pagar con el descuento
   const calcularTotal = () => {
     let total = cart.reduce((acc, p) => acc + p.cantidad * parseFloat(p.precio), 0);
@@ -73,7 +74,6 @@ export const CartProvider = ({ children }) => {
         agregarAlCarrito,
         eliminarDelCarrito,
         disminuirCantidad,
-        vaciarCarrito,
         totalItems,
         totalPrecio: calcularTotal(),
         aplicarCupon,
@@ -82,6 +82,8 @@ export const CartProvider = ({ children }) => {
         discount,
         telefonoUsuario,
         setTelefonoUsuario,
+        vaciarCarrito // <-- Asegurate de incluir esto
+
 
       }}
     >

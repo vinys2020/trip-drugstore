@@ -52,6 +52,10 @@
   color: #fff; /* Texto blanco */
 }
 
+.navbar-nav .nav-link {
+  white-space: nowrap; /* Evita que los textos se dividan en varias líneas */
+}
+
 /* Estilo al pasar el mouse por los items */
 .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
   background-color: #f8c300; /* Fondo amarillo al pasar el mouse */
@@ -93,20 +97,7 @@
   }
 }
 
-@media (max-width: 991.98px) {
-  #navbarNav {
-    position: absolute;
-    top: 100%;
-    left: -8.2px;
-    width: 100%;
-    background-color: #212529; /* mismo color que tu navbar bg-dark */
-    z-index: 1000;
-  }
 
-  .navbar-collapse.show {
-    display: block !important;
-  }
-}
 
 @media (max-width: 868px) {
   .navbar .form-control {
@@ -135,3 +126,19 @@
   font-size: 16px;
   padding: 10px 15px;
 }
+
+.navbar-nav .nav-link {
+  white-space: nowrap; /* Evita que los textos se dividan en varias líneas */
+}
+
+/* Barra de búsqueda */
+.navbar .form-control {
+  width: 100%; /* Asegura que ocupe el ancho disponible */
+  max-width: 400px; /* Limita el tamaño máximo para evitar que se expanda demasiado */
+  font-size: 14px;
+  padding: 8px 12px; /* Asegura un padding adecuado */
+  transition: width 0.3s ease-in-out; /* Transición suave para el cambio de tamaño */
+}
+
+
+

@@ -146,12 +146,12 @@ const Home = () => {
           <div className="container">
             <h3 className="text-center mt-md-4 mt-3 text-white mb-3">Recomendados para vos 🛍️</h3>
             <article className="row">
-  <div className="container">
-    <div className="col-12 mb-3">
-      <HorizontalScroll />
-    </div>
-  </div>
-</article>
+              <div className="container">
+                <div className="col-12 mb-3">
+                  <HorizontalScroll />
+                </div>
+              </div>
+            </article>
 
 
             {/* Sección Especial Bebidas */}
@@ -205,39 +205,22 @@ const Home = () => {
 
 
         <section id="servicios" className="mx-lg-5">
-          <div className="container-fluid w-100 mt-3">
-            <h3 className="text-start text-white mb-0">
-              Ofertas Del Dia 💣
-              <a
-                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
-                target="_self"
-                style={{ color: "#3483fa" }}
-              >
-                Ver más
-              </a>
-            </h3>
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
             <HorizontalCarousel />
           </div>
+        </div>
 
         </section>
 
         <section id="servicios" className="py-md-4 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4 mt-2">
-            <h3 className="text-start text-white mb-0">
-            Snacks y Dulces 🍫
-              <a
-                className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-                href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
-                target="_self"
-                style={{ color: "#3483fa" }}
-              >
-                Ver más
-              </a>
-            </h3>
-            <HorizontalCarousel />
+            <div className="container px-0">
+              <HorizontalCarousel />
+            </div>          
           </div>
-
         </section>
 
         <div className="mt-3 mb-5 mx-lg-5 mx-2">
@@ -282,10 +265,9 @@ const Home = () => {
         </div>
 
         <section id="servicios" className="mt-md-0 mb-4 ms-md-3 mx-md-2 mb-5 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4 p-0">
+        <div className="container-fluid w-100 mt-md-4 mt-0">
 
-            <VerticalCarousel />
-
+          <VerticalCarousel />
 
           </div>
 
