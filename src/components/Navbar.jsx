@@ -212,7 +212,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           </Link>
         </div>
 
-        <div className="collapse navbar-collapse ms-2" id="navbarNav" ref={navbarRef}>
+        <div className="collapse navbar-collapse ms-lg-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
             <li className="nav-item dropdown">
               <Link
