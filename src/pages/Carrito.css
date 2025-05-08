@@ -1,0 +1,182 @@
+.carrito-pagina {
+    max-width: 1100px;
+    margin: auto;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 100px;
+  }
+  
+  .carrito-titulo {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+  }
+  
+  .vacio {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #aaa;
+  }
+  
+  .carrito-contenido {
+    display: flex;
+    flex-direction: row;
+    gap: 0rem;
+  }
+  
+  .carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #333;
+    border-radius: 12px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+  }
+  
+  .carrito-item:hover {
+    transform: scale(1.01);
+  }
+  
+  .item-img {
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .item-detalles {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .item-detalles h5 {
+    font-size: 1.3rem;
+    margin: 0;
+  }
+  
+  .item-detalles p {
+    font-size: 1rem;
+    margin: 0.25rem 0;
+  }
+  
+  .cantidad-controles {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .cantidad-controles button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .cantidad-controles button:hover:not(:disabled) {
+    background-color: #666;
+  }
+  
+  .cantidad-controles button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .eliminar-btn {
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  
+  .eliminar-btn:hover {
+    background-color: #e74c3c;
+  }
+  
+  .paso {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin-inline: auto;
+    width: 100%;
+  }
+  
+  .paso input,
+  .paso select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    width: 100%;
+  }
+  
+  .paso button {
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .paso button:hover {
+    background-color: #218838;
+  }
+  
+  @media (max-width: 768px) {
+    .carrito-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .carrito-contenido {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+    .carrito-pagina {
+      padding: 50px 20px;
+    }
+
+
+  
+    .item-img {
+      width: 100%;
+      max-width: 250px;
+    }
+  
+    .item-detalles {
+      align-items: center;
+    }
+  
+    .cantidad-controles {
+      justify-content: center;
+    }
+  
+    .eliminar-btn {
+      align-self: center;
+    }
+  }
+  

@@ -9,12 +9,13 @@ import { signOut } from "firebase/auth";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import useProductos from "../hooks/useProductos"; // Hook que trae todos los productos activos
+import FloatingCart from "../components/FloatingCart";
 import "./navbar.css";
 
 const adminEmail = "faculez07@gmail.com";
 
 const Navbar = ({ busqueda, setBusqueda }) => {
-  const { agregarAlCarrito } = useContext(CartContext);
+  const { agregarAlCarrito, totalItems, totalPrecio } = useContext(CartContext); // Consumir CartContext
   const { productos, loading } = useProductos();
   const [sugerencias, setSugerencias] = useState([]);
   const [scrollingUp, setScrollingUp] = useState(false);
@@ -189,28 +190,33 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
 
 
-        <div className="d-flex d-lg-none align-items-center">
-          <Link to="/carrito" className="text-white me-2">
+        <div className="d-flex align-items-center order-lg-3 ms-md-2">
+          <Link to="/carrito" className="text-white me-2 position-relative">
             <FaShoppingCart size={24} />
+            {totalItems > 0 && (
+              <span
+                className="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger"
+                style={{ padding: "0.2rem 0.5rem", fontSize: "0.8rem" }}
+              >
+                {totalItems}
+              </span>
+            )}
           </Link>
-          <button
-            className="navbar-toggler border border-light"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <FloatingCart />
         </div>
 
-        <div className="d-none d-lg-flex align-items-center order-lg-3 ms-md-2">
-          <Link to="/carrito" className="text-white me-2">
-            <FaShoppingCart size={24} />
-          </Link>
-        </div>
+        <button
+          className="navbar-toggler border border-light"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
 
         <div className="collapse navbar-collapse ms-lg-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
