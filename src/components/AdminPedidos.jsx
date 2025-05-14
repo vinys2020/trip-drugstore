@@ -39,38 +39,38 @@ const AdminPedidos = () => {
     <section className="container-fluid">
       <div className="row justify-content-center">
         <article className="col-12 col-md-10 col-lg-8">
-          <div className="admin-pedidos-card shadow-lg rounded-4 p-4">
-            <h2 className="admin-pedidos-title mb-4 text-center text-dark">📦 Gestiona tus Pedidos</h2>
+          <div className="adminpedidos-card shadow-lg rounded-4 p-4">
+            <h2 className="adminpedidos-title mb-4 text-center text-dark">📦 Gestiona tus Pedidos</h2>
             {pedidos.length === 0 ? (
               <p>No hay pedidos registrados.</p>
             ) : (
-              <ul className="list-group">
+              <ul className="adminpedidos-list-group">
                 {pedidos.map((pedido) => (
-                  <li key={pedido.id} className="admin-pedidos-item list-group-item p-3 mb-3 rounded-3">
+                  <li key={pedido.id} className="adminpedidos-item p-3 mb-3 rounded-3">
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
-                        <strong className="admin-pedidos-id text-dark">Pedido ID: {pedido.id}</strong>
-                        <div className="admin-pedidos-status text-muted small">Estado: {pedido.estado}</div>
-                        <div className="admin-pedidos-payment-method text-muted small">Método de pago: {pedido.metodopago}</div>
+                        <strong className="adminpedidos-id text-dark">Pedido ID: {pedido.id}</strong>
+                        <div className="adminpedidos-status text-muted small">Estado: {pedido.estado}</div>
+                        <div className="adminpedidos-payment-method text-muted small">Método de pago: {pedido.metodopago}</div>
                       </div>
-                      <span className="admin-pedidos-total text-success fw-bold">Total: ${pedido.totalpedido}</span>
+                      <span className="adminpedidos-total text-success fw-bold">Total: ${pedido.totalpedido}</span>
                     </div>
 
                     <div className="mt-2 d-flex gap-2 flex-column flex-md-row">
                       <button
-                        className="admin-pedidos-btn-preparacion btn btn-outline-warning btn-sm w-100 w-md-auto text-white"
+                        className="adminpedidos-btn-preparacion btn btn-warning btn-sm w-100 w-md-auto text-white"
                         onClick={() => cambiarEstado(pedido.id, "En preparación")}
                       >
                         En preparación
                       </button>
                       <button
-                        className="admin-pedidos-btn-listo btn btn-outline-success btn-sm w-100 w-md-auto text-white"
+                        className="adminpedidos-btn-listo btn btn-success btn-sm w-100 w-md-auto text-white"
                         onClick={() => cambiarEstado(pedido.id, "Listo")}
                       >
                         Listo
                       </button>
                       <button
-                        className="admin-pedidos-btn-detalles btn btn-info btn-sm w-100 w-md-auto text-white"
+                        className="adminpedidos-btn-detalles btn btn-info btn-sm w-100 w-md-auto text-white"
                         onClick={() => handleVerDetalle(pedido.id)}
                       >
                         {pedidoSeleccionado === pedido.id ? "Cerrar detalles" : "Ver detalles"}
@@ -78,7 +78,7 @@ const AdminPedidos = () => {
                     </div>
 
                     {pedidoSeleccionado === pedido.id && (
-                      <div className="admin-pedidos-details mt-3">
+                      <div className="adminpedidos-details mt-3">
                         <h5 className="text-dark">Detalles del Pedido:</h5>
                         <p className="text-dark"><strong>Nombre:</strong> {pedido.cliente?.nombre}</p>
                         <p className="text-dark"><strong>Email:</strong> {pedido.cliente?.email}</p>
@@ -90,9 +90,9 @@ const AdminPedidos = () => {
                         <p className="text-dark"><strong>Método de pago:</strong> {pedido.metodopago}</p>
 
                         <h6 className="text-black">Productos:</h6>
-                        <ul className="admin-pedidos-productos list-group">
+                        <ul className="adminpedidos-productos">
                           {pedido.productos?.map((producto, index) => (
-                            <li key={index} className="admin-pedidos-producto list-group-item text-black">
+                            <li key={index} className="adminpedidos-producto text-black">
                               <strong>{producto.nombre}</strong>
                               <div>Cantidad: {producto.cantidad}</div>
                               <div>Precio unitario: ${producto.preciounitario}</div>

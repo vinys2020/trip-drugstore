@@ -1,6 +1,71 @@
-/* Desactiva el hover predeterminado de Bootstrap en list-group-item */
-.list-group-item:hover {
-    background-color: #f0f0f0 !important; /* Gris claro suave */
-    color: inherit !important;
+/* adminpedidos.css */
+
+.adminpedidos-card {
+    background-color: #fff;
   }
   
+  .adminpedidos-title {
+    font-weight: bold;
+  }
+  
+  .adminpedidos-list-group {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .adminpedidos-item {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: background-color 0.3s ease;
+  }
+  
+  .adminpedidos-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .adminpedidos-id {
+    font-size: 1rem;
+  }
+  
+  .adminpedidos-status,
+  .adminpedidos-payment-method {
+    font-size: 0.85rem;
+  }
+  
+  .adminpedidos-total {
+    font-size: 1.1rem;
+  }
+  
+  .adminpedidos-btn-preparacion,
+  .adminpedidos-btn-listo,
+  .adminpedidos-btn-detalles {
+    font-weight: 500;
+  }
+  
+  .adminpedidos-details {
+    background-color: #fafafa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .adminpedidos-productos {
+    padding-left: 0;
+  }
+  
+  .adminpedidos-producto {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  
+
+  .list-group-item:hover {
+    background-color: #f0f0f0 !important; /* Gris claro suave */
+    color: inherit !important;
+    box-shadow: none !important;
+    transform: none !important;
+    cursor: default !important;
+  }

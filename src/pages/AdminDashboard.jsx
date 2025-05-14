@@ -230,7 +230,7 @@ const AdminDashboard = () => {
 
 
               {/* Tabla de productos */}
-              <div className="table-responsive">
+              <div className="table-responsive mb-5">
 
                 <table className="table table-bordered table-striped">
                   <thead>
