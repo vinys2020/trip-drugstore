@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Productos from "./pages/Productos";
@@ -9,10 +9,16 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
+import Perfil from "./pages/Perfil";
+
+
 import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./App.css"; // Asegurate de tener este import para que cargue los estilos
+import "./App.css"; // Asegúrate de tener este import para que cargue los estilos
+
+// Asegúrate de que la ruta del AuthContext sea correcta
+import { AuthProvider } from "./context/AuthContext"; // Ajusta esta ruta según tu estructura
 
 // Componente que maneja Navbar y Footer según la ruta
 const AppContent = () => {
@@ -31,10 +37,9 @@ const AppContent = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/ayuda" element={<Ayuda />} />
-
+          <Route path="/perfil" element={<Perfil />} />
         </Routes>
         <FloatingCart />
-
       </div>
 
       {location.pathname !== "/login" && <Footer />}
@@ -44,13 +49,15 @@ const AppContent = () => {
 
 const App = () => {
   return (
-    <CartProvider>
-      <Router>
-        <div className="app-root-wrapper">
-          <AppContent />
-        </div>
-      </Router>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="app-root-wrapper">
+            <AppContent />
+          </div>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 };
 

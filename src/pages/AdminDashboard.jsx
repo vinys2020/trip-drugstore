@@ -19,6 +19,8 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+import AdminPedidos from "../components/AdminPedidos";
+
 
 
 const data = [
@@ -52,6 +54,7 @@ const AdminDashboard = () => {
     const categoriasList = data.docs.map((doc) => doc.id);
     setCategorias(categoriasList);
   };
+
 
   const obtenerProductos = async () => {
     const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
@@ -149,10 +152,10 @@ const AdminDashboard = () => {
         {/* CRUD de productos */}
         <section className="row mt-5">
           <article className="col-12 mt-lg-5">
-            <h2 className="text-center mb-4 text-white">Gestiona tus Productos</h2>
-
             <div className="cards shadow-sm rounded-4">
-
+            <h2 className="text-center mb-4 text-black">
+              <i className="bi bi-clipboard-check me-2"></i>Gestiona tus Productos
+            </h2>
               <div className="d-flex justify-content-center">
                 <div className="w-100">
                   <div className="card  rounded-4 p-4 bg-primary">
@@ -325,30 +328,16 @@ const AdminDashboard = () => {
         </section>
 
 
-        {/* Últimos pedidos */}
-        <section className="row mb-5 mt-5">
-          <article className="col-12 mt-5">
-            <h2 className="text-center mb-4 text-white ">Detalle de los Pedidos</h2>
-
-            <div className="card card-orders-list p-4 shadow-sm rounded-4 scale">
-              <h4 className="mb-4">🛒 Últimos pedidos</h4>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item d-flex justify-content-between">
-                  <span>#00123 - Zapatillas Nike</span>
-                  <span>$120</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                  <span>#00124 - Remera Adidas</span>
-                  <span>$45</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between">
-                  <span>#00125 - Pantalón Puma</span>
-                  <span>$60</span>
-                </li>
-              </ul>
+        <section className="row py-5 mb-5">
+          <article className="col-12">
+            {/* Aquí va la Sección de Pedidos */}
+            <div className="admin-pedidos-section mt-5">
+              <AdminPedidos />
             </div>
           </article>
         </section>
+
+
 
         {/* Gráfico de pedidos por día */}
         <section className="row py-5 mb-5">

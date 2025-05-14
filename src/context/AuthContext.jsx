@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../config/firebase"; // Actualiza esta línea con la ruta correcta
 
 export const AuthContext = createContext();
 
