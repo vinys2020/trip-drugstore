@@ -164,7 +164,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 {sugerencias.map((producto) => (
                   <li
                     key={producto.id}
-                    className="list-group-item text-white p-2"
+                    className="list-group-item text-white p-2 bg-dark border-0 "
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setBusqueda("");
@@ -172,7 +172,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                       navigate(`/productos/${producto.categoria}/${producto.id}`);
                     }}
                   >
-                    {producto.nombre} - ${producto.precio}
+                    {producto.nombre}
                   </li>
                 ))}
               </ul>
@@ -280,14 +280,14 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                   </button>
                 </li>
                 <li className="nav-item align-items-center">
-                  <Link className="nav-link d-flex align-items-center" to="/perfil" onClick={() =>
+                  <Link className="nav-link d-flex align-items" to="/perfil" onClick={() =>
                     document.getElementById("navbarNav").classList.remove("show")
                   }>
                     <img
                       src={user.photoURL || "https://via.placeholder.com/40"}
                       alt="Avatar"
-                      className="avatar-img me-2"
-                      style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                      className="avatar-img me-2 mb-0 align-items-top"
+                      style={{ width: "28px", height: "28px", borderRadius: "50%" }}
                     />
                     {user.displayName || user.email}
                   </Link>
