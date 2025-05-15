@@ -69,3 +69,19 @@
     transform: none !important;
     cursor: default !important;
   }
+
+  .estado-pendiente {
+    background-color: #fcebea; /* Rojo suave */
+    border-left: 5px solid #e3342f; /* Rojo vibrante */
+  }
+  
+  .estado-preparacion {
+    background-color: #fff9db; /* Naranja muy suave */
+    border-left: 5px solid #f59e0b; /* Naranja sólido */
+  }
+  
+  .estado-listo {
+    background-color: #c2f8ed; /* Verde agua claro */
+    border-left: 5px solid #10b981; /* Verde esmeralda */
+  }
+  

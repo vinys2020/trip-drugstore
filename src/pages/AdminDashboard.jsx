@@ -328,7 +328,7 @@ const AdminDashboard = () => {
         </section>
 
 
-        <section className="row py-5 mb-5">
+        <section className="row mb-5">
           <article className="col-12">
             {/* Aquí va la Sección de Pedidos */}
             <div className="admin-pedidos-section mt-5">

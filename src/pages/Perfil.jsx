@@ -75,7 +75,7 @@ const Perfil = () => {
                       <div className="text-muted small">Estado: {pedido.estado}</div>
                       <div className="text-muted small">Método de pago: {pedido.metodopago}</div>
                     </div>
-                    <span className="text-primary fw-bold">Total: ${pedido.totalpedido}</span>
+                    <span className="text-success fw-bold">Total: ${pedido.totalpedido}</span>
                   </div>
 
                   {/* Botón para ver detalles */}

@@ -36,10 +36,10 @@ const HorizontalCarousel = () => {
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-        Ofertas Del Dia 💣
+        Articulos de Limpieza
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="https://listado.mercadolibre.com.ar/supermercado/_Container_carrousel-14-04-25#DEAL_ID=MLA1226392-1&S=landingHubsupermercadolibre&V=13&T=CarouselDynamic-home&L=VER-MAS&deal_print_id=55673f90-1a49-11f0-8170-23d8a207be82&c_tracking_id=55673f90-1a49-11f0-8170-23d8a207be82"
+          href="#"
           target="_self"
           style={{ color: "#3483fa" }}
         >

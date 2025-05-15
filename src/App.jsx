@@ -10,6 +10,8 @@ import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
 import Perfil from "./pages/Perfil";
+import InstallModal from "./components/InstallModal";
+
 
 
 import FloatingCart from "./components/FloatingCart";
@@ -41,6 +43,8 @@ const AppContent = () => {
         </Routes>
         <FloatingCart />
       </div>
+      <InstallModal />
+
 
       {location.pathname !== "/login" && <Footer />}
     </>

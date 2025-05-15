@@ -11,17 +11,23 @@ import "./adminpedidos.css";
 const AdminPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
+  const [filtro, setFiltro] = useState("Todos");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const pedidosPorPagina = 5;
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Pedidosid"), (snapshot) => {
-      const pedidosData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const pedidosData = snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .sort((a, b) => b.fecha?.toDate() - a.fecha?.toDate());
+
       setPedidos(pedidosData);
     });
 
-    return () => unsubscribe(); // Cleanup al desmontar
+    return () => unsubscribe();
   }, []);
 
   const handleVerDetalle = (pedidoId) => {
@@ -30,10 +36,37 @@ const AdminPedidos = () => {
 
   const cambiarEstado = async (pedidoId, nuevoEstado) => {
     const pedidoRef = doc(db, "Pedidosid", pedidoId);
-    await updateDoc(pedidoRef, {
-      estado: nuevoEstado,
-    });
+    await updateDoc(pedidoRef, { estado: nuevoEstado });
   };
+
+  const filtrarPedidos = () => {
+    return pedidos.filter((pedido) =>
+      filtro === "Todos"
+        ? true
+        : (pedido.estado || "").toLowerCase().trim() === filtro.toLowerCase().trim()
+    );
+  };
+  
+
+  const pedidosFiltrados = filtrarPedidos();
+  const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
+  const indiceInicio = (paginaActual - 1) * pedidosPorPagina;
+  const pedidosPaginados = pedidosFiltrados.slice(indiceInicio, indiceInicio + pedidosPorPagina);
+
+  const cambiarPagina = (nuevaPagina) => {
+    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
+      setPaginaActual(nuevaPagina);
+    }
+  };
+
+  const obtenerClaseEstado = (estado) => {
+    const estadoNormalizado = (estado || "").toLowerCase().trim();
+    if (estadoNormalizado === "pendiente") return "estado-pendiente";
+    if (estadoNormalizado === "en preparación") return "estado-preparacion";
+    if (estadoNormalizado === "listo") return "estado-listo";
+    return "";
+  };
+  
 
   return (
     <section className="container-fluid">
@@ -41,12 +74,29 @@ const AdminPedidos = () => {
         <article className="col-12 col-md-10 col-lg-8">
           <div className="adminpedidos-card shadow-lg rounded-4 p-4">
             <h2 className="adminpedidos-title mb-4 text-center text-dark">📦 Gestiona tus Pedidos</h2>
-            {pedidos.length === 0 ? (
-              <p>No hay pedidos registrados.</p>
+
+            <div className="mb-3 d-flex gap-2 flex-wrap justify-content-center">
+              <select
+                className="form-select w-auto"
+                value={filtro}
+                onChange={(e) => {
+                  setFiltro(e.target.value);
+                  setPaginaActual(1);
+                }}
+              >
+                <option value="Todos">Todos</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En preparación">En preparación</option>
+                <option value="Listo">Listo</option>
+              </select>
+            </div>
+
+            {pedidosPaginados.length === 0 ? (
+              <p>No hay pedidos para mostrar.</p>
             ) : (
               <ul className="adminpedidos-list-group">
-                {pedidos.map((pedido) => (
-                  <li key={pedido.id} className="adminpedidos-item p-3 mb-3 rounded-3">
+                {pedidosPaginados.map((pedido) => (
+                  <li key={pedido.id} className={`adminpedidos-item p-3 mb-3 rounded-3 ${obtenerClaseEstado(pedido.estado)}`}>
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <strong className="adminpedidos-id text-dark">Pedido ID: {pedido.id}</strong>
@@ -105,6 +155,27 @@ const AdminPedidos = () => {
                   </li>
                 ))}
               </ul>
+            )}
+
+            {/* Paginación */}
+            {totalPaginas > 1 && (
+              <div className="d-flex justify-content-center mt-4 gap-2">
+                <button
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => cambiarPagina(paginaActual - 1)}
+                  disabled={paginaActual === 1}
+                >
+                  Anterior
+                </button>
+                <span className="align-self-center">Página {paginaActual} de {totalPaginas}</span>
+                <button
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => cambiarPagina(paginaActual + 1)}
+                  disabled={paginaActual === totalPaginas}
+                >
+                  Siguiente
+                </button>
+              </div>
             )}
           </div>
         </article>
