@@ -10,20 +10,20 @@ export default defineConfig({
       includeAssets: ['vite.svg'], // u otros archivos estáticos si los tenés
       manifest: {
         name: 'Trip Drugstore',
-        short_name: 'Trip Store',
+        short_name: 'Trip Drugstore',
         description: 'Pedidos en línea desde trip',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#000000',   
+        background_color: '#000000', 
         display: 'standalone',
         start_url: '/',
         icons: [
           {
-            src: 'icons/logotrippc.png',
+            src: 'icons/triplogoapp.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'icons/logotrippc.png',
+            src: 'icons/triplogoapp.png',
             sizes: '512x512',
             type: 'image/png'
           }
