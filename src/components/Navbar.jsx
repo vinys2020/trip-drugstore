@@ -158,13 +158,13 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </div>
             ) : sugerencias.length > 0 ? (
               <ul
-                className="list-group position-absolute start-0 shadow bg-dark p-lg-2 border border-light"
+                className="list-group position-absolute start-0 shadow bg-dark px-0 border border-light px-1 py-1"
                 style={{ width: "92%", zIndex: 10 }}
               >
                 {sugerencias.map((producto) => (
                   <li
                     key={producto.id}
-                    className="list-group-item text-white p-2 bg-dark border-0 "
+                    className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setBusqueda("");
@@ -172,7 +172,14 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                       navigate(`/productos/${producto.categoria}/${producto.id}`);
                     }}
                   >
-                    {producto.nombre}
+                    <div className="d-flex align-items-center">
+                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "24px" }}>
+                        <FaSearch size={16} />
+                      </div>
+                      <div className="flex-grow-1">
+                        {producto.nombre}
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
