@@ -164,7 +164,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 {sugerencias.map((producto) => (
                   <li
                     key={producto.id}
-                    className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0"
+                    className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0 mb-lg-1 "
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setBusqueda("");
@@ -173,8 +173,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                     }}
                   >
                     <div className="d-flex align-items-center">
-                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "24px" }}>
-                        <FaSearch size={16} />
+                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "18px"}}>
+                        <FaSearch size={23} />
                       </div>
                       <div className="flex-grow-1">
                         {producto.nombre}
