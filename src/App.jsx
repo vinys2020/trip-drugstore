@@ -11,6 +11,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Ayuda from "./pages/Ayuda";
 import Perfil from "./pages/Perfil";
 import InstallModal from "./components/InstallModal";
+import CategoriasPage from "./pages/CategoriasPage";
+
 
 
 
@@ -35,6 +37,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos busqueda={busqueda} />} />
+          <Route path="/categorias/:categoriaId" element={<CategoriasPage />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />

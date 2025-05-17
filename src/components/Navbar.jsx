@@ -10,6 +10,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import useProductos from "../hooks/useProductos"; // Hook que trae todos los productos activos
 import FloatingCart from "../components/FloatingCart";
+import CategoriasDropdown from "../components/CategoriasDropdown";
+
 import "./navbar.css";
 
 const adminEmail = "faculez07@gmail.com";
@@ -227,32 +229,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
         <div className="collapse navbar-collapse ms-lg-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle "
-                to="/productos"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }
-              >
-                Categorías
-              </Link>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item" to="/productos/ofertas">Ofertas</Link></li>
-                <li><Link className="dropdown-item" to="/productos/bebidas">Bebidas</Link></li>
-                <li><Link className="dropdown-item" to="/productos/almacen">Almacén</Link></li>
-                <li><Link className="dropdown-item" to="/productos/lacteos">Lácteos</Link></li>
-                <li><Link className="dropdown-item" to="/productos/sandwiches">Sándwiches</Link></li>
-                <li><Link className="dropdown-item" to="/productos/cafeteria">Cafetería</Link></li>
-                <li><Link className="dropdown-item" to="/productos/infusiones">Infusiones</Link></li>
-                <li><Link className="dropdown-item" to="/productos/limpieza">Limpieza</Link></li>
-                <li><Link className="dropdown-item" to="/productos/otros">Otros</Link></li>
-              </ul>
-            </li>
+
+           <CategoriasDropdown />
+
 
             <li className="nav-item">
               <Link className="nav-link" to="/contacto" onClick={() =>
