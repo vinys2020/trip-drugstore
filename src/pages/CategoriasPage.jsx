@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { CartContext } from "../context/CartContext";
+import FiltrosResponsive from "../components/FiltrosResponsive";
+
 import "./CategoriasPage.css";
 
 export default function CategoriasPage() {
@@ -14,13 +16,12 @@ export default function CategoriasPage() {
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
 
-  // Filtros nuevos
   const [filtroStock, setFiltroStock] = useState("todos");
   const [ordenPrecio, setOrdenPrecio] = useState("ninguno");
   const [precioMin, setPrecioMin] = useState("");
   const [precioMax, setPrecioMax] = useState("");
   const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
-  const [filtroAlcohol, setFiltroAlcohol] = useState("todos"); // Nuevo filtro
+  const [filtroAlcohol, setFiltroAlcohol] = useState("todos");
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -33,6 +34,9 @@ export default function CategoriasPage() {
     };
     fetchCategorias();
   }, []);
+
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
+  const toggleMostrarFiltros = () => setMostrarFiltros(!mostrarFiltros);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -55,7 +59,6 @@ export default function CategoriasPage() {
 
   const marcasDisponibles = Array.from(new Set(productos.map((p) => p.marca))).sort();
 
-  // Aplicar filtros reales
   let productosFiltrados = productos
     .filter((producto) =>
       producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -76,11 +79,10 @@ export default function CategoriasPage() {
       return true;
     })
     .filter((producto) => {
-        if (filtroAlcohol === "con") return producto.categoria.toLowerCase().trim() !== "sin alcohol";
-        if (filtroAlcohol === "sin") return producto.categoria.toLowerCase().trim() === "sin alcohol";
-        return true;
-      });
-      
+      if (filtroAlcohol === "con") return producto.categoria.toLowerCase().trim() !== "sin alcohol";
+      if (filtroAlcohol === "sin") return producto.categoria.toLowerCase().trim() === "sin alcohol";
+      return true;
+    });
 
   if (ordenPrecio === "menor") {
     productosFiltrados.sort((a, b) => a.precio - b.precio);
@@ -99,93 +101,88 @@ export default function CategoriasPage() {
   return (
     <div className="categoriaspage-container">
       {/* Sidebar */}
-      <nav className="categoriaspage-sidebar mt-3" aria-label="Filtros y categorías">
+      <FiltrosResponsive mostrar={mostrarFiltros} toggleMostrar={toggleMostrarFiltros}>
+        <nav className="categoriaspage-sidebar mt-3" aria-label="Filtros y categorías">
+          <h2 className="categoriaspage-sidebar-title mt-4">Categorías</h2>
+          <ul className="categoriaspage-sidebar-list">
+            {categorias.map((cat) => (
+              <li
+                key={cat.id}
+                className={`categoriaspage-sidebar-item ${
+                  cat.id === categoriaId ? "active" : ""
+                }`}
+                onClick={() => handleCategoriaClick(cat.id)}
+                tabIndex={0}
+                role="button"
+                onKeyDown={(e) => e.key === "Enter" && handleCategoriaClick(cat.id)}
+                aria-current={cat.id === categoriaId ? "true" : "false"}
+              >
+                {cat.nombre}
+              </li>
+            ))}
+          </ul>
 
-        <h2 className="categoriaspage-sidebar-title mt-4">Categorías</h2>
-        <ul className="categoriaspage-sidebar-list">
-          {categorias.map((cat) => (
-            <li
-              key={cat.id}
-              className={`categoriaspage-sidebar-item ${
-                cat.id === categoriaId ? "active" : ""
-              }`}
-              onClick={() => handleCategoriaClick(cat.id)}
-              tabIndex={0}
-              role="button"
-              onKeyDown={(e) => e.key === "Enter" && handleCategoriaClick(cat.id)}
-              aria-current={cat.id === categoriaId ? "true" : "false"}
-            >
-              {cat.nombre}
-            </li>
-          ))}
-        </ul>
+          <h2 className="categoriaspage-sidebar-title mt-4">Filtros</h2>
 
-        <h2 className="categoriaspage-sidebar-title mt-4">Filtros</h2>
+          <label className="form-label mt-2">Precio:</label>
+          <div className="d-flex gap-2 mb-2">
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Mín"
+              value={precioMin}
+              onChange={(e) => setPrecioMin(e.target.value)}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Máx"
+              value={precioMax}
+              onChange={(e) => setPrecioMax(e.target.value)}
+            />
+          </div>
 
-        {/* Filtro por precio */}
-        <label className="form-label mt-2">Precio:</label>
-        <div className="d-flex gap-2 mb-2">
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Mín"
-            value={precioMin}
-            onChange={(e) => setPrecioMin(e.target.value)}
-          />
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Máx"
-            value={precioMax}
-            onChange={(e) => setPrecioMax(e.target.value)}
-          />
-        </div>
-
-        {/* Filtro por marca */}
-        <label className="form-label">Marca:</label>
-        <select
-          className="form-select mb-3"
-          value={marcaSeleccionada}
-          onChange={(e) => setMarcaSeleccionada(e.target.value)}
-        >
-          <option value="">Todas</option>
-          {marcasDisponibles.map((marca) => (
-            <option key={marca} value={marca}>
-              {marca}
-            </option>
-          ))}
-        </select>
-
-        {/* Filtro por alcohol: solo visible si estamos en la categoría "bebidas" */}
-        {categoriaSeleccionada?.nombre?.toLowerCase().trim() === "bebidas" && (
-        <>
-            <label className="form-label">Contenido de alcohol:</label>
-            <select
+          <label className="form-label">Marca:</label>
+          <select
             className="form-select mb-3"
-            value={filtroAlcohol}
-            onChange={(e) => setFiltroAlcohol(e.target.value)}
-            >
-            <option value="todos">Todos</option>
-            <option value="con">Con Alcohol</option>
-            <option value="sin">Sin Alcohol</option>
-            </select>
-        </>
-        )}
+            value={marcaSeleccionada}
+            onChange={(e) => setMarcaSeleccionada(e.target.value)}
+          >
+            <option value="">Todas</option>
+            {marcasDisponibles.map((marca) => (
+              <option key={marca} value={marca}>
+                {marca}
+              </option>
+            ))}
+          </select>
 
+          {categoriaSeleccionada?.nombre?.toLowerCase().trim() === "bebidas" && (
+            <>
+              <label className="form-label">Contenido de alcohol:</label>
+              <select
+                className="form-select mb-3"
+                value={filtroAlcohol}
+                onChange={(e) => setFiltroAlcohol(e.target.value)}
+              >
+                <option value="todos">Todos</option>
+                <option value="con">Con Alcohol</option>
+                <option value="sin">Sin Alcohol</option>
+              </select>
+            </>
+          )}
 
-        {/* Orden por precio */}
-        <label className="form-label">Ordenar por:</label>
-        <select
-          className="form-select mb-4"
-          value={ordenPrecio}
-          onChange={(e) => setOrdenPrecio(e.target.value)}
-        >
-          <option value="ninguno">Relevancia</option>
-          <option value="menor">Precio: Menor a mayor</option>
-          <option value="mayor">Precio: Mayor a menor</option>
-        </select>
-
-      </nav>
+          <label className="form-label">Ordenar por:</label>
+          <select
+            className="form-select mb-4"
+            value={ordenPrecio}
+            onChange={(e) => setOrdenPrecio(e.target.value)}
+          >
+            <option value="ninguno">Relevancia</option>
+            <option value="menor">Precio: Menor a mayor</option>
+            <option value="mayor">Precio: Mayor a menor</option>
+          </select>
+        </nav>
+      </FiltrosResponsive>
 
       {/* Contenido principal */}
       <main className="categoriaspage-main mt-3" style={{ flex: "3" }}>
@@ -193,21 +190,50 @@ export default function CategoriasPage() {
           {categoriaSeleccionada ? categoriaSeleccionada.nombre : "Productos"}
         </h1>
 
-        <input
-          type="text"
-          className="categoriaspage-search form-control"
-          placeholder="Buscar producto por nombre o marca..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-          aria-label="Buscar producto"
-        />
+        <div className="d-flex gap-2 flex-wrap mb-3">
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Buscar producto por nombre o marca..."
+    value={busqueda}
+    onChange={(e) => setBusqueda(e.target.value)}
+    aria-label="Buscar producto"
+    style={{ minWidth: "200px", flex: 1 }}
+  />
+  {/* Solo mostrar el botón "Filtrar" en pantallas chicas */}
+  <button
+    className="btn btn-outline-secondary d-flex align-items-center d-md-none"
+    onClick={toggleMostrarFiltros}
+  >
+    <span>Filtrar</span>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="ms-2"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 4H21M6 12H18M10 20H14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+
+
+
 
         <div className="categoriaspage-productos row">
           {productosFiltrados.length > 0 ? (
             productosFiltrados.map((producto) => (
               <article
                 key={producto.id}
-                className="categoriaspage-product col-sm-6 col-md-4 col-lg-3 mb-4"
+                className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
               >
                 <div className="card h-100 shadow-sm">
                   {producto.imagen ? (

@@ -58,14 +58,14 @@ const InstallModal = () => {
   if (!showBanner) return null;
 
   return (
-    <div style={styles.bannerWrapper}>
+    <div className="p-1" style={styles.bannerWrapper}>
       <div style={styles.contentWrapper}>
         <img
           src={logo}
           alt="Logo"
           style={styles.logo}
-          width={130}
-          height={75}
+          width={140}
+          height={57}
           decoding="async"
         />
 
@@ -104,7 +104,7 @@ const InstallModal = () => {
 const styles = {
   bannerWrapper: {
     position: "fixed",
-    bottom: 20,
+    bottom: 6,
     left: "50%",
     transform: "translateX(-50%)",
     backgroundColor: "#222",
@@ -117,7 +117,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "stretch",
     maxWidth: 360,
-    width: "90%",
+    width: "100%",
     fontFamily: "'Arial', sans-serif",
   },
   contentWrapper: {
@@ -127,7 +127,7 @@ const styles = {
   logo: {
     flexShrink: 0,
     borderRadius: 8,
-    marginRight: 12,
+    marginRight: 0,
   },
   textColumn: {
     flex: 1,
@@ -135,13 +135,14 @@ const styles = {
     flexDirection: "column",
   },
   title: {
-    fontSize: 14,
-    marginBottom: 8,
+    fontSize: 15,
+    marginBottom: 5,
     lineHeight: 1.3,
   },
   buttonRow: {
     display: "flex",
     gap: "8px",
+    marginBottom: 3,
   },
 };
 
