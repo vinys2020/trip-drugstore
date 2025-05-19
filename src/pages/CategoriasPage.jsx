@@ -191,42 +191,38 @@ export default function CategoriasPage() {
         </h1>
 
         <div className="d-flex gap-2 flex-wrap mb-3">
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Buscar producto por nombre o marca..."
-    value={busqueda}
-    onChange={(e) => setBusqueda(e.target.value)}
-    aria-label="Buscar producto"
-    style={{ minWidth: "200px", flex: 1 }}
-  />
-  {/* Solo mostrar el botón "Filtrar" en pantallas chicas */}
-  <button
-    className="btn btn-outline-secondary d-flex align-items-center d-md-none"
-    onClick={toggleMostrarFiltros}
-  >
-    <span>Filtrar</span>
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      className="ms-2"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M3 4H21M6 12H18M10 20H14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      ></path>
-    </svg>
-  </button>
-</div>
-
-
-
-
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar producto por nombre o marca..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            aria-label="Buscar producto"
+            style={{ minWidth: "200px", flex: 1 }}
+          />
+          {/* Solo mostrar el botón "Filtrar" en pantallas chicas */}
+          <button
+            className="btn btn-outline-secondary d-flex align-items-center d-md-none"
+            onClick={toggleMostrarFiltros}
+          >
+            <span>Filtrar</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="ms-2"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 4H21M6 12H18M10 20H14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              ></path>
+            </svg>
+          </button>
+        </div>
 
         <div className="categoriaspage-productos row">
           {productosFiltrados.length > 0 ? (

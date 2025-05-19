@@ -111,7 +111,7 @@
 
 .categoriaspage-img {
   object-fit: cover;
-  height: 100%;
+  height: 240px;
   width: 100%;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
@@ -159,6 +159,14 @@
   .categoriaspage-container {
     flex-direction: column;
     max-width: 100%;
+  }
+
+  .categoriaspage-img {
+    height: 154px;
+    width: auto;
+  }
+  .categoriaspage-product .card {
+    padding: 10px;
   }
 
   .categoriaspage-sidebar {

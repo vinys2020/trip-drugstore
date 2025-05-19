@@ -20,6 +20,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import AdminPedidos from "../components/AdminPedidos";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../config/firebase";
+
 
 
 
@@ -54,6 +57,27 @@ const AdminDashboard = () => {
     const categoriasList = data.docs.map((doc) => doc.id);
     setCategorias(categoriasList);
   };
+
+  const subirImagenCloudinary = async (file, productoId) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ml_default");  // tu preset aquí
+  
+    try {
+      const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        // Actualizamos en Firebase la URL de la imagen del producto
+        await actualizarProducto(productoId, "imagen", data.secure_url);
+      }
+    } catch (error) {
+      console.error("Error al subir imagen a Cloudinary:", error);
+    }
+  };
+  
 
 
   const obtenerProductos = async () => {
@@ -271,14 +295,26 @@ const AdminDashboard = () => {
                             />
                           </td>
                           <td>
-                            <input
-                              className="form-control"
-                              value={producto.imagen}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "imagen", e.target.value)
-                              }
-                            />
+                            <div className="d-flex align-items-center gap-2">
+                              <input
+                                className="form-control"
+                                value={producto.imagen}
+                                onChange={(e) =>
+                                  actualizarProducto(producto.id, "imagen", e.target.value)
+                                }
+                              />
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  if (e.target.files && e.target.files[0]) {
+                                    subirImagenCloudinary(e.target.files[0], producto.id);
+                                  }
+                                }}
+                              />
+                            </div>
                           </td>
+
                           <td>
                             <input
                               className="form-control"
