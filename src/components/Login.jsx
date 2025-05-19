@@ -195,7 +195,7 @@ const Login = () => {
 
 
             {/* Tarjeta puntos */}
-            <div className="justify-content-center p-4 mb-0 mt-3 mt-lg-5">
+            <div className="justify-content-center p-4 mb-0 mt-5 mt-lg-5">
               <div className="col-12 container">
                 <div className="info-card text-white bg-primary p-5 rounded-4 shadow-sm text-center">
                   <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
@@ -206,12 +206,12 @@ const Login = () => {
             </div>
 
 
-            <div className="container mb-0 mt-0 mt-lg-4 p-lg-5 p-1">
+            <div className="container mb-0 mt-5 mt-lg-4 p-lg-5 p-1">
               <PreguntasFrecuentes />
             </div>
 
-            <div className="container mb-5 p-lg-5 p-1 mt-lg-0">
-              <h2 className="text-center fw-bold mb-4">Nuestros clientes opinan</h2>
+            <div className="container mb-5 p-lg-5 p-1 mt-lg-0 mt-5">
+              <h2 className="text-center fw-bold mb-5">Nuestros clientes opinan</h2>
               <div className="row g-4 justify-content-center">
                 {/* Reseña 1 */}
                 <div className="col-12 col-md-4">
