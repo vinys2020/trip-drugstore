@@ -33,7 +33,7 @@ const PreguntasFrecuentes = () => {
     ];
   
     return (
-      <div className="faq-section bg-light rounded-2 shadow-sm py-5 px-3">
+      <div className="faq-section bg-light rounded-2 shadow-sm  py-5 px-3">
         <h3 className="text-center mb-4">Preguntas Frecuentes</h3>
         <div className="accordion" id="faqAccordion">
           {faqs.map((faq, index) => (

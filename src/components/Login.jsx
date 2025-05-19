@@ -17,6 +17,8 @@ import celuchicaweb from "../assets/celuchica.webp";
 import comprando from "../assets/comprando.webp";
 import PreguntasFrecuentes from "../components/PreguntasFrecuentes";
 import logo from "../assets/logotrippc.png";
+import Footer from "../components/Footer";
+
 
 
 
@@ -193,7 +195,7 @@ const Login = () => {
 
 
             {/* Tarjeta puntos */}
-            <div className="justify-content-center p-4 mb-0 mt-3">
+            <div className="justify-content-center p-4 mb-0 mt-3 mt-lg-5">
               <div className="col-12 container">
                 <div className="info-card text-white bg-primary p-5 rounded-4 shadow-sm text-center">
                   <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
@@ -204,9 +206,46 @@ const Login = () => {
             </div>
 
 
-            <div className="container mb-5 mt-0 p-lg-5 p-1">
+            <div className="container mb-0 mt-0 mt-lg-4 p-lg-5 p-1">
               <PreguntasFrecuentes />
             </div>
+
+            <div className="container mb-5 p-lg-5 p-1 mt-lg-0">
+              <h2 className="text-center fw-bold mb-4">Nuestros clientes opinan</h2>
+              <div className="row g-4 justify-content-center">
+                {/* Reseña 1 */}
+                <div className="col-12 col-md-4">
+                  <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
+                    <h5 className="fw-bold text-center text-primary">María L.</h5>
+                    <p className="fst-italic text-center">"Tiene muchas ofertas y un montón de productos"</p>
+                  </div>
+                </div>
+
+                {/* Reseña 2 */}
+                <div className="col-12 col-md-4">
+                  <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
+                    <h5 className="fw-bold text-center text-primary">Ariel Quinteros</h5>
+                    <p className="fst-italic text-center">"Muy fácil de usar y con precios muy buenos. Me encanta poder hacer todo desde el celu."</p>
+                  </div>
+                </div>
+
+                {/* Reseña 3 */}
+                <div className="col-12 col-md-4">
+                  <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
+                    <h5 className="fw-bold text-center text-primary">Juan Velázquez</h5>
+                    <p className="fst-italic text-center">"¡Súper útil! puedo hacer mis pedidos cuando quiero"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
 
             
 
@@ -255,7 +294,12 @@ const Login = () => {
           )}
         </div>
       </div>
+
     </section>
+
+    
+
+
   );
 };
 

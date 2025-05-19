@@ -17,11 +17,14 @@
   .adminpedidos-item {
     background-color: #fff;
     border: 1px solid #dee2e6;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
   }
   
   .adminpedidos-item:hover {
-    background-color: #f0f0f0;
+    background-color: #e0f0ff;
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
   
   .adminpedidos-id {
