@@ -20,8 +20,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import AdminPedidos from "../components/AdminPedidos";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../config/firebase";
+
 
 
 
@@ -49,6 +48,7 @@ const AdminDashboard = () => {
     imagen: "",
     marca: "",
     stock: "",
+
   });
 
   const obtenerCategorias = async () => {
@@ -94,16 +94,32 @@ const AdminDashboard = () => {
 
   const crearProducto = async () => {
     if (!nuevoProducto.nombre || !nuevoProducto.precio) return;
+  
     const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
-    await addDoc(productosRef, {
+  
+    // Armar el objeto base del producto
+    const productoAGuardar = {
       ...nuevoProducto,
       precio: Number(nuevoProducto.precio),
       stock: Number(nuevoProducto.stock),
       activo: true,
-    });
-    setNuevoProducto({ nombre: "", precio: "", imagen: "", marca: "", stock: "" });
+    };
+  
+    // Si la categoría es Bebidasid, agregar contenido
+    if (categoriaSeleccionada === "Bebidasid") {
+      // Si nuevoProducto.contenido no existe, asignar "sin alcohol" por defecto
+      productoAGuardar.contenido = nuevoProducto.contenido || "sin alcohol";
+    } else {
+      // Para evitar que el campo contenido se guarde en otras categorías
+      delete productoAGuardar.contenido;
+    }
+  
+    await addDoc(productosRef, productoAGuardar);
+  
+    setNuevoProducto({ nombre: "", precio: "", imagen: "", marca: "", stock: "", contenido: "" });
     obtenerProductos();
   };
+  
 
   const actualizarProducto = async (id, campo, valor) => {
     const productoDoc = doc(db, `Categoriasid/${categoriaSeleccionada}/Productosid`, id);
@@ -213,22 +229,107 @@ const AdminDashboard = () => {
                   <i className="bi bi-plus-circle"></i>
                   Agregar producto
                 </h4>
+                
 
-                {["nombre", "precio", "imagen", "marca", "stock"].map((campo) => (
-                  <div className="col-md-4" key={campo}>
-                    <input
-                      className="form-control"
-                      placeholder={campo}
-                      value={nuevoProducto[campo]}
-                      onChange={(e) =>
-                        setNuevoProducto({
-                          ...nuevoProducto,
-                          [campo]: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                ))}
+                {["nombre", "precio", "marca", "stock"].map((campo) => (
+  <div className="col-md-4" key={campo}>
+    <input
+      className="form-control"
+      placeholder={campo}
+      value={nuevoProducto[campo]}
+      onChange={(e) =>
+        setNuevoProducto({
+          ...nuevoProducto,
+          [campo]: e.target.value,
+        })
+      }
+    />
+  </div>
+))}
+
+{categoriaSeleccionada === "Bebidasid" && (
+  <div className="col-md-4">
+    <select
+      className="form-control"
+      value={nuevoProducto.contenido || "sin alcohol"}
+      onChange={(e) =>
+        setNuevoProducto({
+          ...nuevoProducto,
+          contenido: e.target.value,
+        })
+      }
+      onBlur={() => {
+        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
+        if (!nuevoProducto.contenido) {
+          setNuevoProducto({
+            ...nuevoProducto,
+            contenido: "sin alcohol",
+          });
+        }
+      }}
+    >
+      <option value="sin alcohol">Sin alcohol</option>
+      <option value="con alcohol">Con alcohol</option>
+    </select>
+  </div>
+)}
+
+
+
+
+{/* Campo especial para imagen con input file */}
+<div className="col-md-4">
+  {/* Campo de URL manual */}
+  <div className="mb-2">
+    <input
+      className="form-control"
+      placeholder="Imagen URL"
+      value={nuevoProducto.imagen}
+      onChange={(e) =>
+        setNuevoProducto({
+          ...nuevoProducto,
+          imagen: e.target.value,
+        })
+      }
+    />
+  </div>
+
+  
+
+  {/* Selector de archivo */}
+  <div>
+    <input
+      type="file"
+      accept="image/*"
+      className="form-control "
+      onChange={async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const formData = new FormData();
+          formData.append("file", e.target.files[0]);
+          formData.append("upload_preset", "ml_default"); // reemplazar si usás otro preset
+
+          try {
+            const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
+              method: "POST",
+              body: formData,
+            });
+            const data = await res.json();
+            if (data.secure_url) {
+              setNuevoProducto((prev) => ({
+                ...prev,
+                imagen: data.secure_url,
+              }));
+            }
+          } catch (err) {
+            console.error("Error al subir imagen:", err);
+          }
+        }
+      }}
+    />
+  </div>
+</div>
+
+
                 <div className="col-md-4 d-grid">
                   <button onClick={crearProducto} className="btn btn-success">
                     ➕ Agregar
@@ -256,7 +357,7 @@ const AdminDashboard = () => {
               {/* Tabla de productos */}
               <div className="table-responsive mb-5">
 
-                <table className="table table-bordered table-striped">
+                <table className="table table-bordered table-striped mb-5">
                   <thead>
                     <tr>
                       <th>Nombre</th>
@@ -264,99 +365,167 @@ const AdminDashboard = () => {
                       <th>Imagen</th>
                       <th>Marca</th>
                       <th>Stock</th>
+                      {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
                       <th>Estado</th>
                       <th>Acciones</th>
+                      
+
+                      
                     </tr>
                   </thead>
                   <tbody>
-                    {productos
-                      .filter((producto) =>
-                        producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
-                      )
-                      .map((producto) => (
-                        <tr key={producto.id}>
-                          <td>
-                            <input
-                              className="form-control"
-                              value={producto.nombre}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "nombre", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              className="form-control"
-                              type="number"
-                              value={producto.precio}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "precio", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <div className="d-flex align-items-center gap-2">
-                              <input
-                                className="form-control"
-                                value={producto.imagen}
-                                onChange={(e) =>
-                                  actualizarProducto(producto.id, "imagen", e.target.value)
-                                }
-                              />
-                              <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => {
-                                  if (e.target.files && e.target.files[0]) {
-                                    subirImagenCloudinary(e.target.files[0], producto.id);
-                                  }
-                                }}
-                              />
-                            </div>
-                          </td>
+  {productos
+    .filter((producto) =>
+      producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    )
+    .map((producto) => (
+      <tr key={producto.id}>
+        <td>
+          <input
+            className="form-control"
+            value={producto.nombre}
+            onChange={(e) =>
+              actualizarProducto(producto.id, "nombre", e.target.value)
+            }
+          />
+        </td>
+        <td>
+          <input
+            className="form-control"
+            type="number"
+            value={producto.precio}
+            onChange={(e) =>
+              actualizarProducto(producto.id, "precio", e.target.value)
+            }
+          />
+        </td>
+        <td style={{ display: "flex",  alignItems: "center" }}>
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Imagen URL"
+    value={producto.imagen || ""}
+    onChange={(e) =>
+      actualizarProducto(producto.id, "imagen", e.target.value)
+    }
+    style={{ flex: 1 }}
+  />
 
-                          <td>
-                            <input
-                              className="form-control"
-                              value={producto.marca}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "marca", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              className="form-control"
-                              type="number"
-                              value={producto.stock}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "stock", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td className="text-center">
-                            <button
-                              className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"
-                                }`}
-                              onClick={() =>
-                                actualizarProducto(producto.id, "activo", !producto.activo)
-                              }
-                            >
-                              {producto.activo ? "Activo" : "Inactivo"}
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => eliminarProducto(producto.id)}
-                            >
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+  <label
+    htmlFor={`file-upload-${producto.id}`}
+    style={{
+      padding: "6px 12px",
+      backgroundColor: "#007bff",
+      color: "white",
+      borderRadius: "4px",
+      cursor: "pointer",
+      userSelect: "none",
+    }}
+  >
+    Seleccionar archivo
+  </label>
+  <input
+    id={`file-upload-${producto.id}`}
+    type="file"
+    accept="image/*"
+    style={{ display: "none" }}
+    onChange={async (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+        formData.append("upload_preset", "ml_default");
 
-                  </tbody>
+        try {
+          const res = await fetch(
+            "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          const data = await res.json();
+          if (data.secure_url) {
+            actualizarProducto(producto.id, "imagen", data.secure_url);
+          }
+        } catch (err) {
+          console.error("Error al subir imagen:", err);
+        }
+      }
+    }}
+  />
+</td>
+
+
+
+        <td>
+          <input
+            className="form-control"
+            value={producto.marca}
+            onChange={(e) =>
+              actualizarProducto(producto.id, "marca", e.target.value)
+            }
+          />
+        </td>
+        <td>
+          <input
+            className="form-control"
+            type="number"
+            value={producto.stock}
+            onChange={(e) =>
+              actualizarProducto(producto.id, "stock", e.target.value)
+            }
+          />
+        </td>
+
+        {categoriaSeleccionada === "Bebidasid" && (
+  <td>
+    <select
+      className="form-control"
+      value={producto.contenido || "sin alcohol"}
+      onChange={(e) =>
+        actualizarProducto(producto.id, "contenido", e.target.value)
+      }
+      onBlur={() => {
+        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
+        if (!producto.contenido) {
+          actualizarProducto(producto.id, "contenido", "sin alcohol");
+        }
+      }}
+    >
+      <option value="sin alcohol">Sin alcohol</option>
+      <option value="con alcohol">Con alcohol</option>
+    </select>
+  </td>
+)}
+
+
+
+
+
+
+        <td className="text-center">
+          <button
+            className={`btn btn-sm ${
+              producto.activo ? "btn-success" : "btn-secondary"
+            }`}
+            onClick={() =>
+              actualizarProducto(producto.id, "activo", !producto.activo)
+            }
+          >
+            {producto.activo ? "Activo" : "Inactivo"}
+          </button>
+        </td>
+        <td>
+          <button
+            className="btn btn-danger"
+            onClick={() => eliminarProducto(producto.id)}
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    ))}
+</tbody>
                 </table>
               </div>
             </div>

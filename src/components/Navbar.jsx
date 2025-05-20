@@ -171,7 +171,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                     onClick={() => {
                       setBusqueda("");
                       setSugerencias([]);
-                      navigate(`/productos/${producto.categoria}/${producto.id}`);
+                      navigate(`/categorias/${producto.categoria}?search=${encodeURIComponent(producto.nombre)}`);
                     }}
                   >
                     <div className="d-flex align-items-center">

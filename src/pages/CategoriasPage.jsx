@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { collection, getDocs, query } from "firebase/firestore";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { CartContext } from "../context/CartContext";
 import FiltrosResponsive from "../components/FiltrosResponsive";
+
+
 
 import "./CategoriasPage.css";
 
@@ -12,9 +14,14 @@ export default function CategoriasPage() {
   const navigate = useNavigate();
   const { agregarAlCarrito } = useContext(CartContext);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+  
+
+
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
+  const [busqueda, setBusqueda] = useState(searchQuery);
 
   const [filtroStock, setFiltroStock] = useState("todos");
   const [ordenPrecio, setOrdenPrecio] = useState("ninguno");
@@ -23,9 +30,18 @@ export default function CategoriasPage() {
   const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
   const [filtroAlcohol, setFiltroAlcohol] = useState("todos");
 
+
+
+  useEffect(() => {
+    setBusqueda(searchQuery);
+  }, [searchQuery]);
+  
+  
+
   useEffect(() => {
     const fetchCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "Categoriasid"));
+      const q = query(collection(db, "Categoriasid"), orderBy("orden"));
+      const snapshot = await getDocs(q);
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         nombre: doc.data().nombre || doc.id,
@@ -34,6 +50,7 @@ export default function CategoriasPage() {
     };
     fetchCategorias();
   }, []);
+  
 
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const toggleMostrarFiltros = () => setMostrarFiltros(!mostrarFiltros);
@@ -54,8 +71,13 @@ export default function CategoriasPage() {
       setProductos(productosData);
     };
     fetchProductos();
-    setBusqueda("");
+  
+    // Elimina estas dos líneas que borran la búsqueda y parámetros
+    // setBusqueda("");
+    // setSearchParams({});
+  
   }, [categoriaId]);
+  
 
   const marcasDisponibles = Array.from(new Set(productos.map((p) => p.marca))).sort();
 
@@ -79,8 +101,8 @@ export default function CategoriasPage() {
       return true;
     })
     .filter((producto) => {
-      if (filtroAlcohol === "con") return producto.categoria.toLowerCase().trim() !== "sin alcohol";
-      if (filtroAlcohol === "sin") return producto.categoria.toLowerCase().trim() === "sin alcohol";
+      if (filtroAlcohol === "con") return producto.contenido.toLowerCase().trim() !== "sin alcohol";
+      if (filtroAlcohol === "sin") return producto.contenido.toLowerCase().trim() === "sin alcohol";
       return true;
     });
 
@@ -191,15 +213,24 @@ export default function CategoriasPage() {
         </h1>
 
         <div className="d-flex gap-2 flex-wrap mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar producto por nombre o marca..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            aria-label="Buscar producto"
-            style={{ minWidth: "200px", flex: 1 }}
-          />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Buscar producto por nombre o marca..."
+          value={busqueda}
+          onChange={(e) => {
+            const val = e.target.value;
+            setBusqueda(val);
+            if (val) {
+              setSearchParams({ search: val });
+            } else {
+              setSearchParams({});
+            }
+          }}
+          aria-label="Buscar producto"
+          style={{ minWidth: "200px", flex: 1 }}
+        />
+
           {/* Solo mostrar el botón "Filtrar" en pantallas chicas */}
           <button
             className="btn btn-outline-secondary d-flex align-items-center d-md-none"

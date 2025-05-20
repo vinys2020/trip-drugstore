@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { db, auth } from "../config/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import HorizontalCarrito from "../components/HorizontalCarrito"; // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalCarrito from "../components/HorizontalCarrito";
 import "./Carrito.css";
 
 const Carrito = () => {
@@ -35,7 +35,10 @@ const Carrito = () => {
   }, [telefonoUsuario]);
 
   const registrarPedido = async () => {
-    if (!usuario) return alert("Iniciá sesión para hacer un pedido.");
+    if (!usuario) {
+      alert("Iniciá sesión para hacer un pedido.");
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -74,101 +77,247 @@ const Carrito = () => {
   };
 
   return (
-<section className="container py-4 carrito-pagina">
-    <h2 className="mb-4 text-center text-white">Tu Carrito de Compras</h2>
-      <p className="text-white text-center mb-5">
-        Aquí puedes revisar los productos que agregaste, ajustar cantidades, elegir cómo pagar y confirmar tu pedido.
-      </p>
-  {cart.length === 0 ? (
-    <p className="vacio text-white text-center">Tu carrito está vacío.</p>
-  ) : (
-    <section className="carrito-contenido row ">
-      {cart.map((producto, i) => (
-        <article key={i} className="col-12 col-md-6 col-lg-4">
-          <div className="carrito-item text-white border rounded p-3 bg-dark h-100 d-flex flex-column">
-            <img src={producto.imagen} alt={producto.nombre} className="item-img mb-2 img-fluid rounded" />
-            <div className="item-detalles flex-grow-1">
-              <h5>{producto.nombre}</h5>
-              <p>
-                ${producto.precio} x {producto.cantidad} = ${producto.precio * producto.cantidad}
-              </p>
-              <div className="cantidad-controles d-flex align-items-center gap-2 mb-2">
-                <button className="btn btn-outline-light btn-sm" onClick={() => disminuirCantidad(producto.id)} disabled={producto.cantidad <= 1}>-</button>
-                <span>{producto.cantidad}</span>
-                <button className="btn btn-outline-light btn-sm" onClick={() => agregarAlCarrito(producto)}>+</button>
-              </div>
-              <button className="btn btn-danger btn-sm" onClick={() => eliminarDelCarrito(producto.id)}>
-                Eliminar
-              </button>
+    <section className="carrito-pagina">
+      <div className="container p-2">
+        <h2 className="carrito-titulo">Tu Carrito de Compras</h2>
+        <p className="text-center mb-5">
+          Revisa tus productos, ajusta cantidades, elige método de pago y confirma tu pedido.
+        </p>
+
+        {cart.length === 0 ? (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+      padding: "3rem 1rem",
+    }}
+  >
+    <img
+      src="https://res.cloudinary.com/dcggcw8df/image/upload/v1747783241/fzkloulqcyljutykpzmv.png"
+      alt="Carrito vacío"
+      style={{ width: "250px", height: "250px" }}
+    />
+    <h2 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>
+      Tu carrito está vacío
+    </h2>
+    <p style={{ fontSize: "1rem", color: "grey", marginBottom: "1rem" }}>
+      Agregá productos para comenzar tu compra.
+    </p>
+    <a
+      href="/categorias"
+      style={{
+        padding: "0.5rem 1rem",
+        backgroundColor: "#3483fa",
+        color: "white",
+        borderRadius: "6px",
+        textDecoration: "none",
+        fontWeight: "bold",
+      }}
+    >
+      Ver productos
+    </a>
+  </div>
+) : (
+
+          <>
+            <div className="carrito-contenido">
+              {cart.map((producto, i) => (
+                <article key={i} className="carrito-item">
+                  <img
+                    src={producto.imagen}
+                    alt={producto.nombre}
+                    className="item-img"
+                  />
+                  <div className="item-detalles">
+                    <h5>{producto.nombre}</h5>
+                    <p>
+                      ${producto.precio} x {producto.cantidad} = $
+                      {(producto.precio * producto.cantidad).toFixed(2)}
+                    </p>
+
+                    <div className="cantidad-controles">
+                      <button
+                        onClick={() => disminuirCantidad(producto.id)}
+                        disabled={producto.cantidad <= 1}
+                        aria-label="Disminuir cantidad"
+                      >
+                        −
+                      </button>
+                      <span>{producto.cantidad}</span>
+                      <button
+                        onClick={() => agregarAlCarrito(producto)}
+                        aria-label="Aumentar cantidad"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      className="eliminar-btn"
+                      onClick={() => eliminarDelCarrito(producto.id)}
+                      aria-label="Eliminar producto"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </article>
+              ))}
             </div>
+
+            {/* Indicador de pasos */}
+            <div className="steps-indicator">
+              <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
+              <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
+              <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
+              <div className={`step-line ${step >= 3 ? "active" : ""}`}></div>
+              <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
+            </div>
+
+            {/* PASOS */}
+            {step === 1 && (
+              <div className="telefono-container mt-4">
+                <label htmlFor="telefono" className="form-label">
+                  Número de Teléfono
+                </label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  placeholder="Tu número de teléfono"
+                  value={telefonoUsuario}
+                  onChange={(e) => setTelefonoUsuario(e.target.value)}
+                  className="form-control form-control-lg"
+                />
+                <button
+                  onClick={() => {
+                    if (!telefonoUsuario.trim()) {
+                      alert("El número de teléfono es obligatorio.");
+                      return;
+                    }
+                    setStep(2);
+                  }}
+                  className="btn btn-primary mt-3 align-self-center"
+                  >
+                  Confirmar Teléfono
+                </button>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="metodo-pago-container mt-4">
+                <label htmlFor="metodoPago" className="form-label">
+                  Selecciona un Método de Pago
+                </label>
+                <select
+                  id="metodoPago"
+                  value={metodoPago}
+                  onChange={(e) => setMetodoPago(e.target.value)}
+                  className="form-select form-select-lg"
+                >
+                  <option value="">Elige un método</option>
+                  <option value="tarjeta">Tarjeta</option>
+                  <option value="transferencia">Transferencia</option>
+                  <option value="efectivo">Efectivo</option>
+                </select>
+                <button
+                  onClick={() => {
+                    if (!metodoPago) {
+                      alert("Debes seleccionar un método de pago.");
+                      return;
+                    }
+                    setStep(3);
+                  }}
+                  className="btn btn-success btn-lg w-100 mt-3"
+                >
+                  Confirmar Método de Pago
+                </button>
+              </div>
+            )}
+
+{step === 3 && (
+  <>
+    <div className="order-summary p-3 border rounded bg-light text-dark">
+      <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
+
+      {cart.map((producto, i) => (
+        <div
+          key={i}
+          className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+        >
+          <div>
+            <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
           </div>
-        </article>
-      ))}
-
-      <article className="col-12 mt-0">
-        {step === 1 && (
-          <div className="paso d-flex flex-column align-items-center">
-            <input
-              type="tel"
-              className="form-control mb-2 w-100 w-md-50"
-              placeholder="Tu número de teléfono"
-              value={telefonoUsuario}
-              onChange={(e) => setTelefonoUsuario(e.target.value)}
-            />
-            <button className="btn btn-primary" onClick={() => telefonoUsuario ? setStep(2) : alert("Teléfono requerido")}>
-              Confirmar Teléfono
-            </button>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div className="paso d-flex flex-column align-items-center">
-            <select className="form-select mb-2 w-100 w-md-50" value={metodoPago} onChange={(e) => setMetodoPago(e.target.value)}>
-              <option value="">Selecciona método de pago</option>
-              <option value="efectivo">Efectivo</option>
-              <option value="transferencia">Transferencia</option>
-              <option value="tarjeta">Tarjeta</option>
-            </select>
-            <button className="btn btn-primary" onClick={() => metodoPago ? setStep(3) : alert("Seleccioná un método")}>
-              Confirmar Método
-            </button>
-          </div>
-        )}
-
-        {step === 3 && (
-          <div className="text-white bg-secondary p-3 rounded mt-3">
-            <h5>Resumen:</h5>
-            {cart.map((p, i) => (
-              <p key={i}>{p.nombre} x {p.cantidad} = ${p.precio * p.cantidad}</p>
-            ))}
-            <p>Total: ${totalPrecio}</p>
-            {discount > 0 && <p>Descuento aplicado: {discount}%</p>}
-            <button className="btn btn-success mt-2" onClick={registrarPedido} disabled={isLoading}>
-              {isLoading ? "Procesando..." : "Confirmar Pedido"}
-            </button>
-          </div>
-        )}
-      </article>
-    </section>
-    
-  )}
-
-<section id="servicios" className=" mt-5">
-        <div className="container-fluid w-100 mt-3">
-
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalCarrito />
+          <div>
+            <span className="fw-semibold">
+              ${(producto.precio * producto.cantidad).toFixed(2)}
+            </span>
           </div>
         </div>
+      ))}
 
+      <hr className="my-3" />
+
+      <div className="discount-applied d-flex justify-content-between align-items-center text-danger pb-2 border-bottom">
+        <span>Descuento por Puntos:</span>
+        <span>$0</span>
+      </div>
+
+      {discount > 0 && (
+        <>
+          <hr className="my-3" />
+          <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+            <span>Descuento %:</span>
+            <span>{discount}%</span>
+          </div>
+        </>
+      )}
+
+      <hr className="my-3" />
+
+      <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold">
+        <span>Total:</span>
+        <span>${totalPrecio.toFixed(2)}</span>
+      </div>
+    </div>
+
+    <button
+      className="btn btn-primary mt-3 w-100"
+      onClick={registrarPedido}
+      disabled={isLoading}
+    >
+      {isLoading ? "Procesando..." : "Ir a Pagar"}
+    </button>
+
+    <button
+      className="btn btn-danger mt-3 w-100"
+      onClick={() => {
+        if (
+          window.confirm(
+            "¿Estás seguro que querés vaciar el carrito? Se eliminarán todos los productos."
+          )
+        ) {
+          vaciarCarrito();
+          setStep(1);
+        }
+      }}
+    >
+      Vaciar carrito
+    </button>
+  </>
+)}
+
+          </>
+        )}
+
+        <section id="servicios" className="mt-5">
+          <div className="container-fluid px-0">
+            <HorizontalCarrito />
+          </div>
         </section>
-
-
-</section>
-
-
-
+      </div>
+    </section>
   );
 };
 

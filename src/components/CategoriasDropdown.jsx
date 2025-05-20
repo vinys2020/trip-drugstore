@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export default function CategoriasDropdown() {
@@ -8,7 +8,8 @@ export default function CategoriasDropdown() {
 
   useEffect(() => {
     const fetchCategorias = async () => {
-      const snapshot = await getDocs(collection(db, "Categoriasid"));
+      const q = query(collection(db, "Categoriasid"), orderBy("orden"));
+      const snapshot = await getDocs(q);
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         nombre: doc.data().nombre || doc.id,

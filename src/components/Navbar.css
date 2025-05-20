@@ -40,6 +40,7 @@
   top: 100%; /* Aparece justo debajo del elemento de la lista */
   left: 0;
   right: 0;
+  width: 200px;
 }
 
 /* Mostrar el menú cuando el mouse pasa por encima del item */

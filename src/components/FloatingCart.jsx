@@ -87,6 +87,8 @@ const FloatingCart = () => {
     }
   };
 
+  
+
   const handleTelefonoChange = (e) => {
     setTelefonoUsuario(e.target.value);
   };
@@ -128,99 +130,194 @@ const FloatingCart = () => {
           </div>
 
           <div className="cart-modal-body">
-            {cart.length === 0 ? (
-              <p>Tu carrito está vacío.</p>
-            ) : (
-              cart.map((producto, i) => (
-                <div key={i} className="cart-item">
-                  <img src={producto.imagen} alt={producto.nombre} />
-                  <div className="cart-item-details">
-                    <h6>{producto.nombre}</h6>
-                    <p>
-                      ${producto.precio} x {producto.cantidad} = ${producto.precio * producto.cantidad}
-                    </p>
-                    <div className="cart-item-quantity">
-                      <button
-                        onClick={() => disminuirCantidad(producto.id)}
-                        disabled={producto.cantidad <= 1}
-                        className="quantity-btn"
-                      >
-                        -
-                      </button>
-                      <span>{producto.cantidad}</span>
-                      <button
-                        onClick={() => agregarAlCarrito(producto)}
-                        className="quantity-btn"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <button
-                      className="remove-item"
-                      onClick={() => eliminarDelCarrito(producto.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
+          {cart.length === 0 ? (
+  <div className="empty-cart-container">
+    <img
+      src="https://res.cloudinary.com/dcggcw8df/image/upload/v1747783241/fzkloulqcyljutykpzmv.png"
+      alt="Carrito vacío"
+      className="empty-cart-image"
+      style={{ width: "100px", height: "100px" }}
+    />
+    <h2 className="empty-cart-title">Tu carrito está vacío</h2>
+    <p className="empty-cart-text">Agregá productos para comenzar tu compra.</p>
+    <a href="/categorias/Ofertasid" className="empty-cart-button">
+      Ver productos
+    </a>
+  </div>
+) : (
+  cart.map((producto, i) => (
+    <div key={i} className="cart-item">
+      <img src={producto.imagen} alt={producto.nombre} />
+      <div className="cart-item-details">
+        <h6>{producto.nombre}</h6>
+        <p>
+          ${producto.precio} x {producto.cantidad} = $
+          {producto.precio * producto.cantidad}
+        </p>
+        <div className="cart-item-quantity">
+          <button
+            onClick={() => disminuirCantidad(producto.id)}
+            disabled={producto.cantidad <= 1}
+            className="quantity-btn"
+          >
+            -
+          </button>
+          <span>{producto.cantidad}</span>
+          <button
+            onClick={() => agregarAlCarrito(producto)}
+            className="quantity-btn"
+          >
+            +
+          </button>
+        </div>
+        <button
+          className="remove-item"
+          onClick={() => eliminarDelCarrito(producto.id)}
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  ))
+)}
+
+
+<div className="steps-indicator">
+  <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
+  <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
+  <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
+  <div className={`step-line ${step >= 3 ? "active" : ""}`}></div>
+  <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
+</div>
+
 
             {step === 1 && (
-              <div className="telefono-container">
-                <input
-                  type="tel"
-                  placeholder="Tu número de teléfono"
-                  value={telefonoUsuario}
-                  onChange={handleTelefonoChange}
-                  className="telefono-input"
-                />
-                <button onClick={handleConfirmarTelefono} className="confirm-telefono-btn">
-                  Confirmar Teléfono
-                </button>
-              </div>
+              <div className="telefono-container mt-4">
+  <div className="mb-3">
+    <label htmlFor="telefono" className="form-label">
+      Número de Teléfono
+    </label>
+    <input
+      type="tel"
+      id="telefono"
+      placeholder="Tu número de teléfono"
+      value={telefonoUsuario}
+      onChange={handleTelefonoChange}
+      className="form-control form-control-lg"
+    />
+  </div>
+  <button
+    onClick={handleConfirmarTelefono}
+    className="btn btn-primary btn w-100"
+  >
+    Confirmar Teléfono
+  </button>
+</div>
+
             )}
 
             {step === 2 && (
-              <div className="metodo-pago-container">
-                <h6>Selecciona un Método de Pago:</h6>
-                <select value={metodoPago} onChange={handleMetodoPagoChange} className="metodo-pago-select">
-                  <option value="">Elige un método</option>
-                  <option value="tarjeta">Tarjeta</option>
-                  <option value="transferencia">Transferencia</option>
-                  <option value="efectivo">Efectivo</option>
-                </select>
-                <button onClick={handleConfirmarPago} className="confirm-pago-btn">
-                  Confirmar Método de Pago
-                </button>
-              </div>
+              <div className="metodo-pago-container mt-4">
+  <div className="mb-3">
+    <label htmlFor="metodoPago" className="form-label">
+      Selecciona un Método de Pago
+    </label>
+    <select
+      id="metodoPago"
+      value={metodoPago}
+      onChange={handleMetodoPagoChange}
+      className="form-select form-select-lg"
+    >
+      <option value="">Elige un método</option>
+      <option value="tarjeta">Tarjeta</option>
+      <option value="transferencia">Transferencia</option>
+      <option value="efectivo">Efectivo</option>
+    </select>
+  </div>
+  <button
+    onClick={handleConfirmarPago}
+    className="btn btn-success btn-lg w-100"
+  >
+    Confirmar Método de Pago
+  </button>
+</div>
+
             )}
 
-            {step === 3 && (
-              <>
-                <div className="order-summary">
-                  <h6>Resumen del Pedido:</h6>
-                  {cart.map((producto, i) => (
-                    <div key={i} className="order-item">
-                      <p>
-                        {producto.nombre} x {producto.cantidad} = ${producto.precio * producto.cantidad}
-                      </p>
-                    </div>
-                  ))}
-                  <div className="total-summary">
-                    <p>Total: ${totalPrecio.toFixed(2)}</p>
-                    {discount > 0 && <p>Descuento: {discount}%</p>}
-                  </div>
-                </div>
-                <button
-                  className="view-cart-btn"
-                  onClick={registrarPedido}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Procesando..." : "Ir a Pagar"}
-                </button>
-              </>
-            )}
+{step === 3 && (
+  <>
+    <div className="order-summary p-3 border rounded bg-light">
+      <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
+
+      {cart.map((producto, i) => (
+        <div
+          key={i}
+          className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+        >
+          <div>
+            <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
+          </div>
+          <div>
+            <span className="fw-semibold">${(producto.precio * producto.cantidad).toFixed(2)}</span>
+          </div>
+        </div>
+      ))}
+
+      <hr className="my-3" />
+
+      <div className="discount-applied d-flex justify-content-between align-items-center text-danger pb-2 border-bottom">
+        <span>Descuento por Puntos:</span>
+        <span>$0</span>
+      </div>
+
+      {discount > 0 && (
+        <>
+          <hr className="my-3" />
+          <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+            <span>Descuento %:</span>
+            <span>{discount}%</span>
+          </div>
+        </>
+      )}
+
+      <hr className="my-3" />
+
+      <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold">
+        <span>Total:</span>
+        <span>${totalPrecio.toFixed(2)}</span>
+      </div>
+    </div>
+
+    <button
+      className="btn btn-primary mt-3 w-100"
+      onClick={registrarPedido}
+      disabled={isLoading}
+    >
+      {isLoading ? "Procesando..." : "Ir a Pagar"}
+    </button>
+
+    <button
+      className="btn btn-danger mt-3 w-100"
+      onClick={() => {
+        if (
+          window.confirm(
+            "¿Estás seguro que querés vaciar el carrito? Se eliminarán todos los productos."
+          )
+        ) {
+          vaciarCarrito();
+          setStep(1);
+          setIsOpen(false);
+        }
+      }}
+    >
+      Vaciar carrito
+    </button>
+  </>
+)}
+
+
+
+
           </div>
         </div>
       )}
