@@ -80,7 +80,7 @@ const Carrito = () => {
     <section className="carrito-pagina">
       <div className="container p-2">
         <h2 className="carrito-titulo">Tu Carrito de Compras</h2>
-        <p className="text-center mb-5">
+        <p className="text-center mb-lg-5 mb-4">
           Revisa tus productos, ajusta cantidades, elige método de pago y confirma tu pedido.
         </p>
 
@@ -107,7 +107,7 @@ const Carrito = () => {
       Agregá productos para comenzar tu compra.
     </p>
     <a
-      href="/categorias"
+      href="/categorias/Ofertasid"
       style={{
         padding: "0.5rem 1rem",
         backgroundColor: "#3483fa",
@@ -132,7 +132,7 @@ const Carrito = () => {
                     className="item-img"
                   />
                   <div className="item-detalles">
-                    <h5>{producto.nombre}</h5>
+                  <h5 className="fs-6 line-clamp-2">{producto.nombre}</h5>
                     <p>
                       ${producto.precio} x {producto.cantidad} = $
                       {(producto.precio * producto.cantidad).toFixed(2)}
@@ -168,7 +168,7 @@ const Carrito = () => {
             </div>
 
             {/* Indicador de pasos */}
-            <div className="steps-indicator">
+            <div className="steps-indicator mt-4">
               <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
               <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
               <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
@@ -178,73 +178,80 @@ const Carrito = () => {
 
             {/* PASOS */}
             {step === 1 && (
-              <div className="telefono-container mt-4">
-                <label htmlFor="telefono" className="form-label">
-                  Número de Teléfono
-                </label>
-                <input
-                  type="tel"
-                  id="telefono"
-                  placeholder="Tu número de teléfono"
-                  value={telefonoUsuario}
-                  onChange={(e) => setTelefonoUsuario(e.target.value)}
-                  className="form-control form-control-lg"
-                />
-                <button
-                  onClick={() => {
-                    if (!telefonoUsuario.trim()) {
-                      alert("El número de teléfono es obligatorio.");
-                      return;
-                    }
-                    setStep(2);
-                  }}
-                  className="btn btn-primary mt-3 align-self-center"
-                  >
-                  Confirmar Teléfono
-                </button>
-              </div>
-            )}
+  <div className="telefono-container mt-4">
+    <div className="telefono-inner mx-auto">
+      <label htmlFor="telefono" className="form-label text-center d-block">
+        Número de Teléfono
+      </label>
+      <input
+        type="tel"
+        id="telefono"
+        placeholder="Tu número de teléfono"
+        value={telefonoUsuario}
+        onChange={(e) => setTelefonoUsuario(e.target.value)}
+        className="form-control form-control-md mx-auto mb-3"
+      />
+      <button
+        onClick={() => {
+          if (!telefonoUsuario.trim()) {
+            alert("El número de teléfono es obligatorio.");
+            return;
+          }
+          setStep(2);
+        }}
+        className="btn btn-primary d-flex justify-content-center align-items-center w-100 mx-auto"
+        >
+        Confirmar Teléfono
+      </button>
+    </div>
+  </div>
+)}
 
-            {step === 2 && (
-              <div className="metodo-pago-container mt-4">
-                <label htmlFor="metodoPago" className="form-label">
-                  Selecciona un Método de Pago
-                </label>
-                <select
-                  id="metodoPago"
-                  value={metodoPago}
-                  onChange={(e) => setMetodoPago(e.target.value)}
-                  className="form-select form-select-lg"
-                >
-                  <option value="">Elige un método</option>
-                  <option value="tarjeta">Tarjeta</option>
-                  <option value="transferencia">Transferencia</option>
-                  <option value="efectivo">Efectivo</option>
-                </select>
-                <button
-                  onClick={() => {
-                    if (!metodoPago) {
-                      alert("Debes seleccionar un método de pago.");
-                      return;
-                    }
-                    setStep(3);
-                  }}
-                  className="btn btn-success btn-lg w-100 mt-3"
-                >
-                  Confirmar Método de Pago
-                </button>
-              </div>
-            )}
+
+{step === 2 && (
+  <div className="metodo-pago-container mt-4 d-flex justify-content-center">
+    <div className="metodo-pago-inner">
+      <label htmlFor="metodoPago" className="form-label text-center d-block">
+        Selecciona un Método de Pago
+      </label>
+      <select
+        id="metodoPago"
+        value={metodoPago}
+        onChange={(e) => setMetodoPago(e.target.value)}
+        className="form-select form-select-md"
+      >
+        <option value="">Elige un método</option>
+        <option value="tarjeta">Tarjeta</option>
+        <option value="transferencia">Transferencia</option>
+        <option value="efectivo">Efectivo</option>
+      </select>
+      <button
+        onClick={() => {
+          if (!metodoPago) {
+            alert("Debes seleccionar un método de pago.");
+            return;
+          }
+          setStep(3);
+        }}
+        className="btn btn-success mt-3 w-100"
+      >
+        Confirmar Método de Pago
+      </button>
+    </div>
+  </div>
+)}
+
+
 
 {step === 3 && (
   <>
     <div className="order-summary p-3 border rounded bg-light text-dark">
-      <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
+      <h5 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h5>
 
       {cart.map((producto, i) => (
         <div
           key={i}
-          className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+          className="order-item d-flex justify-content-between align-items-center py-2 border-bottom p-1 "
         >
           <div>
             <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>

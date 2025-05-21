@@ -149,7 +149,8 @@
 }
 
 .quantity-btn {
-  background-color: #fff;
+  background-color: #c5c1c1;
+  color: black;
   border: 1px solid #ccc;
   padding: 4px 10px;
   border-radius: 6px;
@@ -159,13 +160,9 @@
   transition: background-color 0.2s, transform 0.2s;
 }
 
-.quantity-btn:hover {
-  background-color: #e9ecef;
-  transform: scale(1.1);
-}
 
 .cart-item-quantity span {
-  font-size: 16px;
+  font-size: 18px;
   min-width: 24px;
   text-align: center;
   font-weight: 600;
