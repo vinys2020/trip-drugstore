@@ -10,10 +10,14 @@ import BannerCard3 from "../components/BannerCard3";
 import VerticalCarousel from "../components/VerticalCarousel";
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
-import promocion1 from "../assets/portada1.png"; // Asegúrate de que estas imágenes existan
-import promocion2 from "../assets/portada1.png";
-import promocion3 from "../assets/portada1.png";
-import promocion4 from "../assets/portada1.png";
+import promocion1 from "../assets/coca.webp"; // Asegúrate de que estas imágenes existan
+import promocion2 from "../assets/portada22.webp";
+import promocion3 from "../assets/cofler.webp";
+import promocion4 from "../assets/galletitas.webp";
+import promocion1Mobile from "../assets/promo22celu.webp";
+import promocion2Mobile from "../assets/promogalletacelu.webp";
+import promocion3Mobile from "../assets/promocoflcelu.webp";
+import promocion4Mobile from "../assets/promococacelu.webp";
 import bebida1 from "../assets/bebida1.jpg";
 import bebida2 from "../assets/bebida2.jpg";
 import bebida3 from "../assets/bebida3.jpg";
@@ -27,9 +31,11 @@ import almacen4 from "../assets/descartable.webp";
 
 
 const Home = () => {
-  const images = [promocion1, promocion2, promocion3, promocion4]; // Array de imágenes
-  const images1 = [promocion1, promocion2, promocion3]; // Array de imágenes
+  const isMobile = window.innerWidth <= 768;
 
+  const images = isMobile
+    ? [promocion1Mobile, promocion2Mobile, promocion3Mobile, promocion4Mobile]
+    : [promocion1, promocion2, promocion3, promocion4];
 
   return (
     <>

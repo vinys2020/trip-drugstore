@@ -5,7 +5,7 @@ const items = [
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_695687-MLA81364471168_122024-G.webp",
     alt: "OFERTAS",
-    link: "#",
+    link: "/categorias/Ofertasid",
     title: "OFERTAS"
   },
   {

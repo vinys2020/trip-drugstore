@@ -3,18 +3,18 @@ import "./HorizontalScroll.css";
 
 const items = [
     {
-      image: "https://http2.mlstatic.com/D_NQ_NP2X_740285-MLA81157648257_122024-O.webp",
+      image: "https://http2.mlstatic.com/D_NQ_NP2X_910241-MLA83418775476_042025-B.webp",
       alt: "Protectores solares",
       link: "#"
     },
     {
-      image: "https://http2.mlstatic.com/D_NQ_NP2X_835746-MLA81157716337_122024-O.webp",
+      image: "https://http2.mlstatic.com/D_NQ_NP2X_893232-MLA83761115815_042025-B.webp",
       alt: "Cuidado del cabello",
       link: "#"
     },
     {
-      image: "https://http2.mlstatic.com/D_NQ_NP2X_869712-MLA81157619195_122024-O.webp",
-      alt: "Incontinencia",
+      image: "https://http2.mlstatic.com/D_NQ_NP2X_678714-MLA83710941603_042025-B.webp",
+      alt: "Almacén",
       link: "#"
     }
 ];
