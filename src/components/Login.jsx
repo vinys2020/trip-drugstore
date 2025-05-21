@@ -17,10 +17,26 @@ import celuchicaweb from "../assets/celuchica.webp";
 import comprando from "../assets/comprando.webp";
 import PreguntasFrecuentes from "../components/PreguntasFrecuentes";
 import logo from "../assets/logotrippc.png";
-import Footer from "../components/Footer";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 
+const guardarUsuarioEnFirestore = async (user) => {
+  const ref = doc(db, "Usuariosid", user.uid);
+  const snapshot = await getDoc(ref);
 
+  if (!snapshot.exists()) {
+    await setDoc(ref, {
+      uid: user.uid,
+      nombre: user.displayName || "",
+      email: user.email,
+      imagen: user.photoURL || "",
+      creado: new Date(),
+      puntos: 0,
+      esAdmin: false,
+    });
+  }
+};
 
 
 const pasos = [
@@ -80,12 +96,14 @@ const Login = () => {
 
   const loginConGoogle = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      await guardarUsuarioEnFirestore(result.user);
       window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const loginConEmail = async (e) => {
     e.preventDefault();
@@ -93,14 +111,17 @@ const Login = () => {
       if (esRegistro) {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCred.user, { photoURL: userimgdef });
+        await guardarUsuarioEnFirestore(userCred.user);
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        await guardarUsuarioEnFirestore(userCred.user);
       }
       window.location.reload();
     } catch (error) {
       alert(error.message);
     }
   };
+  
 
   const cerrarSesion = () => {
     signOut(auth);

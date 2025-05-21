@@ -234,7 +234,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
 
             <li className="nav-item">
-              <Link className="nav-link" to="/contacto" onClick={() =>
+              <Link className="nav-link" to="/Perfil" onClick={() =>
                 document.getElementById("navbarNav").classList.remove("show")
               }>
                 Mis Compras
