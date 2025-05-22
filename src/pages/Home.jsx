@@ -41,7 +41,7 @@ const Home = () => {
     <>
 
       <div className="swiper-container">
-        <div className="swiper-section">
+        <div className="swiper-section  mt-0">
           <SwiperComponent images={images} />
         </div>
       </div>
@@ -55,7 +55,7 @@ const Home = () => {
       <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 mt-lg-3">
         <div className="container ">
           <div className="row justify-content-center">
-            <article className="col-12 col-lg-12 mt-md-4">
+            <article className="col-12 col-lg-12 mt-lg-4 mt-4">
               <h1 className="fw-bold display-5  text-warning">
                 Bienvenido a <span className=" text-white">Trip Drugstore</span>
               </h1>

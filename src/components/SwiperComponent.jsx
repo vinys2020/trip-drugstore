@@ -1,11 +1,12 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css";
+import "./SwiperComponent.css";
+
+
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "./SwiperComponent.css"; // Asegúrate de importar este CSS
 
 const SwiperComponent = ({ images }) => {
   return (
