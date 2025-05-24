@@ -6,7 +6,11 @@ import {
   updateDoc,
   doc
 } from "firebase/firestore";
+import emailjs from '@emailjs/browser';
+
 import "./adminpedidos.css";
+
+emailjs.init('lO8HCYln-rXEwoAgm');  // Tu Public Key de EmailJS
 
 const AdminPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -36,8 +40,38 @@ const AdminPedidos = () => {
 
   const cambiarEstado = async (pedidoId, nuevoEstado) => {
     const pedidoRef = doc(db, "Pedidosid", pedidoId);
+    const pedido = pedidos.find((p) => p.id === pedidoId);
+  
+    if (!pedido) return;
+  
     await updateDoc(pedidoRef, { estado: nuevoEstado });
+  
+    if (nuevoEstado === "Listo" && pedido.cliente?.email) {
+      const templateParams = {
+        nombre: pedido.cliente.nombre || "Cliente",
+        email: pedido.cliente.email,
+        order_id: pedido.id,
+        totalpedido: pedido.totalpedido,
+        productos: pedido.productos?.map((producto) => ({
+          nombre: producto.nombre,
+          cantidad: producto.cantidad,
+          total: producto.total,
+        })) || [],
+      };
+  
+      emailjs
+        .send("default_service", "template_h0wvzcy", templateParams)
+        .then(
+          (result) => {
+            console.log("Email enviado:", result.text);
+          },
+          (error) => {
+            console.error("Error al enviar email:", error);
+          }
+        );
+    }
   };
+  
 
   const filtrarPedidos = () => {
     return pedidos.filter((pedido) =>

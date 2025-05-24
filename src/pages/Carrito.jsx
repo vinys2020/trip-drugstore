@@ -36,6 +36,7 @@ const Carrito = () => {
     const user = auth.currentUser;
     if (user) {
       setUsuario({
+        nombre: user.displayName, // <-- agregamos el nombre
         email: user.email,
         telefono: telefonoUsuario,
       });
@@ -53,6 +54,7 @@ const Carrito = () => {
 
       const pedidoData = {
         cliente: {
+          nombre: usuario.nombre, // <-- nuevo campo
           email: usuario.email,
           telefono: usuario.telefono,
           direccion: "Calle Ficticia 123",
@@ -98,7 +100,7 @@ const Carrito = () => {
       setMetodoPago("");
       setIsLoading(false);
 
-      alert("Pedido registrado correctamente y puntos sumados.");
+      alert(`⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos. Te avisaremos cuando tu pedido esté listo. ¡Acumulá y canjeá descuentos!🎉 `);
     } catch (error) {
       console.error("Error al registrar el pedido y sumar puntos:", error);
       alert("Hubo un problema al procesar tu pedido. Intenta nuevamente.");
@@ -285,7 +287,7 @@ const Carrito = () => {
                 <button
                   className="btn btn-primary mt-3 w-100"
                   onClick={registrarPedido}
-                  disabled={isLoading}
+                  disabled={isLoading || totalPrecio <= 0}  // <--- Aquí
                 >
                   {isLoading ? "Procesando..." : "Ir a Pagar"}
                 </button>
