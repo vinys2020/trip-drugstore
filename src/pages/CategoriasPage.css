@@ -111,10 +111,8 @@
 
 .categoriaspage-img {
   object-fit: cover;
-  height: 240px;
+  height: 100%;
   width: 100%;
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
 }
 
 .categoriaspage-img-placeholder {
