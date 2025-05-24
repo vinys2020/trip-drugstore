@@ -44,8 +44,8 @@
 }
 
 /* Mostrar el menú cuando el mouse pasa por encima del item */
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block; /* Mostrar el menú cuando se pasa el mouse */
+.dropdown-menu.show {
+  display: block !important;
 }
 
 /* Estilo para los items dentro del dropdown */

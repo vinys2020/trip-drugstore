@@ -230,7 +230,14 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         <div className="collapse navbar-collapse ms-lg-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
 
-           <CategoriasDropdown />
+          <CategoriasDropdown
+  onCloseNavbar={() => {
+    const navbar = document.getElementById("navbarNav");
+    if (navbar && navbar.classList.contains("show")) {
+      navbar.classList.remove("show");
+    }
+  }}
+/>
 
 
             <li className="nav-item">
