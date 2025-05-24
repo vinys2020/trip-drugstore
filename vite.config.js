@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['vite.svg'], // u otros archivos estáticos si los tenés
+      includeAssets: ['vite.svg'],
       manifest: {
         name: 'Trip Drugstore',
         short_name: 'Trip Drugstore',

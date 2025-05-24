@@ -12,10 +12,6 @@ import Ayuda from "./pages/Ayuda";
 import Perfil from "./pages/Perfil";
 import InstallModal from "./components/InstallModal";
 import CategoriasPage from "./pages/CategoriasPage";
-
-
-
-
 import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
