@@ -263,16 +263,18 @@ export default function CategoriasPage() {
                 className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
               >
                 <div className="card h-100 shadow-sm">
-                  {producto.imagen ? (
-                    <img
-                      src={producto.imagen}
-                      alt={producto.nombre}
-                      className="categoriaspage-img card-img-top"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="categoriaspage-img-placeholder">Sin imagen</div>
-                  )}
+                <div className="categoriaspage-img-container">
+  {producto.imagen ? (
+    <img
+      src={producto.imagen}
+      alt={producto.nombre}
+      className="categoriaspage-img"
+      loading="lazy"
+    />
+  ) : (
+    <div className="categoriaspage-img-placeholder">Sin imagen</div>
+  )}
+</div>
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title text-dark">{producto.nombre}</h5>
                     <p className="text-muted mb-2">Marca: {producto.marca}</p>
