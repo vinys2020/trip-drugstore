@@ -258,10 +258,12 @@ export default function CategoriasPage() {
         <div className="categoriaspage-productos row">
           {productosFiltrados.length > 0 ? (
             productosFiltrados.map((producto) => (
-              <article
-                key={producto.id}
-                className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
-              >
+<article
+  key={producto.id}
+  className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
+  onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`)}
+  style={{ cursor: "pointer" }}
+>
                 <div className="card h-100 shadow-sm">
                 <div className="categoriaspage-img-container">
   {producto.imagen ? (

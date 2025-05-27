@@ -15,6 +15,7 @@ import CategoriasPage from "./pages/CategoriasPage";
 import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import ProductoDetalle from "./components/ProductoDetalle";
 import "./App.css"; // Asegúrate de tener este import para que cargue los estilos
 
 // Asegúrate de que la ruta del AuthContext sea correcta
@@ -39,6 +40,11 @@ const AppContent = () => {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route
+  path="/categorias/:categoriaId/producto/:productoId"
+  element={<ProductoDetalle />}
+/>
+
         </Routes>
         <FloatingCart />
       </div>

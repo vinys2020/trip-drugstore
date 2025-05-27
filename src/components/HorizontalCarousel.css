@@ -22,7 +22,7 @@
 .scroll-producto-card {
     padding: 16px;
     border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease;
     background-color: #fff;
     min-width: 270px;
@@ -31,6 +31,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 
@@ -49,7 +50,7 @@
 
 
 .scroll-producto-card:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.07);
 }
 
 
