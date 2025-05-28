@@ -1,5 +1,7 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom"; // Agregar esta línea
+
 import { db } from "../config/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "./HorizontalCarousel.css";
@@ -10,6 +12,8 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
   const { agregarAlCarrito } = useContext(CartContext);
+  const navigate = useNavigate(); // Inicializar hook
+
 
   useEffect(() => {
     const fetchRelacionados = async () => {
@@ -30,6 +34,11 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
 
     if (categoriaId) fetchRelacionados();
   }, [categoriaId, productoActualId]);
+
+  const irAlDetalle = (producto) => {
+    navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
+  };
+  
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -77,24 +86,33 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
         className="scroll-producto-contenedor d-flex overflow-auto p-0 mt-2 mt-lg-3"
         style={{ gap: "12px", paddingBottom: "8px" }}
       >
-        {productosRelacionados.map((producto, index) => (
-          <div key={index} className="scroll-producto-card flex-shrink-0">
-            <img src={producto.imagen} alt={producto.nombre} className="scroll-producto-img" />
-            <div className="scroll-producto-body">
-              <p className="scroll-producto-precio">
-                ${producto.precio?.toLocaleString() || "N/A"}
-                <span className="scroll-producto-descuento">{producto.descuento || ""}</span>
-              </p>
-              <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
-            </div>
-            <button
-              className="scroll-producto-boton mt-md-4 mt-0"
-              onClick={() => agregarAlCarrito(producto)}
-            >
-              Agregar al carrito
-            </button>
-          </div>
-        ))}
+{productosRelacionados.map((producto, index) => (
+  <div
+    key={index}
+    className="scroll-producto-card flex-shrink-0"
+    onClick={() => irAlDetalle(producto)}
+    style={{ cursor: "pointer" }} // Para mostrar que es clickeable
+  >
+    <img src={producto.imagen} alt={producto.nombre} className="scroll-producto-img" />
+    <div className="scroll-producto-body">
+      <p className="scroll-producto-precio">
+        ${producto.precio?.toLocaleString() || "N/A"}
+        <span className="scroll-producto-descuento">{producto.descuento || ""}</span>
+      </p>
+      <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
+    </div>
+    <button
+      className="scroll-producto-boton mt-md-4 mt-0"
+      onClick={(e) => {
+        e.stopPropagation(); // evita que el click en el botón también active el click en la tarjeta
+        agregarAlCarrito(producto);
+      }}
+    >
+      Agregar al carrito
+    </button>
+  </div>
+))}
+
       </div>
 
       {isHovered && (

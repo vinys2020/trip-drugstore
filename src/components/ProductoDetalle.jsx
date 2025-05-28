@@ -54,12 +54,21 @@ export default function ProductoDetalle() {
     setBackgroundPosition(`${bgX}% ${bgY}%`);
   };
 
-  if (!producto)
-    return <div className="loading text-center my-5">Cargando...</div>;
+  if (!producto) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "300px" }}
+      >
+        <div className="producto-detalle-loader"></div>
+      </div>
+    );
+  }
+  
 
   return (
     <main className="producto-detalle-page container-fluid py-5">
-      <article className="row justify-content-center g-2">
+      <article className="row justify-content-center g-2 mt-lg-4">
         {/* Imagen del producto con zoom */}
         <section className="col-lg-6 col-md-8 col-sm-10 text-center producto-zoom-container">
           <div

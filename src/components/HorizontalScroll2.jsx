@@ -24,19 +24,19 @@ const items = [
     image: "https://http2.mlstatic.com/D_Q_NP_2X_799360-MLA82317787351_022025-G.webp",
     alt: "SALUDABLES",
     link: "#",
-    title: "SALUDABLES"
+    title: "SNAKS"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_833202-MLA81364584956_122024-G.webp",
     alt: "LACTEOS",
     link: "#",
-    title: "LACTEOS"
+    title: "ALMACEN"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_846703-MLA81564985462_012025-G.webp",
     alt: "MASCOTAS",
     link: "#",
-    title: "MASCOTAS"
+    title: "CHOCOLATES"
   }
 ];
 

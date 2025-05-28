@@ -117,7 +117,7 @@ const Perfil = () => {
 
         <div className="perfil-section">
   <section className="mb-5">
-    <h4 className="mb-3">🛒 Compras recientes</h4>
+    <h4 className="mb-3">🛒 Historial De Compras</h4>
     {isLoading ? (
       <p>Cargando pedidos...</p>
     ) : pedidos.length === 0 ? (

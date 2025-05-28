@@ -1,11 +1,14 @@
 import React, { useState, useRef, useContext } from "react";
 import useProductosLimpieza from "../hooks/useProductoslimpieza";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
 
 const HorizontalCarousel = () => {
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
+
 
   const { productos, loading } = useProductosLimpieza();
   const { agregarAlCarrito } = useContext(CartContext);
@@ -24,8 +27,19 @@ const HorizontalCarousel = () => {
     }
   };
 
+  const handleProductoClick = (producto) => {
+    navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, { state: { producto } });
+  };
+
   if (loading) {
-    return <p>Cargando productos...</p>; // Mensaje mientras carga los productos
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "200px" }}
+      >
+        <div className="custom-loader-spin"></div>
+      </div>
+    );
   }
 
   return (
@@ -81,38 +95,34 @@ const HorizontalCarousel = () => {
           <div
             key={index}
             className="scroll-producto-card flex-shrink-0"
-            style={{ scrollSnapAlign: "start" }}
+            style={{ scrollSnapAlign: "start", cursor: "pointer" }}
+            onClick={() => handleProductoClick(producto)}
           >
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-decoration-none text-dark"
-            >
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                className="scroll-producto-img"
-              />
-              <div className="scroll-producto-body">
-                <div className="scroll-producto-precio-wrapper">
-                  <p className="scroll-producto-precio">
-                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
-                    <span className="scroll-producto-descuento">
-                      {producto.descuento || "Sin descuento"}
-                    </span>
-                  </p>
-                  <div className="dynamic-carousel__shipping-container mt-1">
-                    <span>Envío gratis </span>
-                    {/* SVG de Envío */}
-                  </div>
+            <img
+              src={producto.imagen}
+              alt={producto.nombre}
+              className="scroll-producto-img"
+            />
+            <div className="scroll-producto-body">
+              <div className="scroll-producto-precio-wrapper">
+                <p className="scroll-producto-precio">
+                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                  <span className="scroll-producto-descuento">
+                    {producto.descuento || "Sin descuento"}
+                  </span>
+                </p>
+                <div className="dynamic-carousel__shipping-container mt-1">
+                  <span>Envío gratis</span>
                 </div>
-                <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
               </div>
-            </a>
+              <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
+            </div>
             <button
               className="scroll-producto-boton mt-md-4 mt-0"
-              onClick={() => agregarAlCarrito(producto)}
+              onClick={(e) => {
+                e.stopPropagation();
+                agregarAlCarrito(producto);
+              }}
             >
               Agregar al carrito
             </button>

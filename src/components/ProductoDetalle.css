@@ -132,6 +132,25 @@
     user-select: none;
     z-index: 1000;        
   }
+
+  .producto-detalle-loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ffc107; /* amarillo */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin-producto 1s linear infinite;
+}
+
+@keyframes spin-producto {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
   
   
   @media (max-width: 767px) {

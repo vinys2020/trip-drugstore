@@ -62,7 +62,7 @@ const Home = () => {
               <p className="lead mt-3 text-white">
                 Tu drugstore online de confianza, con envíos rápidos y productos de calidad.
               </p>
-              <Link to="/productos" className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2">
+              <Link to="/categorias/Snacksygalletitasid" className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2">
                 Ver Productos 🛒
               </Link>
             </article>

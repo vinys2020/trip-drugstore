@@ -163,7 +163,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 className="list-group position-absolute start-0 shadow bg-dark px-0 border border-light px-1 py-1"
                 style={{ width: "92%", zIndex: 10 }}
               >
-                {sugerencias.map((producto) => (
+{sugerencias.slice(0, 7).map((producto) => (
                   <li
                     key={producto.id}
                     className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0 mb-lg-1 "
