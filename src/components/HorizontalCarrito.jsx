@@ -28,7 +28,10 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, { state: { producto } });
+    window.scrollTo(0, 0); // <-- Esto lleva al tope de la página
+    navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, {
+      state: { producto },
+    });
   };
 
   if (loading) {
