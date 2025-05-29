@@ -245,8 +245,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     className="nav-link"
     to="/Perfil"
     onClick={() => {
-      window.scrollTo(0, 0); // Llevar al tope
-
       document.getElementById("navbarNav").classList.remove("show");
     }}
   >
@@ -255,8 +253,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 </li>
             <li className="nav-item">
               <Link className="nav-link" to="/ayuda"     onClick={() => {
-                      window.scrollTo(0, 0); // Llevar al tope
-
       document.getElementById("navbarNav").classList.remove("show");
     }}>
                 Ayuda
@@ -266,7 +262,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
             {user && user.email === adminEmail && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin"     onClick={() => {
-                        window.scrollTo(0, 0); // Llevar al tope
       document.getElementById("navbarNav").classList.remove("show");
     }}>
                   Admin
@@ -283,8 +278,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 </li>
                 <li className="nav-item align-items-center">
                   <Link className="nav-link d-flex align-items" to="/perfil"     onClick={() => {
-                          window.scrollTo(0, 0); // Llevar al tope
-
       document.getElementById("navbarNav").classList.remove("show");
     }}>
                     <img
@@ -301,7 +294,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               <li className="nav-item">
                 <Link className="nav-link" to="/login"     onClick={() => {
       document.getElementById("navbarNav").classList.remove("show");
-      window.scrollTo(0, 0); // Llevar al tope
     }}>
                   Iniciar Sesión
                 </Link>

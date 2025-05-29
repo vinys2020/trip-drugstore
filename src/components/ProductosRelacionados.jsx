@@ -37,7 +37,6 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
 
   const irAlDetalle = (producto) => {
     navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
-    window.scrollTo(0, 0); // <- esto asegura que la vista vaya al tope de la página
   };
   
 

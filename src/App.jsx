@@ -16,6 +16,7 @@ import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ProductoDetalle from "./components/ProductoDetalle";
+import ScrollToTop from "./components/ScrollToTop"; // ajustá el path según corresponda
 import "./App.css"; // Asegúrate de tener este import para que cargue los estilos
 
 // Asegúrate de que la ruta del AuthContext sea correcta
@@ -32,6 +33,7 @@ const AppContent = () => {
 
       <div className="w-100 p-0">
         <Routes>
+
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos busqueda={busqueda} />} />
           <Route path="/categorias/:categoriaId" element={<CategoriasPage />} />
@@ -61,6 +63,9 @@ const App = () => {
     <AuthProvider>
       <CartProvider>
         <Router>
+        <ScrollToTop /> {/* ← colocá esto aquí, fuera de <Routes> */}
+
+
           <div className="app-root-wrapper">
             <AppContent />
           </div>

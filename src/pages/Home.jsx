@@ -65,10 +65,10 @@ const Home = () => {
               <Link
   to="/categorias/Snacksygalletitasid"
   className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2"
-  onClick={() => window.scrollTo(0, 0)}
 >
   Ver Productos 🛒
 </Link>
+
             </article>
           </div>
         </div>

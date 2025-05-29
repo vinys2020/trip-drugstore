@@ -28,7 +28,6 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    window.scrollTo(0, 0); // <- esto asegura que la vista vaya al tope de la página
     navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, { state: { producto } });
   };
 
