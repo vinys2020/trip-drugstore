@@ -18,6 +18,7 @@ const AdminPedidos = () => {
   const [filtro, setFiltro] = useState("Todos");
   const [paginaActual, setPaginaActual] = useState(1);
   const pedidosPorPagina = 5;
+  
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Pedidosid"), (snapshot) => {
@@ -38,6 +39,13 @@ const AdminPedidos = () => {
     setPedidoSeleccionado((prevId) => (prevId === pedidoId ? null : pedidoId));
   };
 
+
+
+  
+  
+
+  
+
   const cambiarEstado = async (pedidoId, nuevoEstado) => {
     const pedidoRef = doc(db, "Pedidosid", pedidoId);
     const pedido = pedidos.find((p) => p.id === pedidoId);
@@ -45,6 +53,9 @@ const AdminPedidos = () => {
     if (!pedido) return;
   
     await updateDoc(pedidoRef, { estado: nuevoEstado });
+    const fechaFormateada = pedido.fecha?.toDate().toLocaleString('es-AR') || '';
+
+
   
     if (nuevoEstado === "Listo" && pedido.cliente?.email) {
       const templateParams = {
@@ -57,6 +68,11 @@ const AdminPedidos = () => {
           cantidad: producto.cantidad,
           total: producto.total,
         })) || [],
+        fechapedido: fechaFormateada, // <--- acá la fecha
+
+
+
+
       };
   
       emailjs
