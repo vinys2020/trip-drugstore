@@ -12,6 +12,9 @@
     justify-content: center;
   }
 
+  body, html {
+    overflow-x: hidden;
+  }
   
   
   .hero {

@@ -261,44 +261,54 @@ export default function CategoriasPage() {
 <article
   key={producto.id}
   className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
-  onClick={() => {
-    window.scrollTo(0, 0); // Lleva al tope de la página
-    navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
-  }}
-  style={{ cursor: "pointer" }}
+  style={{ cursor: "default" }} // El cursor pointer solo en la imagen
 >
-                <div className="card h-100 shadow-sm">
-                <div className="categoriaspage-img-container">
-  {producto.imagen ? (
-    <img
-      src={producto.imagen}
-      alt={producto.nombre}
-      className="categoriaspage-img"
-      loading="lazy"
-    />
-  ) : (
-    <div className="categoriaspage-img-placeholder">Sin imagen</div>
-  )}
-</div>
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title text-dark">{producto.nombre}</h5>
-                    <p className="text-muted mb-2">Marca: {producto.marca}</p>
-                    <p className="mb-3">
-                      Precio:{" "}
-                      <span className="fw-bold">
-                        ${producto.precio?.toFixed(2)}
-                      </span>
-                    </p>
-                    <button
-                      className="btn btn-warning-custom mt-auto"
-                      disabled={producto.stock === 0}
-                      onClick={() => agregarAlCarrito(producto)}
-                    >
-                      {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
-                    </button>
-                  </div>
-                </div>
-              </article>
+  <div className="card h-100 shadow-sm">
+    <div
+      className="categoriaspage-img-container"
+      onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`)}
+      style={{ cursor: "pointer" }}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
+        }
+      }}
+      aria-label={`Ver detalles de ${producto.nombre}`}
+    >
+      {producto.imagen ? (
+        <img
+          src={producto.imagen}
+          alt={producto.nombre}
+          className="categoriaspage-img"
+          loading="lazy"
+        />
+      ) : (
+        <div className="categoriaspage-img-placeholder">Sin imagen</div>
+      )}
+    </div>
+
+    <div className="card-body d-flex flex-column">
+      <h5 className="card-title text-dark">{producto.nombre}</h5>
+      <p className="text-muted mb-2">Marca: {producto.marca}</p>
+      <p className="mb-3">
+        Precio: <span className="fw-bold">${producto.precio?.toFixed(2)}</span>
+      </p>
+      <button
+        className="btn btn-warning-custom mt-auto"
+        disabled={producto.stock === 0}
+        onClick={(e) => {
+          e.stopPropagation(); // Evita que el click burbujee y active el onClick de la imagen
+          agregarAlCarrito(producto);
+        }}
+      >
+        {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
+      </button>
+    </div>
+  </div>
+</article>
+
             ))
           ) : (
             <p>No hay productos para mostrar.</p>
