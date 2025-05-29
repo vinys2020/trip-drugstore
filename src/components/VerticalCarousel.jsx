@@ -1,38 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
+import useProductosTripCafe from "../hooks/useProductosTripCafe";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../context/CartContext"; // ✅ Importar el contexto
 import "./VerticalCarousel.css";
 
-const productos = [
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  },
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  },
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  },
-  {
-    nombre: "Huevo Kinder Gran Sorpresa Rosa 150g",
-    precio: "10,200",
-    precioAnterior: "199.99",
-    descuento: "20% OFF",
-    imagen: "https://http2.mlstatic.com/D_Q_NP_2X_893501-MLU78003887134_082024-P.webp",
-  }
-];
-
 const VerticalCarousel = () => {
+  const navigate = useNavigate();
+  const { productos, loading } = useProductosTripCafe();
+  const { agregarAlCarrito } = useContext(CartContext); // ✅ Usar el contexto
+
+  const handleProductoClick = (producto) => {
+    if (!producto.id) {
+      console.warn("El producto no tiene id");
+      return;
+    }
+  
+    // Si no tiene categoriaId, le asigno el valor por defecto
+    const categoriaId = producto.categoriaId || "Tripcafeysandwichesid";
+  
+    navigate(`/categorias/${categoriaId}/producto/${producto.id}`, {
+      state: { producto },
+    });
+  };
+  
+
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "200px" }}
+      >
+        <div className="custom-loader-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       {/* Título */}
@@ -61,11 +63,16 @@ const VerticalCarousel = () => {
       {/* Carrusel de productos */}
       <div className="vc-carousel-wrapper">
         <div className="vc-carousel-container">
-          {productos.map((producto, index) => (
-            <div className="vc-product-card p-lg-0" key={index}>
+          {productos.slice(0, 4).map((producto, index) => (
+            <div
+              className="vc-product-card p-lg-0"
+              key={producto.id || index}
+              style={{ cursor: "pointer" }}
+              onClick={() => handleProductoClick(producto)}
+            >
               <div className="vc-product-img-wrapper">
                 <img
-                  src={producto.imagen}
+                  src={producto.imagen || "/placeholder.jpg"}
                   alt={producto.nombre}
                   className="vc-product-img"
                 />
@@ -75,12 +82,29 @@ const VerticalCarousel = () => {
                   <h2 className="vc-product-title">{producto.nombre}</h2>
                 </div>
                 <div className="vc-precio-wrapper">
-                  <p className="vc-precio-anterior">${producto.precioAnterior}</p>
+                  <p className="vc-precio-anterior">
+                    ${producto.precioAnterior || "-"}
+                  </p>
                   <div className="vc-price-current">
                     <p className="vc-precio-actual">${producto.precio}</p>
-                    <span className="vc-descuento">{producto.descuento}</span>
+                    {producto.descuento && (
+                      <span className="vc-descuento">
+                        {producto.descuento}
+                      </span>
+                    )}
                   </div>
                 </div>
+
+                {/* ✅ Botón Agregar al carrito */}
+                <button
+                  className="scroll-producto-boton mt-2"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    agregarAlCarrito(producto);
+                  }}
+                >
+                  Agregar al carrito
+                </button>
               </div>
             </div>
           ))}
@@ -101,7 +125,7 @@ const VerticalCarousel = () => {
       >
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5"
-          href="#"
+          href="/categorias/Tripcafeysandwichesid"
           target="_self"
           style={{
             color: "#3483fa",
@@ -110,7 +134,7 @@ const VerticalCarousel = () => {
             gap: "5px",
           }}
         >
-          Ver más <span style={{ fontSize: "1.0rem" }}>{'>'}</span>
+          Ver más <span style={{ fontSize: "1.0rem" }}>{">"}</span>
         </a>
       </div>
     </div>

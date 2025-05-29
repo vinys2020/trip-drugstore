@@ -137,6 +137,14 @@
   border-radius: 14px;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+}
+
+
 .btn-warning-custom {
   font-size: 0.9rem;
   background-color: #ffd814;

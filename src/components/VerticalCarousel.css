@@ -201,8 +201,9 @@
 
     .vc-product-img-wrapper {
         width: 100%;
+        height: auto;
         background-color: #f9fafb;
-    }
+        }
 
     .vc-product-body {
         width: 50%;
@@ -255,6 +256,38 @@
     z-index: 10;
 }
 
+.custom-loader-spin {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #ffc107; /* amarillo */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: custom-spin 1s linear infinite;
+    margin: auto;
+  }
+  
+  @keyframes custom-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .vc-product-boton {
+    background-color: #3483fa;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+  }
+  
+  
+  .vc-product-boton:hover {
+    background-color: #2968c8;
+  }
+  
 .vc-btn-move-left,
 .vc-btn-move-right {
     background-color: rgba(0, 0, 0, 0.6);
@@ -271,3 +304,34 @@
 }
 
 
+@media (max-width: 768px) {
+    .vc-product-img-wrapper {
+      width: 100%;
+      height: auto; /* o el alto que desees */
+      background-color: transparent; /* quitar el gris */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .vc-product-img {
+      width: 110%;
+      height: 100%;
+      object-fit: fill; /* rellena el espacio sin dejar bordes */
+      border-radius: 0;
+      padding: 0; /* quitar padding */
+      background-color: white; /* fondo blanco si es necesario */
+    }
+  
+    .vc-product-card {
+      flex-direction: row;
+      border-radius: 0rem;
+      overflow: hidden;
+    }
+  
+    .vc-product-body {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+  

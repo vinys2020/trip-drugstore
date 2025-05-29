@@ -21,6 +21,8 @@ export default function CategoriasPage() {
 
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+
   const [busqueda, setBusqueda] = useState(searchQuery);
 
   const [filtroStock, setFiltroStock] = useState("todos");
@@ -61,6 +63,10 @@ export default function CategoriasPage() {
         setProductos([]);
         return;
       }
+  
+      setProductos([]); // Limpia antes de cargar nuevos
+      setCargando(true);
+  
       const productosRef = collection(db, "Categoriasid", categoriaId, "Productosid");
       const q = query(productosRef);
       const snapshot = await getDocs(q);
@@ -68,15 +74,14 @@ export default function CategoriasPage() {
         id: doc.id,
         ...doc.data(),
       }));
+  
       setProductos(productosData);
+      setCargando(false);
     };
+  
     fetchProductos();
-  
-    // Elimina estas dos líneas que borran la búsqueda y parámetros
-    // setBusqueda("");
-    // setSearchParams({});
-  
   }, [categoriaId]);
+  
   
 
   const marcasDisponibles = Array.from(new Set(productos.map((p) => p.marca))).sort();
@@ -256,64 +261,70 @@ export default function CategoriasPage() {
         </div>
 
         <div className="categoriaspage-productos row">
-          {productosFiltrados.length > 0 ? (
-            productosFiltrados.map((producto) => (
-<article
-  key={producto.id}
-  className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
-  style={{ cursor: "default" }} // El cursor pointer solo en la imagen
->
-  <div className="card h-100 shadow-sm">
-    <div
-      className="categoriaspage-img-container"
-      onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`)}
-      style={{ cursor: "pointer" }}
-      role="link"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
-        }
-      }}
-      aria-label={`Ver detalles de ${producto.nombre}`}
-    >
-      {producto.imagen ? (
-        <img
-          src={producto.imagen}
-          alt={producto.nombre}
-          className="categoriaspage-img"
-          loading="lazy"
-        />
-      ) : (
-        <div className="categoriaspage-img-placeholder">Sin imagen</div>
-      )}
+  {cargando ? (
+    <div className="spinner-container">
+      <div className="spinner-border text-warning" role="status">
+        <span className="visually-hidden">Cargando...</span>
+      </div>
     </div>
-
-    <div className="card-body d-flex flex-column">
-      <h5 className="card-title text-dark">{producto.nombre}</h5>
-      <p className="text-muted mb-2">Marca: {producto.marca}</p>
-      <p className="mb-3">
-        Precio: <span className="fw-bold">${producto.precio?.toFixed(2)}</span>
-      </p>
-      <button
-        className="btn btn-warning-custom mt-auto"
-        disabled={producto.stock === 0}
-        onClick={(e) => {
-          e.stopPropagation(); // Evita que el click burbujee y active el onClick de la imagen
-          agregarAlCarrito(producto);
-        }}
+  ) : productosFiltrados.length > 0 ? (
+    productosFiltrados.map((producto) => (
+      <article
+        key={producto.id}
+        className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
+        style={{ cursor: "default" }} // El cursor pointer solo en la imagen
       >
-        {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
-      </button>
-    </div>
-  </div>
-</article>
+        <div className="card h-100 shadow-sm">
+          <div
+            className="categoriaspage-img-container"
+            onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`)}
+            style={{ cursor: "pointer" }}
+            role="link"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
+              }
+            }}
+            aria-label={`Ver detalles de ${producto.nombre}`}
+          >
+            {producto.imagen ? (
+              <img
+                src={producto.imagen}
+                alt={producto.nombre}
+                className="categoriaspage-img"
+                loading="lazy"
+              />
+            ) : (
+              <div className="categoriaspage-img-placeholder">Sin imagen</div>
+            )}
+          </div>
 
-            ))
-          ) : (
-            <p>No hay productos para mostrar.</p>
-          )}
+          <div className="card-body d-flex flex-column">
+            <h5 className="card-title text-dark">{producto.nombre}</h5>
+            <p className="text-muted mb-2">Marca: {producto.marca}</p>
+            <p className="mb-3">
+              Precio: <span className="fw-bold">${producto.precio?.toFixed(2)}</span>
+            </p>
+            <button
+              className="btn btn-warning-custom mt-auto"
+              disabled={producto.stock === 0}
+              onClick={(e) => {
+                e.stopPropagation();
+                agregarAlCarrito(producto);
+              }}
+            >
+              {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
+            </button>
+          </div>
         </div>
+      </article>
+    ))
+  ) : (
+    <p>No hay productos para mostrar.</p>
+  )}
+</div>
+
       </main>
     </div>
   );
