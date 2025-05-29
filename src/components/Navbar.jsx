@@ -245,8 +245,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     className="nav-link"
     to="/Perfil"
     onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
       window.scrollTo(0, 0); // Llevar al tope
+
+      document.getElementById("navbarNav").classList.remove("show");
     }}
   >
     Mis Compras
@@ -254,8 +255,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 </li>
             <li className="nav-item">
               <Link className="nav-link" to="/ayuda"     onClick={() => {
+                      window.scrollTo(0, 0); // Llevar al tope
+
       document.getElementById("navbarNav").classList.remove("show");
-      window.scrollTo(0, 0); // Llevar al tope
     }}>
                 Ayuda
               </Link>
@@ -264,8 +266,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
             {user && user.email === adminEmail && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin"     onClick={() => {
+                        window.scrollTo(0, 0); // Llevar al tope
       document.getElementById("navbarNav").classList.remove("show");
-      window.scrollTo(0, 0); // Llevar al tope
     }}>
                   Admin
                 </Link>
@@ -281,8 +283,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 </li>
                 <li className="nav-item align-items-center">
                   <Link className="nav-link d-flex align-items" to="/perfil"     onClick={() => {
+                          window.scrollTo(0, 0); // Llevar al tope
+
       document.getElementById("navbarNav").classList.remove("show");
-      window.scrollTo(0, 0); // Llevar al tope
     }}>
                     <img
                       src={user.photoURL || "https://via.placeholder.com/40"}
