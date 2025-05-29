@@ -36,6 +36,8 @@ export default function CategoriasDropdown({ onCloseNavbar }) {
   const handleItemClick = () => {
     setIsOpen(false);
     if (onCloseNavbar) onCloseNavbar();
+    window.scrollTo(0, 0); // <- esto asegura que la vista vaya al tope de la página
+
   };
 
   return (

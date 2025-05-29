@@ -240,26 +240,33 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 />
 
 
+<li className="nav-item">
+  <Link
+    className="nav-link"
+    to="/Perfil"
+    onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+      window.scrollTo(0, 0); // Llevar al tope
+    }}
+  >
+    Mis Compras
+  </Link>
+</li>
             <li className="nav-item">
-              <Link className="nav-link" to="/Perfil" onClick={() =>
-                document.getElementById("navbarNav").classList.remove("show")
-              }>
-                Mis Compras
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/ayuda" onClick={() =>
-                document.getElementById("navbarNav").classList.remove("show")
-              }>
+              <Link className="nav-link" to="/ayuda"     onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+      window.scrollTo(0, 0); // Llevar al tope
+    }}>
                 Ayuda
               </Link>
             </li>
 
             {user && user.email === adminEmail && (
               <li className="nav-item">
-                <Link className="nav-link" to="/admin" onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }>
+                <Link className="nav-link" to="/admin"     onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+      window.scrollTo(0, 0); // Llevar al tope
+    }}>
                   Admin
                 </Link>
               </li>
@@ -273,9 +280,10 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                   </button>
                 </li>
                 <li className="nav-item align-items-center">
-                  <Link className="nav-link d-flex align-items" to="/perfil" onClick={() =>
-                    document.getElementById("navbarNav").classList.remove("show")
-                  }>
+                  <Link className="nav-link d-flex align-items" to="/perfil"     onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+      window.scrollTo(0, 0); // Llevar al tope
+    }}>
                     <img
                       src={user.photoURL || "https://via.placeholder.com/40"}
                       alt="Avatar"
@@ -288,9 +296,10 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </>
             ) : (
               <li className="nav-item">
-                <Link className="nav-link" to="/login" onClick={() =>
-                  document.getElementById("navbarNav").classList.remove("show")
-                }>
+                <Link className="nav-link" to="/login"     onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+      window.scrollTo(0, 0); // Llevar al tope
+    }}>
                   Iniciar Sesión
                 </Link>
               </li>

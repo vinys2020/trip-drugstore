@@ -261,7 +261,10 @@ export default function CategoriasPage() {
 <article
   key={producto.id}
   className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
-  onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`)}
+  onClick={() => {
+    window.scrollTo(0, 0); // Lleva al tope de la página
+    navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
+  }}
   style={{ cursor: "pointer" }}
 >
                 <div className="card h-100 shadow-sm">
