@@ -44,7 +44,7 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
-      const scrollStep = clientWidth * 2.9;
+      const scrollStep = clientWidth * 0.8; // o 1 para ver de a un "pantallazo"
 
       let targetScroll =
         direction === "next"
