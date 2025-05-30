@@ -177,7 +177,8 @@
 /* Pantallas muy grandes */
 @media (min-width: 1508px) {
   .categoriaspage-img-container {
-    height: 450px;
+    height: auto;
+    width: auto;
   }
 }
 
