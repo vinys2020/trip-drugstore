@@ -176,11 +176,47 @@
 
 /* Pantallas muy grandes */
 @media (min-width: 1508px) {
-  .categoriaspage-img-container {
-    height: 450px;
+  .categoriaspage-img {
+    height: 220px;
     width: auto;
+
+
   }
 }
+
+
+/* Pantallas medianas (tablets) */
+@media (max-width: 1507px) {
+  .categoriaspage-img {
+    height: 220px;
+    width: auto;
+
+  }
+
+  
+  
+}
+@media (max-width: 1505px) {
+  .categoriaspage-img {
+    height: 220px;
+    width: auto;
+  }
+  .categoriaspage-product .card {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 1218px) {
+  .categoriaspage-img {
+    height: 150px;
+    width: auto;
+  }
+  .categoriaspage-product .card {
+    padding: 5px;
+  }
+}
+
+
 
 /* Responsive */
 @media (max-width: 767px) {
@@ -190,11 +226,11 @@
   }
 
   .categoriaspage-img {
-    height: 145px;
+    height: 155px;
     width: auto;
   }
   .categoriaspage-product .card {
-    padding: 10px;
+    padding: 6px;
   }
 
   .categoriaspage-sidebar {
