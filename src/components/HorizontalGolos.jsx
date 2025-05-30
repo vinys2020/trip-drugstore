@@ -53,7 +53,7 @@ const HorizontalCarousel = () => {
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-        Snaks y Galletitas
+      <span>Snacks y Galletitas 🍪</span>
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
           href="/categorias/Snacksygalletitasid"

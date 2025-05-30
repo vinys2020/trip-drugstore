@@ -56,7 +56,7 @@ const VerticalCarousel = () => {
             borderTopRightRadius: "10px",
           }}
         >
-          Trip Café ☕
+          Trip Café y Sandwiches ☕
         </h3>
       </div>
 

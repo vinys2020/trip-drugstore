@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import usegolosinasychocolates from "../hooks/useProductosGolos";
+import useBebidas from "../hooks/useProductosBeb";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
@@ -10,7 +10,7 @@ const HorizontalCarousel = () => {
   const navigate = useNavigate();
 
 
-  const { productos, loading } = usegolosinasychocolates();
+  const { productos, loading } = useBebidas();
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -28,7 +28,7 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    navigate(`/categorias/golosinasychocolatesid/producto/${producto.id}`, { state: { producto } });
+    navigate(`/categorias/Bebidasid/producto/${producto.id}`, { state: { producto } });
   };
 
   if (loading) {
@@ -47,16 +47,16 @@ const HorizontalCarousel = () => {
 
   return (
     <div
-      className="position-relative"
+      className="position-relative mt-5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-      <span>Golosinas y Chocolates 🍫</span>
+      <span>Las más buscadas 🔍</span>
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="/categorias/golosinasychocolatesid"
+          href="/categorias/Bebidasid"
           target="_self"
           style={{ color: "#3483fa" }}
         >

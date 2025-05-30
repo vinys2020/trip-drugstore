@@ -5,9 +5,10 @@ import "./Home.css";
 import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
 import HorizontalCarousel from "../components/HorizontalCarousel";
 import HorizontalChoc from "../components/HorizontalChoc";
-import HorizontalGolos from "../components/HorizontalGolos"; // asegurate de la ruta correcta // Importa el componente Swiper
- // asegurate de la ruta correcta // Importa el componente Swiper
- // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalGolos from "../components/HorizontalGolos";
+import HorizontalAlms from "../components/HorizontalAlms";
+import HorizontalBeb from "../components/HorizontalBeb"; // asegurate de la ruta correcta // Importa el componente Swiper
+
 import BannerCard from "../components/BannerCard";
 import BannerCard2 from "../components/BannerCard2";
 import BannerCard3 from "../components/BannerCard3";
@@ -89,6 +90,17 @@ const Home = () => {
           </div>
         </section>
 
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <HorizontalAlms />
+          </div>
+        </div>
+
+        </section>
+
 
       <div className="mt-3 mb-3 mx-lg-5 mx-2">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
@@ -156,7 +168,18 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="recomendados" className="py-4 ">
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <HorizontalBeb />
+          </div>
+        </div>
+
+        </section>
+
+        <section id="recomendados" className="py-lg-0 mb-5 mb-lg-0">
           <div className="container">
             <h3 className="text-center mt-md-4 mt-3 text-white mb-3">Recomendados para vos 🛍️</h3>
             <article className="row">
@@ -300,13 +323,6 @@ const Home = () => {
 
         </section>
 
-        <div className="mt-5 mb-5 mx-lg-5 mx-2">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
-            altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
-          />
-        </div>
 
 
     </div>

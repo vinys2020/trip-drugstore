@@ -7,7 +7,7 @@ import promocioncell from "../assets/promocioncell.webp";
 
 const BannerCard = ({ altText, large }) => {
   return (
-    <div className="container my-4">
+    <div className="container">
       <div className={`andes-card banner-card andes-card--animated andes-card--flat andes-card--padding-16 ${large ? "banner-large" : ""}`}>
         {/* Imagen de fondo para escritorio */}
         <div
