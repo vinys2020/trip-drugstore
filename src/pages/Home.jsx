@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
 import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
-import HorizontalCarousel from "../components/HorizontalCarousel"; // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalCarousel from "../components/HorizontalCarousel";
+import HorizontalChoc from "../components/HorizontalChoc";
+import HorizontalGolos from "../components/HorizontalGolos"; // asegurate de la ruta correcta // Importa el componente Swiper
+ // asegurate de la ruta correcta // Importa el componente Swiper
+ // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
 import BannerCard2 from "../components/BannerCard2";
 import BannerCard3 from "../components/BannerCard3";
@@ -212,6 +216,15 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <section id="servicios" className="py-md-4 mx-lg-5">
+          <div className="container-fluid w-100 mt-md-4 mt-2">
+            <div className="container px-0">
+              <HorizontalChoc />
+            </div>          
+          </div>
+        </section>
+
+
 
 
         <section id="servicios" className="mx-lg-5">
@@ -219,19 +232,12 @@ const Home = () => {
 
           {/* Contenedor para el HorizontalCarousel */}
           <div className="container px-0">
-            <HorizontalCarousel />
+            <HorizontalGolos />
           </div>
         </div>
 
         </section>
 
-        <section id="servicios" className="py-md-4 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4 mt-2">
-            <div className="container px-0">
-              <HorizontalCarousel />
-            </div>          
-          </div>
-        </section>
 
         <div className="mt-3 mb-5 mx-lg-5 mx-2">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
@@ -257,6 +263,17 @@ const Home = () => {
             large={true} // Esto controla si es una imagen grande
           />
         </div>
+
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <HorizontalCarousel />
+          </div>
+        </div>
+
+        </section>
 
         <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4">

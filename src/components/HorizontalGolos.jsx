@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import useProductosLimpieza from "../hooks/useProductoslimpieza";
+import useSnacksygalletitas from "../hooks/useProductosChoc";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
@@ -10,7 +10,7 @@ const HorizontalCarousel = () => {
   const navigate = useNavigate();
 
 
-  const { productos, loading } = useProductosLimpieza();
+  const { productos, loading } = useSnacksygalletitas();
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -28,7 +28,7 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, { state: { producto } });
+    navigate(`/categorias/Snacksygalletitasid/producto/${producto.id}`, { state: { producto } });
   };
 
   if (loading) {
@@ -53,10 +53,10 @@ const HorizontalCarousel = () => {
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-        Articulos de Limpieza
+        Snaks y Galletitas
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="/categorias/Articuloslimpiezaid"
+          href="/categorias/Snacksygalletitasid"
           target="_self"
           style={{ color: "#3483fa" }}
         >
