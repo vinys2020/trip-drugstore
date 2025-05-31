@@ -63,7 +63,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [esRegistro, setEsRegistro] = useState(false);
   const navigate = useNavigate();
-  const correosAdmin = ["faculez07@gmail.com"];
+  const correosAdmin = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
 
   useEffect(() => {
     const root = document.getElementById("root");

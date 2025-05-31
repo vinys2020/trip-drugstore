@@ -62,7 +62,7 @@ const AdminDashboard = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "ml_default");  // tu preset aquí
-  
+
     try {
       const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
         method: "POST",
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
       console.error("Error al subir imagen a Cloudinary:", error);
     }
   };
-  
+
 
 
   const obtenerProductos = async () => {
@@ -94,9 +94,9 @@ const AdminDashboard = () => {
 
   const crearProducto = async () => {
     if (!nuevoProducto.nombre || !nuevoProducto.precio) return;
-  
+
     const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
-  
+
     // Armar el objeto base del producto
     const productoAGuardar = {
       ...nuevoProducto,
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
       stock: Number(nuevoProducto.stock),
       activo: true,
     };
-  
+
     // Si la categoría es Bebidasid, agregar contenido
     if (categoriaSeleccionada === "Bebidasid") {
       // Si nuevoProducto.contenido no existe, asignar "sin alcohol" por defecto
@@ -113,13 +113,13 @@ const AdminDashboard = () => {
       // Para evitar que el campo contenido se guarde en otras categorías
       delete productoAGuardar.contenido;
     }
-  
+
     await addDoc(productosRef, productoAGuardar);
-  
+
     setNuevoProducto({ nombre: "", precio: "", imagen: "", marca: "", stock: "", contenido: "" });
     obtenerProductos();
   };
-  
+
 
   const actualizarProducto = async (id, campo, valor) => {
     const productoDoc = doc(db, `Categoriasid/${categoriaSeleccionada}/Productosid`, id);
@@ -193,9 +193,9 @@ const AdminDashboard = () => {
         <section className="row mt-5">
           <article className="col-12 mt-lg-5">
             <div className="cards shadow-sm rounded-4">
-            <h2 className="text-center mb-4 text-black">
-              <i className="bi bi-clipboard-check me-2"></i>Gestiona tus Productos
-            </h2>
+              <h2 className="text-center mb-4 text-black">
+                <i className="bi bi-clipboard-check me-2"></i>Gestiona tus Productos
+              </h2>
               <div className="d-flex justify-content-center">
                 <div className="w-100">
                   <div className="card  rounded-4 p-4 bg-primary">
@@ -229,105 +229,105 @@ const AdminDashboard = () => {
                   <i className="bi bi-plus-circle"></i>
                   Agregar producto
                 </h4>
-                
+
 
                 {["nombre", "precio", "marca", "stock"].map((campo) => (
-  <div className="col-md-4" key={campo}>
-    <input
-      className="form-control"
-      placeholder={campo}
-      value={nuevoProducto[campo]}
-      onChange={(e) =>
-        setNuevoProducto({
-          ...nuevoProducto,
-          [campo]: e.target.value,
-        })
-      }
-    />
-  </div>
-))}
+                  <div className="col-md-4" key={campo}>
+                    <input
+                      className="form-control"
+                      placeholder={campo}
+                      value={nuevoProducto[campo]}
+                      onChange={(e) =>
+                        setNuevoProducto({
+                          ...nuevoProducto,
+                          [campo]: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                ))}
 
-{categoriaSeleccionada === "Bebidasid" && (
-  <div className="col-md-4">
-    <select
-      className="form-control"
-      value={nuevoProducto.contenido || "sin alcohol"}
-      onChange={(e) =>
-        setNuevoProducto({
-          ...nuevoProducto,
-          contenido: e.target.value,
-        })
-      }
-      onBlur={() => {
-        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
-        if (!nuevoProducto.contenido) {
-          setNuevoProducto({
-            ...nuevoProducto,
-            contenido: "sin alcohol",
-          });
-        }
-      }}
-    >
-      <option value="sin alcohol">Sin alcohol</option>
-      <option value="con alcohol">Con alcohol</option>
-    </select>
-  </div>
-)}
-
-
+                {categoriaSeleccionada === "Bebidasid" && (
+                  <div className="col-md-4">
+                    <select
+                      className="form-control"
+                      value={nuevoProducto.contenido || "sin alcohol"}
+                      onChange={(e) =>
+                        setNuevoProducto({
+                          ...nuevoProducto,
+                          contenido: e.target.value,
+                        })
+                      }
+                      onBlur={() => {
+                        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
+                        if (!nuevoProducto.contenido) {
+                          setNuevoProducto({
+                            ...nuevoProducto,
+                            contenido: "sin alcohol",
+                          });
+                        }
+                      }}
+                    >
+                      <option value="sin alcohol">Sin alcohol</option>
+                      <option value="con alcohol">Con alcohol</option>
+                    </select>
+                  </div>
+                )}
 
 
-{/* Campo especial para imagen con input file */}
-<div className="col-md-4">
-  {/* Campo de URL manual */}
-  <div className="mb-2">
-    <input
-      className="form-control"
-      placeholder="Imagen URL"
-      value={nuevoProducto.imagen}
-      onChange={(e) =>
-        setNuevoProducto({
-          ...nuevoProducto,
-          imagen: e.target.value,
-        })
-      }
-    />
-  </div>
 
-  
 
-  {/* Selector de archivo */}
-  <div>
-    <input
-      type="file"
-      accept="image/*"
-      className="form-control "
-      onChange={async (e) => {
-        if (e.target.files && e.target.files[0]) {
-          const formData = new FormData();
-          formData.append("file", e.target.files[0]);
-          formData.append("upload_preset", "ml_default"); // reemplazar si usás otro preset
+                {/* Campo especial para imagen con input file */}
+                <div className="col-md-4">
+                  {/* Campo de URL manual */}
+                  <div className="mb-2">
+                    <input
+                      className="form-control"
+                      placeholder="Imagen URL"
+                      value={nuevoProducto.imagen}
+                      onChange={(e) =>
+                        setNuevoProducto({
+                          ...nuevoProducto,
+                          imagen: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-          try {
-            const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
-              method: "POST",
-              body: formData,
-            });
-            const data = await res.json();
-            if (data.secure_url) {
-              setNuevoProducto((prev) => ({
-                ...prev,
-                imagen: data.secure_url,
-              }));
-            }
-          } catch (err) {
-            console.error("Error al subir imagen:", err);
-          }
-        }
-      }}
-    />
-  </div>
-</div>
+
+
+                  {/* Selector de archivo */}
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="form-control "
+                      onChange={async (e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          const formData = new FormData();
+                          formData.append("file", e.target.files[0]);
+                          formData.append("upload_preset", "ml_default"); // reemplazar si usás otro preset
+
+                          try {
+                            const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
+                              method: "POST",
+                              body: formData,
+                            });
+                            const data = await res.json();
+                            if (data.secure_url) {
+                              setNuevoProducto((prev) => ({
+                                ...prev,
+                                imagen: data.secure_url,
+                              }));
+                            }
+                          } catch (err) {
+                            console.error("Error al subir imagen:", err);
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
 
 
                 <div className="col-md-4 d-grid">
@@ -368,164 +368,169 @@ const AdminDashboard = () => {
                       {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
                       <th>Estado</th>
                       <th>Acciones</th>
-                      
 
-                      
+
+
                     </tr>
                   </thead>
                   <tbody>
-  {productos
-    .filter((producto) =>
-      producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
-    )
-    .map((producto) => (
-      <tr key={producto.id}>
-        <td>
-          <input
-            className="form-control"
-            value={producto.nombre}
-            onChange={(e) =>
-              actualizarProducto(producto.id, "nombre", e.target.value)
-            }
-          />
-        </td>
-        <td>
-          <input
-            className="form-control"
-            type="number"
-            value={producto.precio}
-            onChange={(e) =>
-              actualizarProducto(producto.id, "precio", e.target.value)
-            }
-          />
-        </td>
-        <td style={{ display: "flex",  alignItems: "center" }}>
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Imagen URL"
-    value={producto.imagen || ""}
-    onChange={(e) =>
-      actualizarProducto(producto.id, "imagen", e.target.value)
-    }
-    style={{ flex: 1 }}
-  />
+                    {productos
+                      .filter((producto) =>
+                        producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+                      )
+                      .map((producto) => (
+                        <tr key={producto.id}>
+                          <td>
+                          <input
+  className="form-control"
+  style={{ minWidth: "400px" }}
+  value={producto.nombre}
+  onChange={(e) =>
+    actualizarProducto(producto.id, "nombre", e.target.value)
+  }
+/>
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+                              style={{ minWidth: "50px" }}
 
-  <label
-    htmlFor={`file-upload-${producto.id}`}
-    style={{
-      padding: "6px 12px",
-      backgroundColor: "#007bff",
-      color: "white",
-      borderRadius: "4px",
-      cursor: "pointer",
-      userSelect: "none",
-    }}
-  >
-    Seleccionar archivo
-  </label>
-  <input
-    id={`file-upload-${producto.id}`}
-    type="file"
-    accept="image/*"
-    style={{ display: "none" }}
-    onChange={async (e) => {
-      if (e.target.files && e.target.files[0]) {
-        const formData = new FormData();
-        formData.append("file", e.target.files[0]);
-        formData.append("upload_preset", "ml_default");
+                              type="number"
+                              value={producto.precio}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "precio", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                            
+                              type="text"
+                              className="form-control"
+                              placeholder="Imagen URL"
+                              value={producto.imagen || ""}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "imagen", e.target.value)
+                              }
+                              style={{ flex: 1 }}
+                            />
 
-        try {
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-          const data = await res.json();
-          if (data.secure_url) {
-            actualizarProducto(producto.id, "imagen", data.secure_url);
-          }
-        } catch (err) {
-          console.error("Error al subir imagen:", err);
-        }
-      }
-    }}
-  />
-</td>
+                            <label
+                              htmlFor={`file-upload-${producto.id}`}
+                              style={{
+                                padding: "6px 12px",
+                                backgroundColor: "#007bff",
+                                color: "white",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                userSelect: "none",
+                              }}
+                            >
+                              Subir
+                            </label>
+                            <input
+                              id={`file-upload-${producto.id}`}
 
+                              type="file"
+                              accept="image/*"
+                              style={{ display: "none"}}
+                              onChange={async (e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  const formData = new FormData();
+                                  formData.append("file", e.target.files[0]);
+                                  formData.append("upload_preset", "ml_default");
 
-
-        <td>
-          <input
-            className="form-control"
-            value={producto.marca}
-            onChange={(e) =>
-              actualizarProducto(producto.id, "marca", e.target.value)
-            }
-          />
-        </td>
-        <td>
-          <input
-            className="form-control"
-            type="number"
-            value={producto.stock}
-            onChange={(e) =>
-              actualizarProducto(producto.id, "stock", e.target.value)
-            }
-          />
-        </td>
-
-        {categoriaSeleccionada === "Bebidasid" && (
-  <td>
-    <select
-      className="form-control"
-      value={producto.contenido || "sin alcohol"}
-      onChange={(e) =>
-        actualizarProducto(producto.id, "contenido", e.target.value)
-      }
-      onBlur={() => {
-        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
-        if (!producto.contenido) {
-          actualizarProducto(producto.id, "contenido", "sin alcohol");
-        }
-      }}
-    >
-      <option value="sin alcohol">Sin alcohol</option>
-      <option value="con alcohol">Con alcohol</option>
-    </select>
-  </td>
-)}
+                                  try {
+                                    const res = await fetch(
+                                      "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
+                                      {
+                                        method: "POST",
+                                        body: formData,
+                                      }
+                                    );
+                                    const data = await res.json();
+                                    if (data.secure_url) {
+                                      actualizarProducto(producto.id, "imagen", data.secure_url);
+                                    }
+                                  } catch (err) {
+                                    console.error("Error al subir imagen:", err);
+                                  }
+                                }
+                              }}
+                            />
+                          </td>
 
 
 
+                          <td>
+                            <input
+                              className="form-control"
+                              value={producto.marca}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "marca", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className="form-control"
+
+                              type="number"
+                              value={producto.stock}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "stock", e.target.value)
+                              }
+                            />
+                          </td>
+
+                          {categoriaSeleccionada === "Bebidasid" && (
+                            <td>
+                              <select
+                                className="form-control"
+                                value={producto.contenido || "sin alcohol"}
+                                onChange={(e) =>
+                                  actualizarProducto(producto.id, "contenido", e.target.value)
+                                }
+                                onBlur={() => {
+                                  // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
+                                  if (!producto.contenido) {
+                                    actualizarProducto(producto.id, "contenido", "sin alcohol");
+                                  }
+                                }}
+                              >
+                                <option value="sin alcohol">Sin alcohol</option>
+                                <option value="con alcohol">Con alcohol</option>
+                              </select>
+                            </td>
+                          )}
 
 
 
-        <td className="text-center">
-          <button
-            className={`btn btn-sm ${
-              producto.activo ? "btn-success" : "btn-secondary"
-            }`}
-            onClick={() =>
-              actualizarProducto(producto.id, "activo", !producto.activo)
-            }
-          >
-            {producto.activo ? "Activo" : "Inactivo"}
-          </button>
-        </td>
-        <td>
-          <button
-            className="btn btn-danger"
-            onClick={() => eliminarProducto(producto.id)}
-          >
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    ))}
-</tbody>
+
+
+
+                          <td className="text-center">
+                            <button
+                              className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"
+                                }`}
+                              onClick={() =>
+                                actualizarProducto(producto.id, "activo", !producto.activo)
+                              }
+                            >
+                              {producto.activo ? "Activo" : "Inactivo"}
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => eliminarProducto(producto.id)}
+                            >
+                              Eliminar
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
                 </table>
               </div>
             </div>
