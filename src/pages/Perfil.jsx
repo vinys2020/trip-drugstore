@@ -64,7 +64,7 @@ const Perfil = () => {
         <p className="text-white mb-2 px-2 small">
           Tu información está segura con nosotros 🔒. Solo tú puedes ver tus compras y beneficios.
         </p>
-        <p className="text-white small px-2 mb-5">
+        <p className="text-white small px-2 mb-lg-5 mb-1">
           ¿No tenés cuenta?{" "}
           <a href="/login" className="link-hover-underline fw-bold text-warning">
             Registrate gratis y empezá a sumar puntos hoy.
