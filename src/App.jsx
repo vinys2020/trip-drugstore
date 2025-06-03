@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // ← asegurate de importar useEffect
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -16,6 +16,7 @@ import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ProductoDetalle from "./components/ProductoDetalle";
+
 import ScrollToTop from "./components/ScrollToTop"; // ajustá el path según corresponda
 import "./App.css"; // Asegúrate de tener este import para que cargue los estilos
 
@@ -26,6 +27,14 @@ import { AuthProvider } from "./context/AuthContext"; // Ajusta esta ruta según
 const AppContent = () => {
   const [busqueda, setBusqueda] = useState("");
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/login") {
+      document.body.classList.add("login-page");
+    } else {
+      document.body.classList.remove("login-page");
+    }
+  }, [location]);
 
   return (
     <>
@@ -43,12 +52,13 @@ const AppContent = () => {
           <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route
-  path="/categorias/:categoriaId/producto/:productoId"
-  element={<ProductoDetalle />}
-/>
+            path="/categorias/:categoriaId/producto/:productoId"
+            element={<ProductoDetalle />}
+          />
 
         </Routes>
         <FloatingCart />
+
       </div>
       <InstallModal />
 
@@ -63,7 +73,7 @@ const App = () => {
     <AuthProvider>
       <CartProvider>
         <Router>
-        <ScrollToTop /> {/* ← colocá esto aquí, fuera de <Routes> */}
+          <ScrollToTop /> {/* ← colocá esto aquí, fuera de <Routes> */}
 
 
           <div className="app-root-wrapper">

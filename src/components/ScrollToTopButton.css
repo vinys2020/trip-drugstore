@@ -1,0 +1,35 @@
+.scroll-to-whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1050;
+    background-color: #25d366; /* verde oficial WhatsApp */
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .scroll-to-whatsapp-button:hover {
+    background-color: #1ebe57; /* verde un poco más oscuro al hover */
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-to-whatsapp-button {
+      width: 48px;
+      height: 48px;
+      bottom: 15px;
+      left: 15px;
+    }
+    .scroll-to-whatsapp-button svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  

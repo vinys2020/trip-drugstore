@@ -48,8 +48,36 @@ const Perfil = () => {
   
 
   if (!usuario) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex flex-column align-items-center justify-content-center text-center vh-100">
+        <h3 className="text-white d-flex align-items-center gap-2" style={{ marginBottom: "0px", marginTop: "0px" }}>
+          Debes iniciar sesión para ver tus compras.
+          <i className="bi bi-arrow-up-right-circle-fill fs-4 text-warning"></i>
+        </h3>
+        <img
+          src="https://res.cloudinary.com/dcggcw8df/image/upload/v1748991756/p416e5ggh9yvtovqgrpc.png"
+          alt="Iniciar sesión requerido"
+          style={{ width: "500px", marginBottom: "0px", marginTop: "0px" }}
+        />
+        <p className="text-white mt-4 mb-2 px-3">
+          Tu información está segura con nosotros 🔒. Solo tú puedes ver tus compras y beneficios.
+        </p>
+        <p className="text-white small px-3">
+          ¿No tenés cuenta?{" "}
+          <a
+  href="/login"
+  className="link-hover-underline mt-0"
+>
+  Registrate gratis y empezá a sumar puntos hoy.
+</a>
+
+        </p>
+      </div>
+    );
   }
+  
+  
+  
 
   const user = {
     nombre: datosUsuario?.nombre || usuario.displayName || "Nombre no disponible",

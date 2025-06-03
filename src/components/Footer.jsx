@@ -69,7 +69,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="text-center">
           <p className="mb-0">
-            © 2025 Trip Drugstore - Página creada por <a href="https://publik.netlify.app/" className="text-info text-decoration-underline" target="_blank" rel="noreferrer">Publik.</a>
+            © 2025 Trip Drugstore - Página creada por <a href="https://www.instagram.com/publik.tuc/" className="text-info text-decoration-underline" target="_blank" rel="noreferrer">Publik.</a>
           </p>
         </div>
       </div>

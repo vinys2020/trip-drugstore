@@ -56,6 +56,19 @@
     font-size: 0.875rem;
     border-radius: 1rem;
   }
+
+  .link-hover-underline {
+    color: #ffc107; /* amarillo de Bootstrap 'text-warning' */
+    font-weight: bold;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+  }
+  
+  .link-hover-underline:hover {
+    color: #ffbf00;;
+    text-decoration: underline;
+  }
+  
   
   .perfil-section {
     margin-top: 2rem;

@@ -13,8 +13,10 @@
   }
   
   .footer-link:hover {
-    color: #f8c102; /* Color amarillo llamativo en hover */
+    color: white; /* Color amarillo llamativo en hover */
+    text-decoration: underline;
   }
+  
   
   .social-icon {
     font-size: 1.8rem;

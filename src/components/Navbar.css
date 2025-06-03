@@ -14,8 +14,17 @@
     color: rgb(255, 230, 0) !important; /* Cambia el color a amarillo al hacer hover */
   }
   .navbar {
-    transition: top 0.3s;
+    z-index: 1030;     /* suficientemente arriba para no quedar debajo de otros elementos */
+    background-color: #212529; /* fondo para evitar transparencia al pegarse */
+    
+    transition: top 0.3s ease-in-out; /* transición suave y natural */
+    will-change: top;                 /* aviso al navegador para optimizar esta propiedad */
+    backface-visibility: hidden;     /* ayuda a suavizar repintados y mejorar rendimiento */
+    /* Opcional para suavizar aún más, pero no siempre necesario */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  
   
   .navbar-hidden {
     top: -110px; /* Asegúrate de que coincida con el valor de la altura de la navbar */
@@ -24,6 +33,7 @@
   .navbar-visible {
     top: 0px; /* Cuando la navbar es visible, vuelve a su posición inicial */
   }
+  
   
 
   /* Estilo para el dropdown */
