@@ -63,6 +63,33 @@
     text-decoration: none;
     transition: text-decoration 0.2s;
   }
+
+  .perfil-img-login {
+    width: 500px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    transition: all 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .perfil-img-login {
+      width: 80%;
+    }
+  }
+
+  /* Estilo base (desktop) */
+.icono-direccion {
+  transition: transform 0.3s ease;
+}
+
+/* En móvil: rotar 90 grados para que apunte hacia arriba */
+@media (max-width: 768px) {
+  .icono-direccion {
+    transform: rotate(-45deg); /* ajusta el ángulo para que quede bien */
+  }
+}
+
+  
   
   .link-hover-underline:hover {
     color: #ffbf00;;

@@ -46,35 +46,35 @@ const Perfil = () => {
     obtenerPedidosYUsuario();
   }, [usuario]);
   
-
   if (!usuario) {
     return (
-      <div className="d-flex flex-column align-items-center justify-content-center text-center vh-100">
-        <h3 className="text-white d-flex align-items-center gap-2" style={{ marginBottom: "0px", marginTop: "0px" }}>
+      <div
+        className="d-flex flex-column align-items-center justify-content-center text-center px-3"
+        style={{ minHeight: "80vh", paddingTop: "1rem", paddingBottom: "1rem" }}
+      >
+        <h3 className="text-white d-flex align-items-center gap-2 mb-2 mt-lg-4">
           Debes iniciar sesión para ver tus compras.
-          <i className="bi bi-arrow-up-right-circle-fill fs-4 text-warning"></i>
+          <i className="bi bi-arrow-up-right-circle-fill fs-4 text-warning icono-direccion"></i>
         </h3>
         <img
           src="https://res.cloudinary.com/dcggcw8df/image/upload/v1748991756/p416e5ggh9yvtovqgrpc.png"
           alt="Iniciar sesión requerido"
-          style={{ width: "500px", marginBottom: "0px", marginTop: "0px" }}
+          className="perfil-img-login mb-3"
         />
-        <p className="text-white mt-4 mb-2 px-3">
+        <p className="text-white mb-2 px-2 small">
           Tu información está segura con nosotros 🔒. Solo tú puedes ver tus compras y beneficios.
         </p>
-        <p className="text-white small px-3">
+        <p className="text-white small px-2 mb-5">
           ¿No tenés cuenta?{" "}
-          <a
-  href="/login"
-  className="link-hover-underline mt-0"
->
-  Registrate gratis y empezá a sumar puntos hoy.
-</a>
-
+          <a href="/login" className="link-hover-underline fw-bold text-warning">
+            Registrate gratis y empezá a sumar puntos hoy.
+          </a>
         </p>
       </div>
     );
   }
+  
+  
   
   
   
