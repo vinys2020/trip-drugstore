@@ -11,32 +11,33 @@ const items = [
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_702985-MLA81633888259_122024-G.webp",
     alt: "CAFÉ",
-    link: "#",
+    link: "/categorias/Almacenid?search=Cafe",
     title: "CAFÉ"
   },
+  
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_646735-MLA81364443724_122024-G.webp",
     alt: "LIMPIEZA",
-    link: "#",
+    link: "/categorias/Articuloslimpiezaid",
     title: "LIMPIEZA"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_799360-MLA82317787351_022025-G.webp",
-    alt: "SALUDABLES",
-    link: "#",
+    alt: "SNAKS",
+    link: "/categorias/Snacksygalletitasid",
     title: "SNAKS"
   },
   {
     image: "https://http2.mlstatic.com/D_Q_NP_2X_833202-MLA81364584956_122024-G.webp",
-    alt: "LACTEOS",
-    link: "#",
-    title: "ALMACEN"
+    alt: "ALMACÉN",
+    link: "/categorias/Almacenid",
+    title: "ALMACÉN"
   },
   {
-    image: "https://http2.mlstatic.com/D_Q_NP_2X_846703-MLA81564985462_012025-G.webp",
-    alt: "MASCOTAS",
-    link: "#",
-    title: "CHOCOLATES"
+    image: "https://res.cloudinary.com/dcggcw8df/image/upload/v1749004549/joaleykybhc9rry0hlu2.png",
+    alt: "JUGOS",
+    link: "/categorias/Bebidasid?search=jugos",
+    title: "JUGOS"
   }
 ];
 

@@ -167,11 +167,11 @@ export default function ProductoDetalle() {
 
           <footer>
           <button
-    className="btn btn-warning btn-lg w-100 mt-4 shadow-sm"
-    onClick={() => agregarAlCarrito(producto)}
-  >
-    Agregar al carrito
-  </button>
+  className="btn btn-warning btn-lg w-100 mt-4 shadow-sm"
+  onClick={() => agregarAlCarrito(producto, categoriaId)}
+>
+  Agregar al carrito
+</button>
           </footer>
         </section>
 

@@ -178,30 +178,38 @@ const AdminPedidos = () => {
                     </div>
 
                     {pedidoSeleccionado === pedido.id && (
-                      <div className="adminpedidos-details mt-3">
-                        <h5 className="text-dark">Detalles del Pedido:</h5>
-                        <p className="text-dark"><strong>Nombre:</strong> {pedido.cliente?.nombre}</p>
-                        <p className="text-dark"><strong>Email:</strong> {pedido.cliente?.email}</p>
-                        <p className="text-dark"><strong>Teléfono:</strong> {pedido.cliente?.telefono}</p>
-                        <p className="text-dark"><strong>Dirección:</strong> {pedido.cliente?.direccion}</p>
-                        <p className="text-dark"><strong>Entrega:</strong> {pedido.cliente?.entrega}</p>
-                        <p className="text-dark"><strong>Fecha:</strong> {pedido.fecha?.toDate().toLocaleString()}</p>
-                        <p className="text-dark"><strong>Estado:</strong> {pedido.estado}</p>
-                        <p className="text-dark"><strong>Método de pago:</strong> {pedido.metodopago}</p>
+  <div className="adminpedidos-details mt-3">
+    <h5 className="text-dark">Detalles del Pedido:</h5>
+    <p className="text-dark"><strong>Nombre:</strong> {pedido.cliente?.nombre}</p>
+    <p className="text-dark"><strong>Email:</strong> {pedido.cliente?.email}</p>
+    <p className="text-dark"><strong>Teléfono:</strong> {pedido.cliente?.telefono}</p>
+    <p className="text-dark"><strong>Dirección:</strong> {pedido.cliente?.direccion}</p>
+    <p className="text-dark"><strong>Entrega:</strong> {pedido.cliente?.entrega}</p>
+    <p className="text-dark"><strong>Fecha:</strong> {pedido.fecha?.toDate().toLocaleString()}</p>
+    <p className="text-dark"><strong>Estado:</strong> {pedido.estado}</p>
+    <p className="text-dark"><strong>Método de pago:</strong> {pedido.metodopago}</p>
 
-                        <h6 className="text-black">Productos:</h6>
-                        <ul className="adminpedidos-productos">
-                          {pedido.productos?.map((producto, index) => (
-                            <li key={index} className="adminpedidos-producto text-black">
-                              <strong>{producto.nombre}</strong>
-                              <div>Cantidad: {producto.cantidad}</div>
-                              <div>Precio unitario: ${producto.preciounitario}</div>
-                              <div>Total: ${producto.total}</div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+    {pedido.cliente?.descuento > 0 && (
+  <>
+    <p className="text-dark"><strong>Descuento aplicado:</strong> %{pedido.cliente.descuento}</p>
+    <p className="text-dark "><strong>Total con descuento:</strong> ${pedido.totalpedido}</p>
+  </>
+)}
+
+    <h6 className="text-black">Productos:</h6>
+    <ul className="adminpedidos-productos">
+      {pedido.productos?.map((producto, index) => (
+        <li key={index} className="adminpedidos-producto text-black">
+          <strong>{producto.nombre}</strong>
+          <div>Cantidad: {producto.cantidad}</div>
+          <div>Precio unitario: ${producto.preciounitario}</div>
+          <div>Total: ${producto.total}</div>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
                   </li>
                 ))}
               </ul>

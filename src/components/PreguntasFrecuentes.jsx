@@ -11,24 +11,24 @@ const PreguntasFrecuentes = () => {
     // Definir las preguntas y respuestas en un array para mejor mantenimiento
     const faqs = [
       {
-        pregunta: "¿Cómo hago un pedido?",
-        respuesta: "Podés hacer tu pedido desde nuestra página web o en nuestro local."
+        pregunta: "¿Cómo realizo un pedido?",
+        respuesta: "Podés hacer tu pedido fácilmente desde nuestra página web. Armá tu carrito, confirmá la compra y nosotros lo preparamos para que lo retires."
       },
       {
-        pregunta: "¿Cuáles son los métodos de pago disponibles?",
-        respuesta: "Aceptamos todo los metodos pagos."
+        pregunta: "¿Qué métodos de pago aceptan?",
+        respuesta: "Aceptamos todos los métodos de pago habituales: efectivo, tarjetas de débito y crédito, y billeteras virtuales."
       },
       {
-        pregunta: "¿El envío es gratuito?",
-        respuesta: "El envío es gratuito para compras superiores a $5.000."
+        pregunta: "¿Realizan envíos a domicilio?",
+        respuesta: "Por el momento no realizamos envíos, pero estamos trabajando para ofrecer este servicio muy pronto."
       },
       {
-        pregunta: "¿Puedo cambiar mi pedido?",
-        respuesta: "Si tu pedido aún no fue enviado, podés modificarlo desde el carrito. Si ya fue enviado, contactanos para ayudarte."
+        pregunta: "¿Puedo modificar mi pedido luego de confirmarlo?",
+        respuesta: "Sí, si tu pedido aún no fue preparado, podés modificarlo desde el carrito. Si ya está listo, contactanos y veremos cómo ayudarte."
       },
       {
-        pregunta: "¿Cómo saber el estado de mi pedido?",
-        respuesta: "Recibirás un correo con el seguimiento y el estado de tu pedido."
+        pregunta: "¿Cómo puedo saber el estado de mi pedido?",
+        respuesta: "Podés consultar el estado de tu pedido desde tu perfil. Además, te enviaremos una notificación cuando esté listo para retirar."
       }
     ];
   

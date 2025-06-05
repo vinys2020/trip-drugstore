@@ -102,14 +102,15 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
       <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
     </div>
     <button
-      className="scroll-producto-boton mt-md-4 mt-0"
-      onClick={(e) => {
-        e.stopPropagation(); // evita que el click en el botón también active el click en la tarjeta
-        agregarAlCarrito(producto);
-      }}
-    >
-      Agregar al carrito
-    </button>
+  className="scroll-producto-boton mt-md-4 mt-0"
+  onClick={(e) => {
+    e.stopPropagation();
+    console.log({ ...producto, categoriaId }); // debug
+    agregarAlCarrito(producto, categoriaId);
+  }}
+>
+  Agregar al carrito
+</button>
   </div>
 ))}
 

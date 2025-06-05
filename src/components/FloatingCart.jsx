@@ -2,16 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { db, auth } from "../config/firebase";
-import {
-  collection,
-  addDoc,
-  Timestamp,
-  doc,
-  query,
-  where,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
+import { getDoc, doc, collection, addDoc, Timestamp, query, where, getDocs, setDoc } from "firebase/firestore";
+import { obtenerProductoPorId } from "/src/hooks/obtenerProductoPorId";
+
+import { writeBatch } from "firebase/firestore"; // Asegúrate de importarlo arriba
+
+
+
+import { obtenerCuponesUsuario } from "../hooks/useCupones";
+
 import "./FloatingCart.css";
 
 const FloatingCart = () => {
@@ -36,6 +35,17 @@ const FloatingCart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [metodoPago, setMetodoPago] = useState("");
+  const [cupones, setCupones] = useState([]);
+  const [cuponSeleccionado, setCuponSeleccionado] = useState(null);
+
+
+
+
+  useEffect(() => {
+    if (usuario?.uid) {
+      obtenerCuponesUsuario(usuario.uid).then(setCupones);
+    }
+  }, [usuario]);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -44,12 +54,28 @@ const FloatingCart = () => {
         nombre: user.displayName, // <-- agregamos el nombre
         email: user.email,
         telefono: telefonoUsuario,
+        uid: user.uid,  // <--- Este campo es necesario para obtener cupones
+
       });
     }
   }, [telefonoUsuario]);
 
-  const registrarPedido = async () => {
+  const handleSeleccionCupon = (e) => {
+    const idCupon = e.target.value;
+    const cupon = cupones.find((c) => c.id === idCupon) || null;
+    setCuponSeleccionado(cupon);
+    aplicarCupon(cupon ? cupon : ""); // Aplica o quita automáticamente
+  };
 
+
+
+  const valorSelect = cuponSeleccionado ? cuponSeleccionado.id : "";
+
+
+
+
+
+  const registrarPedido = async () => {
     if (totalPrecio <= 0) {
       alert("El total del pedido debe ser mayor a $0 para confirmar.");
       return;
@@ -62,14 +88,61 @@ const FloatingCart = () => {
     try {
       setIsLoading(true);
 
-      // --- 1) Creamos el objeto pedidoData ---
+      const productosAFinalizar = [];
+
+      for (const producto of cart) {
+        const { id: productoId, categoriaId, cantidad, nombre } = producto;
+      
+        if (!categoriaId) {
+          alert(`Falta categoriaId para el producto: ${nombre}`);
+          setIsLoading(false);
+          return;
+        }
+      
+        if (productoId && cantidad > 0) {
+          // Obtener referencia y docSnap directamente aquí:
+          const docRef = doc(db, `Categoriasid/${categoriaId}/Productosid/${productoId}`);
+          const docSnap = await getDoc(docRef);
+      
+          if (!docSnap.exists()) {
+            alert(`Producto no encontrado: ${nombre}`);
+            setIsLoading(false);
+            return;
+          }
+      
+          const data = docSnap.data();
+          const stockActual = data.stock ?? 0;
+      
+          if (stockActual < cantidad) {
+            alert(`No hay suficiente stock para el producto: ${nombre}`);
+            setIsLoading(false);
+            return;
+          }
+      
+          productosAFinalizar.push({
+            ref: docRef,
+            stockActual,
+            cantidad,
+          });
+        } else {
+          console.warn("Faltan datos para verificar stock:", producto);
+        }
+      }
+      
+
+
+
+      // 2) Crear el pedido
       const pedidoData = {
         cliente: {
-          nombre: usuario.nombre, // <-- nuevo campo
+          nombre: usuario.nombre,
           email: usuario.email,
           telefono: usuario.telefono,
           direccion: "Calle Ficticia 123",
           entrega: "takeaway",
+          totalpedido: totalConDescuento,
+          cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
+          descuento: discount,
         },
         estado: "pendiente",
         fecha: Timestamp.now(),
@@ -80,42 +153,59 @@ const FloatingCart = () => {
           preciounitario: producto.precio,
           total: producto.precio * producto.cantidad,
         })),
-        totalpedido: totalPrecio,
+        totalpedido: totalConDescuento,
       };
 
-      // --- 2) Guardamos en "Pedidosid" ---
       await addDoc(collection(db, "Pedidosid"), pedidoData);
 
-      // --- 3) Calculamos cuántos puntos sumar ---
+      // 3) Actualizar stock con batch
+
+      const batch = writeBatch(db);
+
+      productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
+        const nuevoStock = Math.max(0, stockActual - cantidad);
+        console.log(`Producto a actualizar: ${ref.id}`);
+        console.log(`Stock actual: ${stockActual}`);
+        console.log(`Cantidad a restar: ${cantidad}`);
+        console.log(`Nuevo stock calculado: ${nuevoStock}`);
+
+        batch.update(ref, { stock: nuevoStock });
+      });
+
+      try {
+        await batch.commit();
+        console.log("Batch commit exitoso: stock actualizado para todos los productos");
+      } catch (error) {
+        console.error("Error en batch commit:", error);
+      }
+
+
+      // 4) Sumar puntos
       const puntosGanados = totalItems > 1 ? 50 : 25;
 
-      // --- 4) Buscamos el documento en “Usuariosid” por el campo `email` ---
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        // Tomamos el primer documento donde `email === usuario.email`
         const usuarioDoc = querySnapshot.docs[0];
         const puntosPrevios = typeof usuarioDoc.data().puntos === "number"
           ? usuarioDoc.data().puntos
           : 0;
         const nuevosPuntos = puntosPrevios + puntosGanados;
 
-        // Actualizamos solo el campo `puntos`
         await setDoc(usuarioDoc.ref, { puntos: nuevosPuntos }, { merge: true });
       } else {
-        // Si no existe ningún registro con ese email, avisamos
-        console.warn(
-          `No se encontró ningún documento en "Usuariosid" con email = ${usuario.email}.`
-        );
+        console.warn(`No se encontró ningún documento en "Usuariosid" con email = ${usuario.email}.`);
       }
 
-      // --- 5) Vaciar carrito y resetear pasos ---
+      // 5) Limpiar estado
       vaciarCarrito();
       setIsOpen(false);
       setStep(1);
       setMetodoPago("");
+      setCuponSeleccionado(null);
+      aplicarCupon("");
       setIsLoading(false);
 
       alert(`⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos. Te avisaremos cuando tu pedido esté listo. ¡Acumulá y canjeá descuentos!🎉 `);
@@ -125,6 +215,8 @@ const FloatingCart = () => {
       setIsLoading(false);
     }
   };
+
+
 
   const handleTelefonoChange = (e) => {
     setTelefonoUsuario(e.target.value);
@@ -149,6 +241,13 @@ const FloatingCart = () => {
       setStep(3);
     }
   };
+
+  // En el cuerpo del componente, antes del return
+  const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
+  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
+
+
+
 
   return (
     <>
@@ -277,6 +376,8 @@ const FloatingCart = () => {
               </div>
             )}
 
+// esto es el
+
             {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
@@ -300,16 +401,50 @@ const FloatingCart = () => {
 
                   <hr className="my-3" />
 
+                  {/* Sección para aplicar cupon */}
+                  <div className="coupon-section mb-3">
+                    <label htmlFor="couponSelect" className="form-label">
+                      Selecciona un Cupón
+                    </label>
+
+                    <select
+                      id="couponSelect"
+                      value={valorSelect}
+                      onChange={handleSeleccionCupon}
+                      className="form-select"
+                    >
+                      <option value="">-- Elige un cupón --</option>
+                      {cupones?.length > 0 ? (
+                        cupones
+                          .filter((c) => !c.usado)
+                          .map((cupon) => (
+                            <option key={cupon.id} value={cupon.id}>
+                              {cupon.nombre} ({cupon.descuento}%)
+                            </option>
+                          ))
+                      ) : (
+                        <option disabled value="">
+                          No tenés cupones disponibles
+                        </option>
+                      )}
+                    </select>
+
+
+
+
+
+                  </div>
+
                   <div className="discount-applied d-flex justify-content-between align-items-center text-danger pb-2 border-bottom">
                     <span>Descuento por Puntos:</span>
-                    <span>$0</span>
+                    <span>${descuentoMonetario.toFixed(2)}</span>
                   </div>
 
                   {discount > 0 && (
                     <>
                       <hr className="my-3" />
                       <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
-                        <span>Descuento %:</span>
+                        <span>Descuento por Cupón:</span>
                         <span>{discount}%</span>
                       </div>
                     </>
@@ -319,18 +454,17 @@ const FloatingCart = () => {
 
                   <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold">
                     <span>Total:</span>
-                    <span>${totalPrecio.toFixed(2)}</span>
+                    <span>${totalConDescuento.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <button
                   className="btn btn-primary mt-3 w-100"
                   onClick={registrarPedido}
-                  disabled={isLoading || totalPrecio <= 0}  // <--- Aquí
+                  disabled={isLoading || totalPrecio <= 0}
                 >
                   {isLoading ? "Procesando..." : "Ir a Pagar"}
                 </button>
-
 
                 <button
                   className="btn btn-danger mt-3 w-100"
@@ -350,6 +484,8 @@ const FloatingCart = () => {
                 </button>
               </>
             )}
+
+
           </div>
         </div>
       )}

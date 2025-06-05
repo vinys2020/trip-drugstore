@@ -121,14 +121,14 @@ const HorizontalCarousel = () => {
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
             <button
-              className="scroll-producto-boton mt-md-4 mt-0"
-              onClick={(e) => {
-                e.stopPropagation();
-                agregarAlCarrito(producto);
-              }}
-            >
-              Agregar al carrito
-            </button>
+  className="scroll-producto-boton mt-md-4 mt-0"
+  onClick={(e) => {
+    e.stopPropagation();
+    agregarAlCarrito(producto, "Bebidasid"); // PASAMOS LA CATEGORÍA EXPLÍCITAMENTE
+  }}
+>
+  Agregar al carrito
+</button>
           </div>
         ))}
       </div>

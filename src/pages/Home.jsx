@@ -65,8 +65,7 @@ const Home = () => {
                 Bienvenido a <span className=" text-white">Trip Drugstore</span>
               </h1>
               <p className="lead mt-3 text-white">
-                Tu drugstore online de confianza, con envíos rápidos y productos de calidad.
-              </p>
+              Ganá tiempo comprando online, Hacé tu pedido y retiralo listo al instante.</p>
               <Link
   to="/categorias/Snacksygalletitasid"
   className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2"
@@ -117,17 +116,19 @@ const Home = () => {
           <div className="container mt-md-4">
             <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas! 🥂</h3>
             <div className="row g-3 justify-content-center">
-              <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${bebida1})`,
+            <div className="col-6 col-md-3">
+  <Link to="/categorias/Bebidasid?search=cerveza">
+    <article
+      className="bebida-card"
+      style={{
+        backgroundImage: `url(${bebida1})`,
+      }}
+    >
+      <div className="card-body"></div>
+    </article>
+  </Link>
+</div>
 
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
 
               <div className="col-6 col-md-3">
                 <article
@@ -142,28 +143,40 @@ const Home = () => {
               </div>
 
               <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${bebida3})`,
-
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
+  <Link
+    to={{
+      pathname: "/categorias/Bebidasid",
+      search: "?alcohol=con",
+    }}
+  >
+    <article
+      className="bebida-card"
+      style={{
+        backgroundImage: `url(${bebida3})`,
+      }}
+    >
+      <div className="card-body"></div>
+    </article>
+  </Link>
+</div>
 
               <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${bebida4})`,
-
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
+  <Link
+    to={{
+      pathname: "/categorias/Bebidasid",
+      search: "?alcohol=sin",
+    }}
+  >
+    <article
+      className="bebida-card"
+      style={{
+        backgroundImage: `url(${bebida4})`,
+      }}
+    >
+      <div className="card-body"></div>
+    </article>
+  </Link>
+</div>
             </div>
           </div>
         </section>

@@ -1,8 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { 
+  collection, 
+  query, 
+  where, 
+  getDocs, 
+  doc, 
+  getDoc, 
+  addDoc, 
+  updateDoc 
+} from "firebase/firestore";
 import { db } from "../config/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 
 import "./perfil.css";
 
@@ -29,7 +37,7 @@ const Perfil = () => {
         }));
         pedidosData.sort((a, b) => b.fecha.toDate() - a.fecha.toDate());
         setPedidos(pedidosData);
-  
+
         // Obtener info extra del usuario (nombre, puntos, etc.)
         const userDocRef = doc(db, "Usuariosid", usuario.uid);
         const userDocSnap = await getDoc(userDocRef);
@@ -38,14 +46,58 @@ const Perfil = () => {
         } else {
           console.warn("El documento del usuario no existe en Usuariosid");
         }
-  
+
         setIsLoading(false);
       }
     };
-  
+
     obtenerPedidosYUsuario();
   }, [usuario]);
-  
+
+  // Función para comprar un cupón (colócala dentro del componente Perfil)
+// Dentro del componente Perfil, reemplaza comprarCupon con esta versión corregida:
+
+const comprarCupon = async (nombre, descuento, costoPuntos) => {
+  if (!usuario || !datosUsuario) return;
+
+  if (datosUsuario.puntos < costoPuntos) {
+    alert("No tienes puntos suficientes para canjear este cupón.");
+    return;
+  }
+
+  try {
+    // Resta puntos al usuario (CORREGIDO)
+    const userDocRef = doc(db, "Usuariosid", usuario.uid);
+    await updateDoc(userDocRef, {
+      puntos: datosUsuario.puntos - costoPuntos,
+    });
+
+    // Agrega cupón en subcolección Cuponesid
+    const cuponData = {
+      nombre,
+      descuento,
+      usado: false,
+      fechaCompra: new Date(),
+    };
+
+    const cuponesCollectionRef = collection(db, "Usuariosid", usuario.uid, "Cuponesid");
+    await addDoc(cuponesCollectionRef, cuponData);
+
+    // Actualiza puntos localmente
+    setDatosUsuario((prev) => ({
+      ...prev,
+      puntos: prev.puntos - costoPuntos,
+    }));
+
+    alert(`¡Cupón "${nombre}" comprado con éxito!`);
+  } catch (error) {
+    console.error("Error comprando cupón:", error);
+    alert("Hubo un error al comprar el cupón. Intenta nuevamente.");
+  }
+};
+
+
+
   if (!usuario) {
     return (
       <div
@@ -73,11 +125,8 @@ const Perfil = () => {
       </div>
     );
   }
-  
-  
-  
-  
-  
+
+
 
   const user = {
     nombre: datosUsuario?.nombre || usuario.displayName || "Nombre no disponible",
@@ -85,7 +134,7 @@ const Perfil = () => {
     foto: usuario.photoURL || "https://i.pravatar.cc/150?img=3",
     puntos: datosUsuario?.puntos ?? 0,
   };
-  
+
 
   const handleVerDetalle = (pedidoId) => {
     setPedidoSeleccionado((prev) => (prev === pedidoId ? null : pedidoId));
@@ -128,8 +177,8 @@ const Perfil = () => {
         return "💰";
     }
   };
-  
-  
+
+
 
   return (
     <section className="perfil-container">
@@ -144,133 +193,163 @@ const Perfil = () => {
         </div>
 
         <div className="perfil-section">
-  <section className="mb-5">
-    <h4 className="mb-3">🛒 Historial De Compras</h4>
-    {isLoading ? (
-      <p>Cargando pedidos...</p>
-    ) : pedidos.length === 0 ? (
-      <p>No tienes pedidos realizados.</p>
-    ) : (
-      <>
-        <article className="compras-recientes">
-          <ul className="list-group">
-            {pedidosPaginados.map((pedido) => (
-              <li key={pedido.id} className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <strong className="text-black">Pedido ID: {pedido.id}</strong>
-                    <div className={`small ${obtenerClaseEstado(pedido.estado)}`}>
-                      {obtenerIconoEstado(pedido.estado)} Estado: {pedido.estado}
-                    </div>
-                    <div className="text-muted small">
-                      Método de pago: {obtenerIconoPago(pedido.metodopago)} {pedido.metodopago}
-                    </div>
-                  </div>
-                  <span className="text-success fw-bold">Total: ${pedido.totalpedido}</span>
+          <section className="mb-5">
+            <h4 className="mb-3">🛒 Historial De Compras</h4>
+            {isLoading ? (
+              <p>Cargando pedidos...</p>
+            ) : pedidos.length === 0 ? (
+              <p>No tienes pedidos realizados.</p>
+            ) : (
+              <>
+                <article className="compras-recientes">
+                  <ul className="list-group">
+                    {pedidosPaginados.map((pedido) => (
+                      <li key={pedido.id} className="list-group-item">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div>
+                            <strong className="text-black">Pedido ID: {pedido.id}</strong>
+                            <div className={`small ${obtenerClaseEstado(pedido.estado)}`}>
+                              {obtenerIconoEstado(pedido.estado)} Estado: {pedido.estado}
+                            </div>
+                            <div className="text-muted small">
+                              Método de pago: {obtenerIconoPago(pedido.metodopago)} {pedido.metodopago}
+                            </div>
+                          </div>
+                          <span className="text-success fw-bold">Total: ${pedido.totalpedido}</span>
+                        </div>
+
+                        <button
+                          className="btn btn-info btn-sm mt-2"
+                          onClick={() => handleVerDetalle(pedido.id)}
+                        >
+                          {pedidoSeleccionado === pedido.id ? "Cerrar detalles" : "Ver detalles"}
+                        </button>
+
+                        {pedidoSeleccionado === pedido.id && (
+                          <div className="mt-3 text-black">
+                            <h5>📦 Detalles del Pedido:</h5>
+                            <p><strong>Nombre:</strong> {pedido.cliente.nombre}</p>
+                            <p><strong>Email:</strong> {pedido.cliente.email}</p>
+                            <p><strong>Teléfono:</strong> {pedido.cliente.telefono}</p>
+                            <p><strong>Dirección:</strong> {pedido.cliente.direccion}</p>
+                            <p><strong>Entrega:</strong> {pedido.cliente.entrega}</p>
+                            <p><strong>Fecha:</strong> {pedido.fecha.toDate().toLocaleString()}</p>
+                            <p><strong>Estado:</strong> <span className={obtenerClaseEstado(pedido.estado)}>{obtenerIconoEstado(pedido.estado)} {pedido.estado}</span></p>
+                            <p><strong>Método de pago:</strong> {pedido.metodopago}</p>
+
+                            <h6>🛍️ Productos:</h6>
+                            <ul className="list-group">
+                              {pedido.productos.map((producto, index) => (
+                                <li key={index} className="list-group-item text-black">
+                                  <strong>{producto.nombre}</strong>
+                                  <div>Cantidad: {producto.cantidad}</div>
+                                  <div>Precio unitario: ${producto.preciounitario}</div>
+                                  <div>Total: ${producto.total}</div>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+
+                <div className="d-flex justify-content-between align-items-center mt-3 gap-2 small">
+                  <button
+                    className="btn btn-outline-secondary btn-sm p-2 mx-auto"
+                    onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
+                    disabled={paginaActual === 1}
+                  >
+                    Anterior
+                  </button>
+                  <span className="fw-semibold text-center">
+                    Página {paginaActual} de {totalPaginas}
+                  </span>
+                  <button
+                    className="btn btn-outline-secondary btn-sm p-2 mx-auto"
+                    onClick={() => setPaginaActual((prev) => Math.min(prev + 1, totalPaginas))}
+                    disabled={paginaActual === totalPaginas}
+                  >
+                    Siguiente
+                  </button>
                 </div>
 
-                <button
-                  className="btn btn-info btn-sm mt-2"
-                  onClick={() => handleVerDetalle(pedido.id)}
-                >
-                  {pedidoSeleccionado === pedido.id ? "Cerrar detalles" : "Ver detalles"}
-                </button>
 
-                {pedidoSeleccionado === pedido.id && (
-                  <div className="mt-3 text-black">
-                    <h5>📦 Detalles del Pedido:</h5>
-                    <p><strong>Nombre:</strong> {pedido.cliente.nombre}</p>
-                    <p><strong>Email:</strong> {pedido.cliente.email}</p>
-                    <p><strong>Teléfono:</strong> {pedido.cliente.telefono}</p>
-                    <p><strong>Dirección:</strong> {pedido.cliente.direccion}</p>
-                    <p><strong>Entrega:</strong> {pedido.cliente.entrega}</p>
-                    <p><strong>Fecha:</strong> {pedido.fecha.toDate().toLocaleString()}</p>
-                    <p><strong>Estado:</strong> <span className={obtenerClaseEstado(pedido.estado)}>{obtenerIconoEstado(pedido.estado)} {pedido.estado}</span></p>
-                    <p><strong>Método de pago:</strong> {pedido.metodopago}</p>
+              </>
+            )}
+          </section>
 
-                    <h6>🛍️ Productos:</h6>
-                    <ul className="list-group">
-                      {pedido.productos.map((producto, index) => (
-                        <li key={index} className="list-group-item text-black">
-                          <strong>{producto.nombre}</strong>
-                          <div>Cantidad: {producto.cantidad}</div>
-                          <div>Precio unitario: ${producto.preciounitario}</div>
-                          <div>Total: ${producto.total}</div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </article>
+          {/* NUEVA SECCIÓN DE PUNTOS Y BENEFICIOS */}
+{/* NUEVA SECCIÓN DE PUNTOS Y BENEFICIOS */}
+<section className="puntos-beneficios border-top pt-4 mt-5">
+  <h4 className="mb-3">🎁 Canjea tus puntos</h4>
+  <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div className="col">
+      <div className="card h-100 shadow-sm">
+        <div className="card-body">
+          <h5 className="card-title text-black"><i className="bi bi-tag me-1"></i>10% de descuento</h5>
+          <hr className="bg-dark"/>
 
-        <div className="d-flex justify-content-between align-items-center mt-3 gap-2 small">
+          <p className="card-text text-center">Canjea 50 puntos para obtener un 10% de descuento en tu próxima compra.</p>
+        </div>
+        <div className="card-footer d-flex justify-content-center border-0 bg-white">
   <button
-    className="btn btn-outline-secondary btn-sm p-2 mx-auto"
-    onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
-    disabled={paginaActual === 1}
+    className="btn btn-success btn-sm"
+    onClick={() => comprarCupon("10% de Descuento", 10, 50)}
+    disabled={datosUsuario?.puntos < 50}
   >
-    Anterior
-  </button>
-  <span className="fw-semibold text-center">
-    Página {paginaActual} de {totalPaginas}
-  </span>
-  <button
-    className="btn btn-outline-secondary btn-sm p-2 mx-auto"
-    onClick={() => setPaginaActual((prev) => Math.min(prev + 1, totalPaginas))}
-    disabled={paginaActual === totalPaginas}
-  >
-    Siguiente
+    Canjear
   </button>
 </div>
 
+      </div>
+    </div>
 
-      </>
-    )}
-  </section>
+    <div className="col">
+      <div className="card h-100 shadow-sm">
+        <div className="card-body">
+          <h5 className="card-title text-black" ><i className="bi bi-star-fill me-1"></i>20% de descuento</h5>
+          <hr className="bg-dark"/>
 
-  {/* NUEVA SECCIÓN DE PUNTOS Y BENEFICIOS */}
-  <section className="puntos-beneficios border-top pt-4 mt-5">
-    <h4 className="mb-3">🎁 Canjea tus puntos</h4>
-    <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <div className="col">
-        <div className="card h-100 shadow-sm">
-          <div className="card-body">
-            <h5 className="card-title">🎉 10% de descuento</h5>
-            <p className="card-text">Canjea 100 puntos para obtener un 10% de descuento en tu próxima compra.</p>
-          </div>
-          <div className="card-footer text-end">
-            <button className="btn btn-success btn-sm" disabled>Canjear</button>
-          </div>
+          <p className="card-text text-center">Canjea 100 puntos para obtener un 20% de descuento en tu próxima compra.</p>
         </div>
-      </div>
-      <div className="col">
-        <div className="card h-100 shadow-sm">
-          <div className="card-body">
-            <h5 className="card-title">🚚 Envío gratis</h5>
-            <p className="card-text">Canjea 150 puntos para recibir tu próximo pedido sin costo de envío.</p>
-          </div>
-          <div className="card-footer text-end">
-            <button className="btn btn-success btn-sm" disabled>Canjear</button>
-          </div>
-        </div>
-      </div>
-      <div className="col">
-        <div className="card h-100 shadow-sm">
-          <div className="card-body">
-            <h5 className="card-title">🍫 Producto sorpresa</h5>
-            <p className="card-text">Canjea 50 puntos y recibí un regalo sorpresa junto a tu pedido.</p>
-          </div>
-          <div className="card-footer text-end">
-            <button className="btn btn-success btn-sm" disabled>Canjear</button>
-          </div>
-        </div>
-      </div>
-    </article>
-  </section>
+        <div className="card-footer d-flex justify-content-center border-0 bg-white">
+  <button
+    className="btn btn-success btn-sm"
+    onClick={() => comprarCupon("20% de Descuento", 20, 100)}
+    disabled={datosUsuario?.puntos < 100}
+  >
+    Canjear
+  </button>
 </div>
+      </div>
+    </div>
+
+    <div className="col">
+      <div className="card h-100 shadow-sm">
+        <div className="card-body">
+          <h5 className="card-title text-black"><i className="bi bi-gift me-1"></i>30% de descuento</h5>
+          <hr className="bg-dark"/>
+
+          <p className="card-text text-center">Canjea 150 puntos para obtener un 30% de descuento en tu próxima compra.</p>
+        </div>
+        <div className="card-footer d-flex justify-content-center border-0 bg-white">
+  <button
+    className="btn btn-success btn-sm"
+    onClick={() => comprarCupon("30% de Descuento", 30, 150)}
+    disabled={datosUsuario?.puntos < 150}
+  >
+    Canjear
+  </button>
+</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+
+        </div>
       </div>
     </section>
   );

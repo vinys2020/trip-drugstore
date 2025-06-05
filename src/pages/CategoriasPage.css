@@ -3,14 +3,17 @@
   padding: 1rem;
   margin: 0 auto;
   display: flex;
-  flex-wrap: nowrap; /* evita que sidebar se mueva arriba */
+  flex-wrap: nowrap;
+  /* evita que sidebar se mueva arriba */
   background: #fff;
-  min-height: 70vh; /* para que tome altura aunque poco contenido */
+  min-height: 70vh;
+  /* para que tome altura aunque poco contenido */
   padding: 20px;
 }
 
 .categoriaspage-sidebar {
-  width: 260px; /* ✅ Cambiá este valor si querés más o menos ancho */
+  width: 260px;
+  /* ✅ Cambiá este valor si querés más o menos ancho */
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 1rem;
@@ -64,8 +67,10 @@
 
 /* Contenido principal */
 .categoriaspage-main {
-  flex: 1 1 auto; /* ocupa todo el espacio restante */
-  min-width: 0; /* para evitar overflow */
+  flex: 1 1 auto;
+  /* ocupa todo el espacio restante */
+  min-width: 0;
+  /* para evitar overflow */
   padding-left: 1rem;
 }
 
@@ -111,7 +116,8 @@
 
 .categoriaspage-img-container {
   width: 100%;
-  height: 220px; /* o el valor que prefieras */
+  height: 220px;
+  /* o el valor que prefieras */
   overflow: hidden;
   border-bottom: 1px solid #eee;
   display: flex;
@@ -167,6 +173,7 @@
   color: #ffd814;
   cursor: pointer;
 }
+
 .btn-warning-custom {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -193,14 +200,16 @@
 
   }
 
-  
-  
+
+
 }
+
 @media (max-width: 1505px) {
   .categoriaspage-img {
     height: 220px;
     width: auto;
   }
+
   .categoriaspage-product .card {
     padding: 10px;
   }
@@ -211,6 +220,7 @@
     height: 150px;
     width: auto;
   }
+
   .categoriaspage-product .card {
     padding: 5px;
   }
@@ -229,6 +239,7 @@
     height: 155px;
     width: auto;
   }
+
   .categoriaspage-product .card {
     padding: 6px;
   }

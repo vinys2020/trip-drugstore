@@ -53,14 +53,14 @@ const HorizontalCarousel = () => {
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
       Puede interesarte ⭐
-        <a
-          className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="#"
-          target="_self"
-          style={{ color: "#3483fa" }}
-        >
-          Ver más
-        </a>
+      <a
+  className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
+  href="/categorias/Articuloslimpiezaid"
+  target="_self"
+  style={{ color: "#3483fa" }}
+>
+  Ver más
+</a>
       </h3>
 
       {/* Botón Prev */}
@@ -120,14 +120,15 @@ const HorizontalCarousel = () => {
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
             <button
-              className="scroll-producto-boton mt-md-4 mt-0"
-              onClick={(e) => {
-                e.stopPropagation();
-                agregarAlCarrito(producto);
-              }}
-            >
-              Agregar al carrito
-            </button>
+  className="scroll-producto-boton mt-md-4 mt-0"
+  onClick={(e) => {
+    e.stopPropagation();
+    agregarAlCarrito(producto, "Articuloslimpiezaid");
+  }}
+>
+  Agregar al carrito
+</button>
+
           </div>
         ))}
       </div>
