@@ -376,7 +376,6 @@ const FloatingCart = () => {
               </div>
             )}
 
-// esto es el
 
             {step === 3 && (
               <>

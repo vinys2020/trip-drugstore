@@ -97,14 +97,14 @@ const VerticalCarousel = () => {
 
                 {/* ✅ Botón Agregar al carrito */}
                 <button
-                  className="scroll-producto-boton mt-2"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    agregarAlCarrito(producto);
-                  }}
-                >
-                  Agregar al carrito
-                </button>
+  className="scroll-producto-boton mt-md-4 mt-0"
+  onClick={(e) => {
+    e.stopPropagation();
+    agregarAlCarrito(producto, "Tripcafeysandwichesid"); // PASO LA CATEGORÍA EXPLÍCITA
+  }}
+>
+  Agregar al carrito
+</button>
               </div>
             </div>
           ))}
