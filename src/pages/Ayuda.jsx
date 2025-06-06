@@ -1,8 +1,16 @@
 import React from 'react';
-import { FaSearch, FaQuestionCircle, FaEnvelopeOpenText } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';  // corregí importación del ícono
+import FaqCuentaAcceso from '../components/FaqCuentaAcceso';
+import FaqFuncionalidades from '../components/FaqFuncionalidades';
+import FaqSeguridad from '../components/FaqSeguridad';
+
 import "./ayuda.css";
 
 const PaginaAyuda = () => {
+  const whatsappNumber = "5493814685931"; // poné tu número con código país y sin signos
+  const defaultMessage = encodeURIComponent("Hola, necesito ayuda con mi pedido."); // mensaje predeterminado
+
+
   return (
     <div className="help-page mt-md-4">
       {/* Header */}
@@ -11,47 +19,26 @@ const PaginaAyuda = () => {
         <p>Encuentra respuestas rápidas a tus preguntas o contáctanos si necesitas asistencia adicional.</p>
       </header>
 
-      {/* Search Bar */}
-      <div className="search-container">
-        <input type="text" placeholder="Buscar en la ayuda..." />
-        <FaSearch />
-      </div>
-
       {/* Sección: Cuenta y Acceso */}
-      <section className="faq-section">
-        <h2><FaQuestionCircle /> Cuenta y Acceso</h2>
-        <ul >
-          <li>¿Cómo creo una cuenta?</li>
-          <li>Olvidé mi contraseña, ¿qué hago?</li>
-          <li>¿Puedo cambiar mi correo electrónico?</li>
-        </ul>
-      </section>
+      <FaqCuentaAcceso />
 
       {/* Sección: Funcionalidades */}
-      <section className="faq-section">
-        <h2><FaQuestionCircle /> Funcionalidades</h2>
-        <ul>
-          <li>¿Cómo uso la plataforma?</li>
-          <li>¿Dónde encuentro mis estadísticas?</li>
-          <li>¿Puedo cambiar mi imagen de perfil?</li>
-        </ul>
-      </section>
+      <FaqFuncionalidades />
 
       {/* Sección: Seguridad */}
-      <section className="faq-section">
-        <h2><FaQuestionCircle /> Seguridad</h2>
-        <ul>
-          <li>¿Mi información está segura?</li>
-          <li>¿Cómo reporto un problema?</li>
-          <li>¿Qué hago si detecto actividad sospechosa?</li>
-        </ul>
-      </section>
+      <FaqSeguridad />
 
       {/* Footer */}
       <div className="contact-support">
         <p>¿No encontraste lo que buscabas?</p>
-        <a href="mailto:soporte@tuapp.com">
-          <FaEnvelopeOpenText /> Contactar Soporte
+        <a 
+          href={`https://wa.me/${whatsappNumber}?text=${defaultMessage}`} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="btn-whatsapp"
+        >
+          <FaWhatsapp style={{ marginRight: '8px' }} />
+          Contactanos
         </a>
       </div>
     </div>

@@ -14,15 +14,15 @@ const VerticalCarousel = () => {
       console.warn("El producto no tiene id");
       return;
     }
-  
+
     // Si no tiene categoriaId, le asigno el valor por defecto
     const categoriaId = producto.categoriaId || "Tripcafeysandwichesid";
-  
+
     navigate(`/categorias/${categoriaId}/producto/${producto.id}`, {
       state: { producto },
     });
   };
-  
+
 
   if (loading) {
     return (
@@ -97,14 +97,14 @@ const VerticalCarousel = () => {
 
                 {/* ✅ Botón Agregar al carrito */}
                 <button
-  className="scroll-producto-boton mt-md-4 mt-0"
-  onClick={(e) => {
-    e.stopPropagation();
-    agregarAlCarrito(producto, "Tripcafeysandwichesid"); // PASO LA CATEGORÍA EXPLÍCITA
-  }}
->
-  Agregar al carrito
-</button>
+                  className="scroll-producto-boton mt-md-4 mt-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    agregarAlCarrito(producto, "Tripcafeysandwichesid"); // PASO LA CATEGORÍA EXPLÍCITA
+                  }}
+                >
+                  Agregar al carrito
+                </button>
               </div>
             </div>
           ))}

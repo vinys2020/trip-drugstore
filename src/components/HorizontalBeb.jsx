@@ -18,11 +18,11 @@ const HorizontalCarousel = () => {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
       const scrollStep = clientWidth * 0.8; // o 1 para ver de a un "pantallazo"
-  
+
       let targetScroll = direction === "next"
         ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
         : Math.max(scrollLeft - scrollStep, 0);
-  
+
       scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
   };
@@ -41,9 +41,9 @@ const HorizontalCarousel = () => {
       </div>
     );
   }
-  
-  
-  
+
+
+
 
   return (
     <div
@@ -53,7 +53,7 @@ const HorizontalCarousel = () => {
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-      <span>Las más buscadas 🔍</span>
+        <span>Las más buscadas 🔍</span>
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
           href="/categorias/Bebidasid"
@@ -121,14 +121,14 @@ const HorizontalCarousel = () => {
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
             <button
-  className="scroll-producto-boton mt-md-4 mt-0"
-  onClick={(e) => {
-    e.stopPropagation();
-    agregarAlCarrito(producto, "Bebidasid"); // PASAMOS LA CATEGORÍA EXPLÍCITAMENTE
-  }}
->
-  Agregar al carrito
-</button>
+              className="scroll-producto-boton mt-md-4 mt-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                agregarAlCarrito(producto, "Bebidasid"); // PASAMOS LA CATEGORÍA EXPLÍCITAMENTE
+              }}
+            >
+              Agregar al carrito
+            </button>
           </div>
         ))}
       </div>
