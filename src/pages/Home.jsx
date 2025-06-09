@@ -8,11 +8,14 @@ import HorizontalChoc from "../components/HorizontalChoc";
 import HorizontalGolos from "../components/HorizontalGolos";
 import HorizontalAlms from "../components/HorizontalAlms";
 import HorizontalBeb from "../components/HorizontalBeb"; // asegurate de la ruta correcta // Importa el componente Swiper
-
+import Horizontalots from "../components/Horizontalots";
+import Horizontalcig from "../components/Horizontalcig"; // asegurate de la ruta correcta // Importa el componente Swiper
 import BannerCard from "../components/BannerCard";
 import BannerCard2 from "../components/BannerCard2";
 import BannerCard3 from "../components/BannerCard3";
 import VerticalCarousel from "../components/VerticalCarousel";
+import VerticalCarouselPers from "../components/VerticalCarouselPers";
+
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
 import promocion1 from "../assets/coca.webp"; // Asegúrate de que estas imágenes existan
@@ -101,13 +104,46 @@ const Home = () => {
         </section>
 
 
-      <div className="mt-3 mb-3 mx-lg-5 mx-2">
+      <div className="mt-3 mb-3 mx-lg-5">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
         <BannerCard
           altText="Promo banner grande"
           large={true} // Esto controla si es una imagen grande
         />
       </div>
+
+      <section id="servicios" className="py-md-4 mx-lg-5">
+          <div className="container-fluid w-100 mt-md-4 mt-2">
+            <div className="container px-0">
+              <HorizontalChoc />
+            </div>          
+          </div>
+        </section>
+
+
+
+
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <HorizontalGolos />
+          </div>
+        </div>
+
+        </section>
+
+
+        <div className="mt-3 mb-5 mx-lg-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard2
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
+        
 
 
 
@@ -192,9 +228,33 @@ const Home = () => {
 
         </section>
 
+        <div className="mt-5 mb-5 mx-lg-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 mx-lg-5">
+          <div className="w-100 mt-md-4 mt-0">
+
+            <VerticalCarousel />
+
+          </div>
+
+        </section>
+
+        <div className="mt-5 mb-5 mx-lg-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
         <section id="recomendados" className="py-lg-0 mb-5 mb-lg-0">
           <div className="container">
-            <h3 className="text-center mt-md-4 mt-3 text-white mb-3">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mt-md-4 mt-3 text-white mb-5">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="container">
                 <div className="col-12 mb-3">
@@ -252,53 +312,10 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section id="servicios" className="py-md-4 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4 mt-2">
-            <div className="container px-0">
-              <HorizontalChoc />
-            </div>          
-          </div>
-        </section>
 
 
 
 
-        <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
-
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalGolos />
-          </div>
-        </div>
-
-        </section>
-
-
-        <div className="mt-3 mb-5 mx-lg-5 mx-2">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard2
-            altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
-          />
-        </div>
-
-        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4 mt-0">
-
-            <VerticalCarousel />
-
-          </div>
-
-        </section>
-
-        <div className="mt-5 mb-5 mx-lg-5 mx-2">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
-            altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
-          />
-        </div>
 
         <section id="servicios" className="mx-lg-5">
         <div className="container-fluid w-100 mt-3">
@@ -311,9 +328,9 @@ const Home = () => {
 
         </section>
 
-        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 ms-md-3 mx-md-2 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4">
-            <VerticalCarousel />
+        <section id="servicios" className="mb-md-2 mt-md-0  mb-4 ms-md-3 mx-md-2 mx-lg-5">
+          <div className=" w-100 mt-md-4">
+            <VerticalCarouselPers />
 
           </div>
 
@@ -327,14 +344,37 @@ const Home = () => {
           />
         </div>
 
-        <section id="servicios" className="mt-md-0 mb-4 ms-md-3 mx-md-2 mb-5 mx-lg-5">
-        <div className="container-fluid w-100 mt-md-4 mt-0">
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
 
-          <VerticalCarousel />
-
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <Horizontalots />
           </div>
+        </div>
 
         </section>
+
+
+
+        <section id="servicios" className="mx-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <Horizontalcig />
+          </div>
+        </div>
+
+        </section>
+
+        <div className="mt-5 mb-5 mx-lg-5 mx-2">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard3
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
 
 
 
