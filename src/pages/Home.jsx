@@ -13,6 +13,14 @@ import Horizontalcig from "../components/Horizontalcig"; // asegurate de la ruta
 import BannerCard from "../components/BannerCard";
 import BannerCard2 from "../components/BannerCard2";
 import BannerCard3 from "../components/BannerCard3";
+import BannerCard4 from "../components/Baner4";
+import BannerCard5 from "../components/Banner5";
+import BannerCard6 from "../components/Banner6cafetrip";
+import BannerCard7 from "../components/Banner7cho";
+
+
+
+
 import VerticalCarousel from "../components/VerticalCarousel";
 import VerticalCarouselPers from "../components/VerticalCarouselPers";
 
@@ -92,6 +100,8 @@ const Home = () => {
           </div>
         </section>
 
+
+
         <section id="servicios" className="mx-lg-5">
         <div className="container-fluid w-100 mt-3">
 
@@ -103,69 +113,14 @@ const Home = () => {
 
         </section>
 
-
-      <div className="mt-0 mb-4">
-        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard3
-          altText="Promo banner grande"
-          large={true} // Esto controla si es una imagen grande
-        />
-      </div>
-
-
-        <section id="servicios" className="mb-md-2 mt-md-5 mb-4 mx-lg-5">
-          <div className="w-100 mt-md-4 mt-0">
-
-            <VerticalCarousel />
-
-          </div>
-
-        </section>
-
-        <section id="servicios" className="py-2 mx-lg-5">
-          <div className="container-fluid w-100 mt-md-4 mt-2">
-            <div className="container px-0">
-              <HorizontalChoc />
-            </div>          
-          </div>
-        </section>
-
-        <div className="mt-0 mb-4">
-        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard3
-          altText="Promo banner grande"
-          large={true} // Esto controla si es una imagen grande
-        />
-      </div>
-
-
-
-
-        <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
-
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalGolos />
-          </div>
-        </div>
-
-        </section>
-
-
-        <div className="mt-3 mb-5 mx-lg-5">
+        <div className="mt-2 mx-lg-5">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard2
+          <BannerCard3
             altText="Promo banner grande"
             large={true} // Esto controla si es una imagen grande
           />
         </div>
 
-        
-
-
-
-        {/* Sección Especial Bebidas */}
         <section id="bebidas" className="mt-5">
           <div className="container mt-md-4">
             <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas! 🥂</h3>
@@ -246,14 +201,18 @@ const Home = () => {
 
         </section>
 
-        <div className="mt-5 mb-5 mx-lg-5">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
-            altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
-          />
-        </div>
-        <section id="servicios" className="mb-md-2 mt-md-0 mb-4 mx-lg-5">
+
+
+      <div className="mt-0 mb-4">
+        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+        <BannerCard6
+          altText="Promo banner grande"
+          large={true} // Esto controla si es una imagen grande
+        />
+      </div>
+
+
+        <section id="servicios" className="mb-md-2 mt-lg-5 mb-4 mx-lg-5 mt-3">
           <div className="w-100 mt-md-4 mt-0">
 
             <VerticalCarousel />
@@ -262,17 +221,68 @@ const Home = () => {
 
         </section>
 
-        <div className="mt-5 mb-5 mx-lg-5">
+        <div className="mt-5 mb-5 mx-lg-5 mx-2">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
+          <BannerCard7
             altText="Promo banner grande"
             large={true} // Esto controla si es una imagen grande
           />
         </div>
 
-        <section id="recomendados" className="py-lg-0 mb-5 mb-lg-0">
+        <section id="servicios" className="py-0 mx-lg-5 mb-2">
+          <div className="container-fluid w-100 mt-md-4 mt-2">
+            <div className="container px-0">
+              <HorizontalChoc />
+            </div>          
+          </div>
+        </section>
+
+        <div className="mt-0 mb-4">
+        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+        <BannerCard5
+          altText="Promo banner grande"
+          large={true} // Esto controla si es una imagen grande
+        />
+      </div>
+
+
+
+
+        <section id="servicios" className="mx-lg-5 mb-0 mt-lg-5">
+        <div className="container-fluid w-100 mt-3">
+
+          {/* Contenedor para el HorizontalCarousel */}
+          <div className="container px-0">
+            <HorizontalGolos />
+          </div>
+        </div>
+
+        </section>
+
+
+        <div className="justify-content-center p-0 mb-0 mt-5 mt-lg-5">
+              <div className="col-12 container">
+                <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+                  <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+                  <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
+                  <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
+                </div>
+              </div>
+            </div>
+
+      
+
+        <div className="mt-4 mb-5 mx-lg-5">
+          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+          <BannerCard4
+            altText="Promo banner grande"
+            large={true} // Esto controla si es una imagen grande
+          />
+        </div>
+
+        <section id="recomendados" className="py-lg-0 mb-5 mb-lg-5">
           <div className="container">
-            <h3 className="text-center mt-md-4 mt-3 text-white mb-lg-5 mb-3">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mt-md-4 mt-3 text-white mb-lg-4 mb-3">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="container">
                 <div className="col-12 mb-3">
