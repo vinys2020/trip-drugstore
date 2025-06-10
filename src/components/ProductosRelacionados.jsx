@@ -38,7 +38,7 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
   const irAlDetalle = (producto) => {
     navigate(`/categorias/${categoriaId}/producto/${producto.id}`);
   };
-  
+
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -86,33 +86,45 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
         className="scroll-producto-contenedor d-flex overflow-auto p-0 mt-2 mt-lg-3"
         style={{ gap: "12px", paddingBottom: "8px" }}
       >
-{productosRelacionados.map((producto, index) => (
-  <div
-    key={index}
-    className="scroll-producto-card flex-shrink-0"
-    onClick={() => irAlDetalle(producto)}
-    style={{ cursor: "pointer" }} // Para mostrar que es clickeable
-  >
-    <img src={producto.imagen} alt={producto.nombre} className="scroll-producto-img" />
-    <div className="scroll-producto-body">
-      <p className="scroll-producto-precio">
-        ${producto.precio?.toLocaleString() || "N/A"}
-        <span className="scroll-producto-descuento">{producto.descuento || ""}</span>
-      </p>
-      <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
-    </div>
-    <button
-  className="scroll-producto-boton mt-md-4 mt-0"
-  onClick={(e) => {
-    e.stopPropagation();
-    console.log({ ...producto, categoriaId }); // debug
-    agregarAlCarrito(producto, categoriaId);
-  }}
->
-  Agregar al carrito
-</button>
-  </div>
-))}
+        {productosRelacionados.map((producto, index) => (
+          <div
+            key={index}
+            className="scroll-producto-card flex-shrink-0"
+            onClick={() => irAlDetalle(producto)}
+            style={{ cursor: "pointer" }} // Para mostrar que es clickeable
+          >
+            <img src={producto.imagen} alt={producto.nombre} className="scroll-producto-img" />
+            <div className="scroll-producto-body">
+              <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
+                {/* Precio anterior */}
+                <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }} className="mt-lg-3">
+                  ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
+                </span>
+
+                {/* Precio actual */}
+                <p className="scroll-producto-precio mb-0">
+                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                </p>
+
+              </div>
+              <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1 mb-1">
+                <span>Trip</span>
+                <i className="bi bi-lightning-fill text-warning"></i>
+              </div>
+              <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
+            </div>
+            <button
+              className="scroll-producto-boton mt-md-4 mt-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log({ ...producto, categoriaId }); // debug
+                agregarAlCarrito(producto, categoriaId);
+              }}
+            >
+              Agregar al carrito
+            </button>
+          </div>
+        ))}
 
       </div>
 

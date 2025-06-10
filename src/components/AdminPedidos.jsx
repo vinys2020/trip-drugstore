@@ -18,7 +18,7 @@ const AdminPedidos = () => {
   const [filtro, setFiltro] = useState("Todos");
   const [paginaActual, setPaginaActual] = useState(1);
   const pedidosPorPagina = 5;
-  
+
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "Pedidosid"), (snapshot) => {
@@ -41,22 +41,22 @@ const AdminPedidos = () => {
 
 
 
-  
-  
 
-  
+
+
+
 
   const cambiarEstado = async (pedidoId, nuevoEstado) => {
     const pedidoRef = doc(db, "Pedidosid", pedidoId);
     const pedido = pedidos.find((p) => p.id === pedidoId);
-  
+
     if (!pedido) return;
-  
+
     await updateDoc(pedidoRef, { estado: nuevoEstado });
     const fechaFormateada = pedido.fecha?.toDate().toLocaleString('es-AR') || '';
 
 
-  
+
     if (nuevoEstado === "Listo" && pedido.cliente?.email) {
       const templateParams = {
         nombre: pedido.cliente.nombre || "Cliente",
@@ -74,7 +74,7 @@ const AdminPedidos = () => {
 
 
       };
-  
+
       emailjs
         .send("default_service", "template_h0wvzcy", templateParams)
         .then(
@@ -87,7 +87,7 @@ const AdminPedidos = () => {
         );
     }
   };
-  
+
 
   const filtrarPedidos = () => {
     return pedidos.filter((pedido) =>
@@ -96,7 +96,7 @@ const AdminPedidos = () => {
         : (pedido.estado || "").toLowerCase().trim() === filtro.toLowerCase().trim()
     );
   };
-  
+
 
   const pedidosFiltrados = filtrarPedidos();
   const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
@@ -116,7 +116,7 @@ const AdminPedidos = () => {
     if (estadoNormalizado === "listo") return "estado-listo";
     return "";
   };
-  
+
 
   return (
     <section className="container-fluid">
@@ -178,37 +178,37 @@ const AdminPedidos = () => {
                     </div>
 
                     {pedidoSeleccionado === pedido.id && (
-  <div className="adminpedidos-details mt-3">
-    <h5 className="text-dark">Detalles del Pedido:</h5>
-    <p className="text-dark"><strong>Nombre:</strong> {pedido.cliente?.nombre}</p>
-    <p className="text-dark"><strong>Email:</strong> {pedido.cliente?.email}</p>
-    <p className="text-dark"><strong>Teléfono:</strong> {pedido.cliente?.telefono}</p>
-    <p className="text-dark"><strong>Dirección:</strong> {pedido.cliente?.direccion}</p>
-    <p className="text-dark"><strong>Entrega:</strong> {pedido.cliente?.entrega}</p>
-    <p className="text-dark"><strong>Fecha:</strong> {pedido.fecha?.toDate().toLocaleString()}</p>
-    <p className="text-dark"><strong>Estado:</strong> {pedido.estado}</p>
-    <p className="text-dark"><strong>Método de pago:</strong> {pedido.metodopago}</p>
+                      <div className="adminpedidos-details mt-3">
+                        <h5 className="text-dark">Detalles del Pedido:</h5>
+                        <p className="text-dark"><strong>Nombre:</strong> {pedido.cliente?.nombre}</p>
+                        <p className="text-dark"><strong>Email:</strong> {pedido.cliente?.email}</p>
+                        <p className="text-dark"><strong>Teléfono:</strong> {pedido.cliente?.telefono}</p>
+                        <p className="text-dark"><strong>Dirección:</strong> {pedido.cliente?.direccion}</p>
+                        <p className="text-dark"><strong>Entrega:</strong> {pedido.cliente?.entrega}</p>
+                        <p className="text-dark"><strong>Fecha:</strong> {pedido.fecha?.toDate().toLocaleString()}</p>
+                        <p className="text-dark"><strong>Estado:</strong> {pedido.estado}</p>
+                        <p className="text-dark"><strong>Método de pago:</strong> {pedido.metodopago}</p>
 
-    {pedido.cliente?.descuento > 0 && (
-  <>
-    <p className="text-dark"><strong>Descuento aplicado:</strong> %{pedido.cliente.descuento}</p>
-    <p className="text-dark "><strong>Total con descuento:</strong> ${pedido.totalpedido}</p>
-  </>
-)}
+                        {pedido.cliente?.descuento > 0 && (
+                          <>
+                            <p className="text-dark"><strong>Descuento aplicado:</strong> %{pedido.cliente.descuento}</p>
+                            <p className="text-dark "><strong>Total con descuento:</strong> ${pedido.totalpedido}</p>
+                          </>
+                        )}
 
-    <h6 className="text-black">Productos:</h6>
-    <ul className="adminpedidos-productos">
-      {pedido.productos?.map((producto, index) => (
-        <li key={index} className="adminpedidos-producto text-black">
-          <strong>{producto.nombre}</strong>
-          <div>Cantidad: {producto.cantidad}</div>
-          <div>Precio unitario: ${producto.preciounitario}</div>
-          <div>Total: ${producto.total}</div>
-        </li>
-      ))}
-    </ul>
-  </div>
-)}
+                        <h6 className="text-black">Productos:</h6>
+                        <ul className="adminpedidos-productos">
+                          {pedido.productos?.map((producto, index) => (
+                            <li key={index} className="adminpedidos-producto text-black">
+                              <strong>{producto.nombre}</strong>
+                              <div>Cantidad: {producto.cantidad}</div>
+                              <div>Precio unitario: ${producto.preciounitario}</div>
+                              <div>Total: ${producto.total}</div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
                   </li>
                 ))}

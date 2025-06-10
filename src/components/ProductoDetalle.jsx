@@ -19,7 +19,7 @@ export default function ProductoDetalle() {
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState("0% 0%");
   const imgRef = useRef(null);
-  
+
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -27,7 +27,7 @@ export default function ProductoDetalle() {
       const docSnap = await getDoc(ref);
       if (docSnap.exists()) {
         setProducto({ id: docSnap.id, ...docSnap.data() });
-    }
+      }
     };
     fetchProducto();
   }, [categoriaId, productoId]);
@@ -64,7 +64,7 @@ export default function ProductoDetalle() {
       </div>
     );
   }
-  
+
 
   return (
     <main className="producto-detalle-page container-fluid py-5">
@@ -102,9 +102,8 @@ export default function ProductoDetalle() {
               style={{
                 backgroundImage: `url(${producto.imagen})`,
                 backgroundPosition: backgroundPosition,
-                backgroundSize: `${imgRef.current?.width * 2}px ${
-                  imgRef.current?.height * 2
-                }px`,
+                backgroundSize: `${imgRef.current?.width * 2}px ${imgRef.current?.height * 2
+                  }px`,
               }}
             />
           )}
@@ -115,33 +114,40 @@ export default function ProductoDetalle() {
           <header className="d-flex justify-content-between align-items-start mb-3 mb-lg-0 mt-lg-3">
             <h1 className="producto-titulo fw-bold mb-lg-3 mt-lg-5">{producto.nombre}</h1>
             <button
-  className="btn btn-link p-0 ms-2 mt-1 mt-lg-2"
-  onClick={() => setFavorito(!favorito)}
-  aria-label={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
-  title={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="28"
-    height="26"
-    viewBox="0 0 24 24"
-    fill={favorito ? "#FFCC00" : "none"}
-    stroke="#FFCC00"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="ui-pdp-icon ui-pdp-icon--bookmark"
-  >
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-  </svg>
-</button>
+              className="btn btn-link p-0 ms-2 mt-1 mt-lg-2"
+              onClick={() => setFavorito(!favorito)}
+              aria-label={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+              title={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="26"
+                viewBox="0 0 24 24"
+                fill={favorito ? "#FFCC00" : "none"}
+                stroke="#FFCC00"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ui-pdp-icon ui-pdp-icon--bookmark"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
 
           </header>
 
           <section>
+            {/* Precio anterior */}
+            <p className="text-muted mb-1 text-decoration-line-through fs-5">
+              ${Math.round(producto.precio * 1.2).toLocaleString()}
+            </p>
+
+            {/* Precio actual */}
             <h2 className="producto-precio text-success fw-bold mb-3">
-              ${producto.precio}
+              ${producto.precio.toLocaleString()}
             </h2>
+
 
             <p className="mb-2">
               <strong>Marca:</strong> {producto.marca}
@@ -151,42 +157,47 @@ export default function ProductoDetalle() {
               {producto.stock > 0 ? producto.stock : "Agotado"}
             </p>
 
+            {/* Info adicional */}
             <div className="mb-4 info-adicional">
-              <p className="text-success mb-1 fw-semibold">
-                Envío gratis <i className="bi bi-truck"></i>
+              <p className="text-success mb-1 fw-semibold d-flex align-items-center gap-1">
+                Trip <i className="bi bi-lightning-fill text-warning"></i>
               </p>
               <p className="text-primary mb-0 fw-semibold">
                 Devolución gratis <i className="bi bi-arrow-counterclockwise"></i>
               </p>
             </div>
 
+            {/* Descripción del producto */}
             {producto.descripcion && (
-              <p className="producto-descripcion border-top pt-3">{producto.descripcion}</p>
+              <p className="producto-descripcion border-top pt-3">
+                {producto.descripcion}
+              </p>
             )}
           </section>
 
+
           <footer>
-          <button
-  className="btn btn-warning btn-lg w-100 mt-4 shadow-sm"
-  onClick={() => agregarAlCarrito(producto, categoriaId)}
->
-  Agregar al carrito
-</button>
+            <button
+              className="btn btn-warning btn-lg w-100 mt-4 shadow-sm"
+              onClick={() => agregarAlCarrito(producto, categoriaId)}
+            >
+              Agregar al carrito
+            </button>
           </footer>
         </section>
 
         <section className="container mt-5">
-  <article className="row justify-content-center">
-    <div className="col-12">
-    </div>
-    <div className="col-lg-10 col-md-11 col-sm-12">
-      <ProductosRelacionados
-        categoriaId={categoriaId} // Podés reemplazarlo dinámicamente si lo tenés
-        productoActualId={producto.id}
-      />
-    </div>
-  </article>
-</section>
+          <article className="row justify-content-center">
+            <div className="col-12">
+            </div>
+            <div className="col-lg-10 col-md-11 col-sm-12">
+              <ProductosRelacionados
+                categoriaId={categoriaId} // Podés reemplazarlo dinámicamente si lo tenés
+                productoActualId={producto.id}
+              />
+            </div>
+          </article>
+        </section>
       </article>
     </main>
   );

@@ -18,11 +18,11 @@ const HorizontalCarousel = () => {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
       const scrollStep = clientWidth * 0.8; // o 1 para ver de a un "pantallazo"
-  
+
       let targetScroll = direction === "next"
         ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
         : Math.max(scrollLeft - scrollStep, 0);
-  
+
       scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
   };
@@ -52,15 +52,15 @@ const HorizontalCarousel = () => {
     >
       {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
-      Puede interesarte ⭐
-      <a
-  className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-  href="/categorias/Articuloslimpiezaid"
-  target="_self"
-  style={{ color: "#3483fa" }}
->
-  Ver más
-</a>
+        Puede interesarte ⭐
+        <a
+          className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
+          href="/categorias/Articuloslimpiezaid"
+          target="_self"
+          style={{ color: "#3483fa" }}
+        >
+          Ver más
+        </a>
       </h3>
 
       {/* Botón Prev */}
@@ -107,27 +107,34 @@ const HorizontalCarousel = () => {
             />
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper">
-                <p className="scroll-producto-precio">
-                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
-                  <span className="scroll-producto-descuento">
-                    {producto.descuento || "Sin descuento"}
+                <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
+                  {/* Precio anterior */}
+                  <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }} className="mt-lg-3">
+                    ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
                   </span>
-                </p>
-                <div className="dynamic-carousel__shipping-container mt-1">
-                  <span>Envío gratis</span>
+
+                  {/* Precio actual */}
+                  <p className="scroll-producto-precio mb-0">
+                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                  </p>
+
+                </div>
+                <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
+                  <span>Trip</span>
+                  <i className="bi bi-lightning-fill text-warning"></i>
                 </div>
               </div>
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
             <button
-  className="scroll-producto-boton mt-md-4 mt-0"
-  onClick={(e) => {
-    e.stopPropagation();
-    agregarAlCarrito(producto, "Articuloslimpiezaid");
-  }}
->
-  Agregar al carrito
-</button>
+              className="scroll-producto-boton mt-md-4 mt-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                agregarAlCarrito(producto, "Articuloslimpiezaid");
+              }}
+            >
+              Agregar al carrito
+            </button>
 
           </div>
         ))}

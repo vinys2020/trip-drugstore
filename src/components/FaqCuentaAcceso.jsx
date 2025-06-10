@@ -3,24 +3,24 @@ import { FaQuestionCircle } from 'react-icons/fa';
 import '../pages/ayuda.css';
 
 const FaqCuentaAcceso = () => {
-    const faqs = [
-        {
-          pregunta: "¿Cómo creo una cuenta?",
-          respuesta: "Podés registrarte fácilmente desde la pantalla de inicio haciendo clic en 'Registrarse' y completando tus datos personales."
-        },
-        {
-          pregunta: "Olvidé mi contraseña, ¿qué hago?",
-          respuesta: "Para recuperar tu contraseña, por favor contactá a nuestro equipo de soporte a través del centro de ayuda o el chat de WhatsApp."
-        },
-        {
-          pregunta: "¿Es obligatorio crear una cuenta para comprar?",
-          respuesta: "No es obligatorio. Podés navegar y consultar productos sin registrarte, pero para finalizar una compra es necesario crear una cuenta."
-        },
-        {
-          pregunta: "¿Gano puntos con mis compras?",
-          respuesta: "Sí, recordá que con cada compra acumulás puntos que podés canjear por descuentos y promociones especiales."
-        }
-      ];
+  const faqs = [
+    {
+      pregunta: "¿Cómo creo una cuenta?",
+      respuesta: "Podés registrarte fácilmente desde la pantalla de inicio haciendo clic en 'Registrarse' y completando tus datos personales."
+    },
+    {
+      pregunta: "Olvidé mi contraseña, ¿qué hago?",
+      respuesta: "Para recuperar tu contraseña, por favor contactá a nuestro equipo de soporte a través del centro de ayuda o el chat de WhatsApp."
+    },
+    {
+      pregunta: "¿Es obligatorio crear una cuenta para comprar?",
+      respuesta: "No es obligatorio. Podés navegar y consultar productos sin registrarte, pero para finalizar una compra es necesario crear una cuenta."
+    },
+    {
+      pregunta: "¿Gano puntos con mis compras?",
+      respuesta: "Sí, recordá que con cada compra acumulás puntos que podés canjear por descuentos y promociones especiales."
+    }
+  ];
 
   return (
     <section className="faq-section">

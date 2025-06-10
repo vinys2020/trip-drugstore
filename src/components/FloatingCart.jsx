@@ -92,33 +92,33 @@ const FloatingCart = () => {
 
       for (const producto of cart) {
         const { id: productoId, categoriaId, cantidad, nombre } = producto;
-      
+
         if (!categoriaId) {
           alert(`Falta categoriaId para el producto: ${nombre}`);
           setIsLoading(false);
           return;
         }
-      
+
         if (productoId && cantidad > 0) {
           // Obtener referencia y docSnap directamente aquí:
           const docRef = doc(db, `Categoriasid/${categoriaId}/Productosid/${productoId}`);
           const docSnap = await getDoc(docRef);
-      
+
           if (!docSnap.exists()) {
             alert(`Producto no encontrado: ${nombre}`);
             setIsLoading(false);
             return;
           }
-      
+
           const data = docSnap.data();
           const stockActual = data.stock ?? 0;
-      
+
           if (stockActual < cantidad) {
             alert(`No hay suficiente stock para el producto: ${nombre}`);
             setIsLoading(false);
             return;
           }
-      
+
           productosAFinalizar.push({
             ref: docRef,
             stockActual,
@@ -128,7 +128,7 @@ const FloatingCart = () => {
           console.warn("Faltan datos para verificar stock:", producto);
         }
       }
-      
+
 
 
 

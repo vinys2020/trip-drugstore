@@ -108,14 +108,21 @@ const HorizontalCarousel = () => {
             />
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper">
-                <p className="scroll-producto-precio">
-                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
-                  <span className="scroll-producto-descuento">
-                    {producto.descuento || "Sin descuento"}
+                <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
+                  {/* Precio anterior */}
+                  <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }} className="mt-lg-3">
+                    ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
                   </span>
-                </p>
-                <div className="dynamic-carousel__shipping-container mt-1">
-                  <span>Envío gratis</span>
+
+                  {/* Precio actual */}
+                  <p className="scroll-producto-precio mb-0">
+                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                  </p>
+
+                </div>
+                <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
+                  <span>Trip</span>
+                  <i className="bi bi-lightning-fill text-warning"></i>
                 </div>
               </div>
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>

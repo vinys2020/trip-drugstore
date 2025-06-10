@@ -30,8 +30,8 @@ import bebida1 from "../assets/bebida1.jpg";
 import bebida2 from "../assets/bebida2.jpg";
 import bebida3 from "../assets/bebida3.jpg";
 import bebida4 from "../assets/bebida4.jpg";
-import almacen1 from "../assets/cafeteyerba.webp";
-import almacen2 from "../assets/almacen2.webp";
+import almacen1 from "../assets/snakpost.webp";
+import almacen2 from "../assets/congeladospost.webp";
 import almacen3 from "../assets/limpieza.webp";
 import almacen4 from "../assets/descartable.webp";
 
@@ -104,21 +104,39 @@ const Home = () => {
         </section>
 
 
-      <div className="mt-3 mb-3 mx-lg-5">
+      <div className="mt-0 mb-4">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard
+        <BannerCard3
           altText="Promo banner grande"
           large={true} // Esto controla si es una imagen grande
         />
       </div>
 
-      <section id="servicios" className="py-md-4 mx-lg-5">
+
+        <section id="servicios" className="mb-md-2 mt-md-5 mb-4 mx-lg-5">
+          <div className="w-100 mt-md-4 mt-0">
+
+            <VerticalCarousel />
+
+          </div>
+
+        </section>
+
+        <section id="servicios" className="py-2 mx-lg-5">
           <div className="container-fluid w-100 mt-md-4 mt-2">
             <div className="container px-0">
               <HorizontalChoc />
             </div>          
           </div>
         </section>
+
+        <div className="mt-0 mb-4">
+        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
+        <BannerCard3
+          altText="Promo banner grande"
+          large={true} // Esto controla si es una imagen grande
+        />
+      </div>
 
 
 
@@ -254,7 +272,7 @@ const Home = () => {
 
         <section id="recomendados" className="py-lg-0 mb-5 mb-lg-0">
           <div className="container">
-            <h3 className="text-center mt-md-4 mt-3 text-white mb-5">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mt-md-4 mt-3 text-white mb-lg-5 mb-3">Recomendados para vos 🛍️</h3>
             <article className="row">
               <div className="container">
                 <div className="col-12 mb-3">
@@ -265,51 +283,59 @@ const Home = () => {
 
 
             {/* Sección Especial Bebidas */}
-            <div className="row g-3 justify-content-center  p-md-3">
-              <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${almacen1})`,
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
+            <div className="row g-3 justify-content-center p-md-3">
+  <div className="col-6 col-md-3">
+    <Link to="/categorias/Snacksygalletitasid">
+      <article
+        className="bebida-card"
+        style={{
+          backgroundImage: `url(${almacen1})`,
+        }}
+      >
+        <div className="card-body"></div>
+      </article>
+    </Link>
+  </div>
 
-              <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${almacen2})`,
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
+  <div className="col-6 col-md-3">
+    <Link to="/categorias/Congeladosid">
+      <article
+        className="bebida-card"
+        style={{
+          backgroundImage: `url(${almacen2})`,
+        }}
+      >
+        <div className="card-body"></div>
+      </article>
+    </Link>
+  </div>
 
-              <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${almacen3})`,
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
+  <div className="col-6 col-md-3">
+    <Link to="/categorias/Articuloslimpiezaid">
+      <article
+        className="bebida-card"
+        style={{
+          backgroundImage: `url(${almacen3})`,
+        }}
+      >
+        <div className="card-body"></div>
+      </article>
+    </Link>
+  </div>
 
-              <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${almacen4})`,
-                  }}
-                >
-                  <div className="card-body"></div>
-                </article>
-              </div>
-            </div>
+  <div className="col-6 col-md-3">
+    <Link to="/categorias/Cuidadopersonalid">
+      <article
+        className="bebida-card"
+        style={{
+          backgroundImage: `url(${almacen4})`,
+        }}
+      >
+        <div className="card-body"></div>
+      </article>
+    </Link>
+  </div>
+</div>
           </div>
         </section>
 

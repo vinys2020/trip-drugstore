@@ -3,25 +3,25 @@ import { FaQuestionCircle } from 'react-icons/fa';
 import '../pages/ayuda.css';
 
 const FaqFuncionalidades = () => {
-    const faqs = [
-        {
-          pregunta: "¿Cómo uso la plataforma?",
-          respuesta: "La plataforma es intuitiva: navegá por las categorías, agregá productos al carrito y finalizá tu pedido desde allí."
-        },
-        {
-          pregunta: "¿Qué pasa después de hacer un pedido?",
-          respuesta: "Una vez que completás tu pedido, recibirás un correo electrónico notificándote cuando esté listo para ser retirado."
-        },
-        {
-          pregunta: "¿Puedo seguir el estado de mi pedido?",
-          respuesta: "Sí, desde tu perfil podés consultar el estado actual de tu pedido en la sección de Mis compras."
-        },
-        {
-          pregunta: "¿La plataforma funciona desde el celular?",
-          respuesta: "Sí, podés acceder y usar todas las funciones desde cualquier dispositivo móvil sin inconvenientes."
-        }
-      ];
-      
+  const faqs = [
+    {
+      pregunta: "¿Cómo uso la plataforma?",
+      respuesta: "La plataforma es intuitiva: navegá por las categorías, agregá productos al carrito y finalizá tu pedido desde allí."
+    },
+    {
+      pregunta: "¿Qué pasa después de hacer un pedido?",
+      respuesta: "Una vez que completás tu pedido, recibirás un correo electrónico notificándote cuando esté listo para ser retirado."
+    },
+    {
+      pregunta: "¿Puedo seguir el estado de mi pedido?",
+      respuesta: "Sí, desde tu perfil podés consultar el estado actual de tu pedido en la sección de Mis compras."
+    },
+    {
+      pregunta: "¿La plataforma funciona desde el celular?",
+      respuesta: "Sí, podés acceder y usar todas las funciones desde cualquier dispositivo móvil sin inconvenientes."
+    }
+  ];
+
 
   return (
     <section className="faq-section">

@@ -82,22 +82,27 @@ const VerticalCarousel = () => {
                   <h2 className="vc-product-title">{producto.nombre}</h2>
                 </div>
                 <div className="vc-precio-wrapper">
-                  <p className="vc-precio-anterior">
-                    ${producto.precioAnterior || "-"}
-                  </p>
-                  <div className="vc-price-current">
-                    <p className="vc-precio-actual">${producto.precio}</p>
-                    {producto.descuento && (
-                      <span className="vc-descuento">
-                        {producto.descuento}
-                      </span>
-                    )}
+                  <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
+                    {/* Precio anterior */}
+                    <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }}>
+                      ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
+                    </span>
+
+                    {/* Precio actual */}
+                    <p className="scroll-producto-precio mb-0">
+                      ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                    </p>
+
+                  </div>
+                  <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
+                    <span>Trip</span>
+                    <i className="bi bi-lightning-fill text-warning"></i>
                   </div>
                 </div>
 
                 {/* ✅ Botón Agregar al carrito */}
                 <button
-                  className="scroll-producto-boton mt-md-4 mt-0"
+                  className="scroll-producto-boton mt-md-4 mt-2"
                   onClick={(e) => {
                     e.stopPropagation();
                     agregarAlCarrito(producto, "Tripcafeysandwichesid"); // PASO LA CATEGORÍA EXPLÍCITA

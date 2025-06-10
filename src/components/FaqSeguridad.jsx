@@ -3,20 +3,20 @@ import { FaQuestionCircle } from 'react-icons/fa';
 import '../pages/ayuda.css';
 
 const FaqSeguridad = () => {
-    const faqs = [
-        {
-          pregunta: "¿Mi información está segura?",
-          respuesta: "Sí. Utilizamos tecnología de Google para la autenticación y protección de cuentas, junto con protocolos de seguridad avanzados como encriptación de datos y monitoreo continuo para garantizar la seguridad de tu información."
-        },
-        {
-          pregunta: "¿La plataforma guarda los datos de mi tarjeta?",
-          respuesta: "No, por tu seguridad no almacenamos información sensible como los datos de tu tarjeta. El pago se realiza directamente al momento de la entrega de tu pedido, lo que garantiza una experiencia segura."
-        },
-        {
-          pregunta: "¿Mi sesión se cierra automáticamente?",
-          respuesta: "Sí, por seguridad tu sesión puede cerrarse automáticamente después de un período de inactividad prolongado. Esto ayuda a proteger tu cuenta si olvidás cerrar sesión."
-        }
-      ];
+  const faqs = [
+    {
+      pregunta: "¿Mi información está segura?",
+      respuesta: "Sí. Utilizamos tecnología de Google para la autenticación y protección de cuentas, junto con protocolos de seguridad avanzados como encriptación de datos y monitoreo continuo para garantizar la seguridad de tu información."
+    },
+    {
+      pregunta: "¿La plataforma guarda los datos de mi tarjeta?",
+      respuesta: "No, por tu seguridad no almacenamos información sensible como los datos de tu tarjeta. El pago se realiza directamente al momento de la entrega de tu pedido, lo que garantiza una experiencia segura."
+    },
+    {
+      pregunta: "¿Mi sesión se cierra automáticamente?",
+      respuesta: "Sí, por seguridad tu sesión puede cerrarse automáticamente después de un período de inactividad prolongado. Esto ayuda a proteger tu cuenta si olvidás cerrar sesión."
+    }
+  ];
 
   return (
     <section className="faq-section">

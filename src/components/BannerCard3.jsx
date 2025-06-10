@@ -1,23 +1,22 @@
 import React from "react";
 import "./BannerCard.css";
 
-// Importa las imágenes locales desde la carpeta assets
-import promocion from "../assets/vea.webp";
-import promocioncell from "../assets/vea.webp";
+const BannerCard = ({ altText = "Promoción", large = true }) => {
+  const desktopImageUrl = "https://res.cloudinary.com/dcggcw8df/image/upload/v1749521158/r1xktwif6azninqadrtb.webp";
+  const mobileImageUrl = "https://res.cloudinary.com/dcggcw8df/image/upload/v1749520929/hw7rhnoghz3kdhqgxmwh.webp";
 
-const BannerCard = ({ altText, large }) => {
   return (
-    <div className="container my-4">
+    <div className="container">
       <div className={`andes-card banner-card andes-card--animated andes-card--flat andes-card--padding-16 ${large ? "banner-large" : ""}`}>
         {/* Imagen de fondo para escritorio */}
         <div
           className="banner-image"
-          style={{ backgroundImage: `url(${promocion})` }}
-          alt={altText}
+          style={{ backgroundImage: `url(${desktopImageUrl})` }}
+          aria-label={altText}
         />
         {/* Imagen para móviles */}
         <img
-          src={promocioncell}
+          src={mobileImageUrl}
           alt={altText}
           className="mobile-banner-image"
         />
