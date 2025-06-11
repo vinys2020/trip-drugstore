@@ -17,6 +17,8 @@ import BannerCard4 from "../components/Baner4";
 import BannerCard5 from "../components/Banner5";
 import BannerCard6 from "../components/Banner6cafetrip";
 import BannerCard7 from "../components/Banner7cho";
+import BannerCard8 from "../components/Banner8dep";
+
 
 
 
@@ -115,7 +117,7 @@ const Home = () => {
 
         <div className="mt-2 mx-lg-5">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
+          <BannerCard8
             altText="Promo banner grande"
             large={true} // Esto controla si es una imagen grande
           />
@@ -203,7 +205,7 @@ const Home = () => {
 
 
 
-      <div className="mt-0 mb-4">
+      <div className="mt-2 mb-5">
         {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
         <BannerCard6
           altText="Promo banner grande"
@@ -260,15 +262,6 @@ const Home = () => {
         </section>
 
 
-        <div className="justify-content-center p-0 mb-0 mt-5 mt-lg-5">
-              <div className="col-12 container">
-                <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-                  <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
-                  <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
-                  <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
-                </div>
-              </div>
-            </div>
 
       
 
@@ -349,6 +342,16 @@ const Home = () => {
           </div>
         </section>
 
+        <div className="justify-content-center p-0 mb-5 mt-5 mt-lg-5">
+              <div className="col-12 container">
+                <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+                  <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+                  <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
+                  <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
+                </div>
+              </div>
+            </div>
+
 
 
 
@@ -404,13 +407,6 @@ const Home = () => {
 
         </section>
 
-        <div className="mt-5 mb-5 mx-lg-5 mx-2">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-          <BannerCard3
-            altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
-          />
-        </div>
 
 
 

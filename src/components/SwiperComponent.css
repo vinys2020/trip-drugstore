@@ -75,6 +75,27 @@ body {
 
 }
 
+
+.custom-loader-spin {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ffc107; /* amarillo */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: custom-spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes custom-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 /* ----------- PAGINACIÓN ----------- */
 
 /* Centrar los puntos de paginación en la parte inferior */
