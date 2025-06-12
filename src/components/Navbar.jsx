@@ -15,6 +15,8 @@ import CategoriasDropdown from "../components/CategoriasDropdown";
 import "./navbar.css";
 
 const adminEmail = "faculez07@gmail.com";
+const empleadosEmails = ["faculez1@gmail.com", "empleado2@empresa.com"];
+
 
 const Navbar = ({ busqueda, setBusqueda }) => {
   const { agregarAlCarrito, totalItems, totalPrecio } = useContext(CartContext); // Consumir CartContext
@@ -270,6 +272,16 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 </Link>
               </li>
             )}
+
+{user && empleadosEmails.includes(user.email) && (
+  <li className="nav-item">
+    <Link className="nav-link" to="/empleado" onClick={() => {
+      document.getElementById("navbarNav").classList.remove("show");
+    }}>
+      Empleado
+    </Link>
+  </li>
+)}
 
             {user ? (
               <>

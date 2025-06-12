@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import { Link } from "react-router-dom"; // Asegurate de importar esto arriba del archivo
+import { Link } from "react-router-dom";
 import userimgdef from "../assets/userimgdef.webp";
 import confirmado from "../assets/confirmado.webp";
 import celuchicaweb from "../assets/celuchica.webp";
@@ -19,7 +19,6 @@ import PreguntasFrecuentes from "../components/PreguntasFrecuentes";
 import logo from "../assets/logotrippc.png";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-
 
 const guardarUsuarioEnFirestore = async (user) => {
   const ref = doc(db, "Usuariosid", user.uid);
@@ -34,16 +33,16 @@ const guardarUsuarioEnFirestore = async (user) => {
       creado: new Date(),
       puntos: 0,
       esAdmin: false,
+      esEmpleado: false,
     });
   }
 };
-
 
 const pasos = [
   {
     titulo: "Ingresá con tu mail y contraseña",
     descripcion: "Identificate para poder acceder a las mejores ofertas",
-    imagen: confirmado, // podés usar la imagen importada aquí
+    imagen: confirmado,
   },
   {
     titulo: "Autogestioná tu pedido",
@@ -63,19 +62,41 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [esRegistro, setEsRegistro] = useState(false);
   const navigate = useNavigate();
+
+  // Definimos los correos autorizados para admin y empleados
   const correosAdmin = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
+  const correosEmpleado = ["faculez1@gmail.com"];
 
   useEffect(() => {
     const root = document.getElementById("root");
     const originalBg = root.style.backgroundColor;
     root.style.backgroundColor = "white";
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
         document.body.classList.remove("overflow-hidden");
-        const email = currentUser.email;
-        correosAdmin.includes(email) ? navigate("/admin") : navigate("/");
+
+        // Primero buscamos el usuario en Firestore para saber si es admin o empleado
+        const ref = doc(db, "Usuariosid", currentUser.uid);
+        const snapshot = await getDoc(ref);
+
+        // Si no existe en Firestore, guardamos el usuario (solo la primera vez)
+        if (!snapshot.exists()) {
+          await guardarUsuarioEnFirestore(currentUser);
+        }
+
+        // Obtenemos datos del usuario guardado
+        const userData = snapshot.exists() ? snapshot.data() : null;
+
+        // Navegamos según el rol:
+        if (userData?.esAdmin || correosAdmin.includes(currentUser.email)) {
+          navigate("/admin");
+        } else if (userData?.esEmpleado || correosEmpleado.includes(currentUser.email)) {
+          navigate("/empleado");
+        } else {
+          navigate("/");
+        }
       }
     });
 
@@ -103,7 +124,6 @@ const Login = () => {
       console.error(error);
     }
   };
-  
 
   const loginConEmail = async (e) => {
     e.preventDefault();
@@ -121,7 +141,6 @@ const Login = () => {
       alert(error.message);
     }
   };
-  
 
   const cerrarSesion = () => {
     signOut(auth);
@@ -130,38 +149,45 @@ const Login = () => {
   };
 
   return (
-
-    
-
     <section className="login-page">
       <div className="container-main">
         <div className="row col-12">
           {/* Sidebar */}
           <aside className="col-12 col-lg-3 login-sidebar bg-dark">
-
-          <div className="text-center mb-4 mt-lg-3 mt-4 me-5">
-            <Link to="/" className="d-inline-block">
-              <img 
-                src={logo} 
-                alt="Trip Drugstore" 
-                style={{ 
-                  height: "120px", 
-                  objectFit: "contain", 
-                  filter: "drop-shadow(2px 2px 0 black) drop-shadow(2px 2px 0 black)" 
-                }} 
-              />
-            </Link>
-          </div>
+            <div className="text-center mb-4 mt-lg-3 mt-4 me-5">
+              <Link to="/" className="d-inline-block">
+                <img
+                  src={logo}
+                  alt="Trip Drugstore"
+                  style={{
+                    height: "120px",
+                    objectFit: "contain",
+                    filter: "drop-shadow(2px 2px 0 black) drop-shadow(2px 2px 0 black)",
+                  }}
+                />
+              </Link>
+            </div>
             <h2 className="text-center mb-2 text-white">¡Bienvenido a Trip Platform!</h2>
+
+            {/* Aquí mostramos el saludo para usar el estado user y que no aparezca apagado */}
+            {user && (
+              <p className="text-center text-white mb-3">
+                Hola, {user.displayName || user.email}
+              </p>
+            )}
 
             <div className="text-center mb-4">
               <h5 className="text-white mb-3 mt-4">¿Ya tienes cuenta?</h5>
-              <button className="btn btn-warning w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" onClick={() => setEsRegistro(false)}>Ingresá aquí</button>
+              <button className="btn btn-warning w-100 mb-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" onClick={() => setEsRegistro(false)}>
+                Ingresá aquí
+              </button>
             </div>
 
             <div className="text-center mb-4">
               <h5 className="text-white mb-3">¿Sos nuevo?</h5>
-              <button className="btn btn-light w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" onClick={() => setEsRegistro(true)}>¡Registrate!</button>
+              <button className="btn btn-light w-100 mb-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" onClick={() => setEsRegistro(true)}>
+                ¡Registrate!
+              </button>
             </div>
 
             <div className="login-extra-info mt-0">
@@ -176,29 +202,31 @@ const Login = () => {
               <div className="contact-info">
                 <h5 className="fw-bold text-white">Contáctanos</h5>
                 <div className="d-flex justify-content-center gap-3">
-                  <a href="https://www.instagram.com/tripconcep" className="social-icon" target="_blank" rel="noopener noreferrer"><i className="bi bi-instagram"></i></a>
-                  <a href="https://wa.me/5493812024221" className="social-icon" target="_blank" rel="noopener noreferrer"><i className="bi bi-whatsapp"></i></a>
+                  <a href="https://www.instagram.com/tripconcep" className="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i className="bi bi-instagram"></i>
+                  </a>
+                  <a href="https://wa.me/5493812024221" className="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i className="bi bi-whatsapp"></i>
+                  </a>
                 </div>
               </div>
             </div>
           </aside>
 
-        {/* Main content */}
-        <div className="maincont col-12 col-md-12 col-lg-9">
-          {/* ¿Cómo funciona? */}
-          <article className="bg-white como-funciona-articulo mt-lg-5">
-            <h1 className="comofunciona como-funciona-titulo">¿Cómo funciona?</h1>
-          </article>
+          {/* Main content */}
+          <div className="maincont col-12 col-md-12 col-lg-9">
+            {/* ¿Cómo funciona? */}
+            <article className="bg-white como-funciona-articulo mt-lg-5">
+              <h1 className="comofunciona como-funciona-titulo">¿Cómo funciona?</h1>
+            </article>
 
-           {/* Tarjetas en columna */}
-           {/* Contenedor con fila de tarjetas */}
-
+            {/* Tarjetas en columna */}
             <div className="container">
               <div className="row g-4 justify-content-center align-items-stech p-2 p-md-5 p-lg-4 sin-margen">
                 {pasos.map((paso, index) => (
                   <div key={index} className="col-12 col-md-4">
                     <div className="info-card text-white bg-dark p-2 rounded-4 shadow-sm h-100">
-                      <img 
+                      <img
                         src={paso.imagen}
                         alt={`Ilustración ${paso.titulo}`}
                         className="img-fluid rounded-3 mb-3"
@@ -212,9 +240,6 @@ const Login = () => {
               </div>
             </div>
 
-
-
-
             {/* Tarjeta puntos */}
             <div className="justify-content-center p-4 mb-0 mt-5 mt-lg-5">
               <div className="col-12 container">
@@ -225,7 +250,6 @@ const Login = () => {
                 </div>
               </div>
             </div>
-
 
             <div className="container mb-0 mt-5 mt-lg-4 p-lg-5 p-1">
               <PreguntasFrecuentes />
@@ -259,68 +283,62 @@ const Login = () => {
                 </div>
               </div>
             </div>
-
-
-
-
-
-
-
-
-
-            
-
-
           </div>
-
         </div>
       </div>
 
       {/* Offcanvas */}
       <div className="offcanvas offcanvas-start text-white bg-dark" id="offcanvasLogin" tabIndex="-1">
         <div className="offcanvas-header border-bottom border-secondary">
-          <h5 className="offcanvas-title">{esRegistro ? "Registrarse" : "Iniciar sesión"}</h5>
-          <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas"/>
+          <h5 className="offcanvas-title">{esRegistro ? "Registro" : "Iniciar sesión"}</h5>
+          <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
         </div>
-        <div className="offcanvas-body">
-          {user ? (
-            <div className="text-center">
-              <img src={user.photoURL||userimgdef} alt="" width={80} className="rounded-circle mb-3"/>
-              <h4 className="text-warning">Hola, {user.displayName||user.email}</h4>
-              <button className="btn btn-danger mt-3" onClick={cerrarSesion}>Cerrar sesión</button>
-            </div>
-          ) : (
-            <>
-              <form onSubmit={loginConEmail}>
 
-                <h1 className="text-white text-center mb-3 title-margin" style={{
-                  fontSize: "5rem", fontWeight: "900",
-                  textShadow: "2px 2px 0 black, 4px 4px 0 yellow",
-                  letterSpacing: "2px", textTransform: "uppercase"
-                }}>TRIP</h1>
-                <h5>Ingresa tu cuenta:</h5>
-                <input type="email" className="form-control mb-3" placeholder="Correo electrónico" value={email} onChange={e=>setEmail(e.target.value)} required/>
-                <input type="password" className="form-control mb-3" placeholder="Contraseña" value={password} onChange={e=>setPassword(e.target.value)} required/>
-                <button type="submit" className="btn btn-warning w-100 mb-3">{esRegistro ? "🚀 Registrarse" : "Iniciar sesión"}</button>
-              </form>
-              <div className="d-flex align-items-center mb-3">
-                <hr className="flex-grow-1" style={{borderColor:"white"}}/>
-                <span className="px-2 text-white">o</span>
-                <hr className="flex-grow-1" style={{borderColor:"white"}}/>
-              </div>
-              <button className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center" onClick={loginConGoogle}>
-                <i className="bi bi-google me-2"/>Ingresar con Google
-              </button>
-            </>
-          )}
+        <div className="offcanvas-body">
+          <form onSubmit={loginConEmail}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email:
+              </label>
+              <input
+                className="form-control"
+                type="email"
+                id="email"
+                placeholder="ejemplo@correo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Contraseña:
+              </label>
+              <input
+                className="form-control"
+                type="password"
+                id="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn btn-warning w-100">
+              {esRegistro ? "Registrarse" : "Ingresar"}
+            </button>
+          </form>
+
+          <hr className="my-4" />
+
+          <button className="btn btn-outline-light w-100" onClick={loginConGoogle}>
+            <i className="bi bi-google me-2"></i> Ingresar con Google
+          </button>
         </div>
       </div>
-
     </section>
-
-    
-
-
   );
 };
 

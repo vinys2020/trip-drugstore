@@ -1,15 +1,6 @@
-// src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
+import AdminPedidos from "../components/AdminPedidos";
 import "./admindashboard.css";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
 import {
   collection,
   getDocs,
@@ -19,28 +10,13 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
-import AdminPedidos from "../components/AdminPedidos";
 
-
-
-
-
-const data = [
-  { name: "Lunes", pedidos: 30 },
-  { name: "Martes", pedidos: 50 },
-  { name: "Miércoles", pedidos: 70 },
-  { name: "Jueves", pedidos: 60 },
-  { name: "Viernes", pedidos: 90 },
-  { name: "Sábado", pedidos: 120 },
-  { name: "Domingo", pedidos: 80 },
-];
-
-
-
-const AdminDashboard = () => {
+const EmpleadoDashboard = ({ user }) => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Articuloslimpiezaid");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
+    "Articuloslimpiezaid"
+  );
   const [busqueda, setBusqueda] = useState("");
   const [nuevoProducto, setNuevoProducto] = useState({
     nombre: "",
@@ -48,9 +24,10 @@ const AdminDashboard = () => {
     imagen: "",
     marca: "",
     stock: "",
-
+    contenido: "sin alcohol",
   });
 
+  // Obtener categorías
   const obtenerCategorias = async () => {
     const categoriasRef = collection(db, "Categoriasid");
     const data = await getDocs(categoriasRef);
@@ -58,30 +35,12 @@ const AdminDashboard = () => {
     setCategorias(categoriasList);
   };
 
-  const subirImagenCloudinary = async (file, productoId) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ml_default");  // tu preset aquí
-
-    try {
-      const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.secure_url) {
-        // Actualizamos en Firebase la URL de la imagen del producto
-        await actualizarProducto(productoId, "imagen", data.secure_url);
-      }
-    } catch (error) {
-      console.error("Error al subir imagen a Cloudinary:", error);
-    }
-  };
-
-
-
+  // Obtener productos según categoría seleccionada
   const obtenerProductos = async () => {
-    const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
+    const productosRef = collection(
+      db,
+      `Categoriasid/${categoriaSeleccionada}/Productosid`
+    );
     const data = await getDocs(productosRef);
     const productosList = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     setProductos(productosList);
@@ -89,103 +48,116 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     obtenerCategorias();
-    obtenerProductos();
+  }, []);
+
+  useEffect(() => {
+    if (categoriaSeleccionada) obtenerProductos();
   }, [categoriaSeleccionada]);
 
+  // Crear producto nuevo
   const crearProducto = async () => {
-    if (!nuevoProducto.nombre || !nuevoProducto.precio) return;
+    if (!nuevoProducto.nombre || !nuevoProducto.precio) {
+      alert("Nombre y precio son obligatorios");
+      return;
+    }
 
-    const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
+    const productosRef = collection(
+      db,
+      `Categoriasid/${categoriaSeleccionada}/Productosid`
+    );
 
-    // Armar el objeto base del producto
     const productoAGuardar = {
       ...nuevoProducto,
       precio: Number(nuevoProducto.precio),
-      stock: Number(nuevoProducto.stock),
+      stock: Number(nuevoProducto.stock) || 0,
       activo: true,
     };
 
-    // Si la categoría es Bebidasid, agregar contenido
+    // Ajustar contenido solo si es Bebidasid
     if (categoriaSeleccionada === "Bebidasid") {
-      // Si nuevoProducto.contenido no existe, asignar "sin alcohol" por defecto
       productoAGuardar.contenido = nuevoProducto.contenido || "sin alcohol";
     } else {
-      // Para evitar que el campo contenido se guarde en otras categorías
       delete productoAGuardar.contenido;
     }
 
-    await addDoc(productosRef, productoAGuardar);
-
-    setNuevoProducto({ nombre: "", precio: "", imagen: "", marca: "", stock: "", contenido: "" });
-    obtenerProductos();
+    try {
+      await addDoc(productosRef, productoAGuardar);
+      setNuevoProducto({
+        nombre: "",
+        precio: "",
+        imagen: "",
+        marca: "",
+        stock: "",
+        contenido: "sin alcohol",
+      });
+      obtenerProductos();
+    } catch (error) {
+      console.error("Error al crear producto:", error);
+    }
   };
 
-
+  // Actualizar producto en Firestore y estado local
   const actualizarProducto = async (id, campo, valor) => {
-    const productoDoc = doc(db, `Categoriasid/${categoriaSeleccionada}/Productosid`, id);
+    const productoDoc = doc(
+      db,
+      `Categoriasid/${categoriaSeleccionada}/Productosid`,
+      id
+    );
     try {
+      const valorActualizado =
+        campo === "precio" || campo === "stock"
+          ? Number(valor)
+          : campo === "activo"
+          ? Boolean(valor)
+          : valor;
+
       await updateDoc(productoDoc, {
-        [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
+        [campo]: valorActualizado,
       });
 
-      // Actualizar producto localmente en el estado sin recargar toda la lista
       setProductos((prev) =>
         prev.map((p) =>
           p.id === id
             ? {
-              ...p,
-              [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
-            }
+                ...p,
+                [campo]: valorActualizado,
+              }
             : p
         )
       );
     } catch (error) {
-      console.error("Error al actualizar el producto:", error);
+      console.error("Error al actualizar producto:", error);
     }
   };
 
-
+  // Eliminar producto
   const eliminarProducto = async (id) => {
-    const productoDoc = doc(db, `Categoriasid/${categoriaSeleccionada}/Productosid`, id);
-    await deleteDoc(productoDoc);
-    obtenerProductos();
+    if (!window.confirm("¿Estás seguro que quieres eliminar este producto?")) {
+      return;
+    }
+
+    const productoDoc = doc(
+      db,
+      `Categoriasid/${categoriaSeleccionada}/Productosid`,
+      id
+    );
+    try {
+      await deleteDoc(productoDoc);
+      obtenerProductos();
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+    }
   };
 
   return (
     <section className="admin-dashboard py-5 mt-lg-5">
       <div className="container-fluid px-4 px-md-5">
         <header className="text-center mb-5">
-          <h1 className="fw-bold display-5">Panel de Administración</h1>
+          <h1 className="fw-bold display-5">Panel de Empleado</h1>
           <p className="text-white fs-5 ">
-            Gestiona todo desde un solo lugar: Productos, Pedidos y Métricas.
+            Gestiona todo desde un solo lugar: Productos y Pedidos.
           </p>
         </header>
-
-
-        {/* Estadísticas */}
-        <section className="row g-4 mb-5">
-          <article className="col-12 col-md-4">
-            <div className="card card-orders text-center p-4 shadow-sm rounded-4 scale">
-              <h5>📦 Pedidos</h5>
-              <h2 className="fw-bold">128</h2>
-              <p className="text-white">Pedidos totales este mes</p>
-            </div>
-          </article>
-          <article className="col-12 col-md-4">
-            <div className="card card-users text-center p-4 shadow-sm rounded-4 scale">
-              <h5>👥 Usuarios</h5>
-              <h2 className="fw-bold">542</h2>
-              <p className="text-white">Usuarios registrados</p>
-            </div>
-          </article>
-          <article className="col-12 col-md-4">
-            <div className="card card-sales text-center p-4 shadow-sm rounded-4 scale">
-              <h5>💸 Ventas</h5>
-              <h2 className="fw-bold">$15,230</h2>
-              <p className="text-white">Ingresos este mes</p>
-            </div>
-          </article>
-        </section>
 
 
 
@@ -555,33 +527,10 @@ const AdminDashboard = () => {
 
 
 
-        {/* Gráfico de pedidos por día */}
-        <section className="row py-5 mb-5">
-          <article className="col-12">
-            <h2 className="text-center mb-4 text-white mt-lg-3">Estadisticas</h2>
-            <div className="card mb-0 shadow-sm rounded-4">
-              <h4 className="mb-4 text-black">📊 Pedidos por día</h4>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="pedidos"
-                    stroke="#007bff"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </article>
-        </section>
 
       </div>
     </section>
   );
 };
 
-export default AdminDashboard;
+export default EmpleadoDashboard;

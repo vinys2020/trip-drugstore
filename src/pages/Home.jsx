@@ -375,7 +375,7 @@ const Home = () => {
 
         </section>
 
-        <div className="mt-5 mb-5 mx-lg-5 mx-2">
+        <div className="mt-5 mb-5 mx-lg-5">
           {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard3
             altText="Promo banner grande"

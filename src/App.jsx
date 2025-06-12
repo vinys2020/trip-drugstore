@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import EmpleadoDashboard from "./pages/EmpleadoDashboard";
+
 import Ayuda from "./pages/Ayuda";
 import Perfil from "./pages/Perfil";
 import InstallModal from "./components/InstallModal";
@@ -49,6 +51,7 @@ const AppContent = () => {
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/empleado" element={<EmpleadoDashboard />} />
           <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route
