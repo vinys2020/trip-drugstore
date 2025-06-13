@@ -18,6 +18,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import CrearCategoriaProducto from "../components/CrearCategoriaProducto";
 import { db } from "../config/firebase";
 import AdminPedidos from "../components/AdminPedidos";
 
@@ -157,13 +158,14 @@ const AdminDashboard = () => {
         <header className="text-center mb-5">
           <h1 className="fw-bold display-5">Panel de Administración</h1>
           <p className="text-white fs-5 ">
-            Gestiona todo desde un solo lugar: Productos, Pedidos y Métricas.
+            Gestiona todo desde un solo lugar: Categorias, Productos, Pedidos y Métricas.
           </p>
-        </header>
 
+        </header>
 
         {/* Estadísticas */}
         <section className="row g-4 mb-5">
+          
           <article className="col-12 col-md-4">
             <div className="card card-orders text-center p-4 shadow-sm rounded-4 scale">
               <h5>📦 Pedidos</h5>
@@ -187,6 +189,13 @@ const AdminDashboard = () => {
           </article>
         </section>
 
+        <section className="row mb-5">
+          <article className="col-12">
+            <div className="mt-5">
+            <CrearCategoriaProducto />
+            </div>
+          </article>
+        </section>
 
 
         {/* CRUD de productos */}
@@ -381,14 +390,14 @@ const AdminDashboard = () => {
                       .map((producto) => (
                         <tr key={producto.id}>
                           <td>
-                          <input
-  className="form-control"
-  style={{ minWidth: "400px" }}
-  value={producto.nombre}
-  onChange={(e) =>
-    actualizarProducto(producto.id, "nombre", e.target.value)
-  }
-/>
+                            <input
+                              className="form-control"
+                              style={{ minWidth: "400px" }}
+                              value={producto.nombre}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "nombre", e.target.value)
+                              }
+                            />
                           </td>
                           <td>
                             <input
@@ -403,68 +412,68 @@ const AdminDashboard = () => {
                             />
                           </td>
                           <td style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Imagen URL"
-    value={producto.imagen || ""}
-    onChange={(e) =>
-      actualizarProducto(producto.id, "imagen", e.target.value)
-    }
-    style={{ flex: 1 }}
-  />
-  {/* Mostrar imagen */}
-  {producto.imagen && (
-    <img
-      src={producto.imagen}
-      alt={producto.nombre}
-      style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
-    />
-  )}
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Imagen URL"
+                              value={producto.imagen || ""}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "imagen", e.target.value)
+                              }
+                              style={{ flex: 1 }}
+                            />
+                            {/* Mostrar imagen */}
+                            {producto.imagen && (
+                              <img
+                                src={producto.imagen}
+                                alt={producto.nombre}
+                                style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+                              />
+                            )}
 
-  <label
-    htmlFor={`file-upload-${producto.id}`}
-    style={{
-      padding: "6px 12px",
-      backgroundColor: "#007bff",
-      color: "white",
-      borderRadius: "4px",
-      cursor: "pointer",
-      userSelect: "none",
-    }}
-  >
-    Subir
-  </label>
-  <input
-    id={`file-upload-${producto.id}`}
-    type="file"
-    accept="image/*"
-    style={{ display: "none" }}
-    onChange={async (e) => {
-      if (e.target.files && e.target.files[0]) {
-        const formData = new FormData();
-        formData.append("file", e.target.files[0]);
-        formData.append("upload_preset", "ml_default");
+                            <label
+                              htmlFor={`file-upload-${producto.id}`}
+                              style={{
+                                padding: "6px 12px",
+                                backgroundColor: "#007bff",
+                                color: "white",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                userSelect: "none",
+                              }}
+                            >
+                              Subir
+                            </label>
+                            <input
+                              id={`file-upload-${producto.id}`}
+                              type="file"
+                              accept="image/*"
+                              style={{ display: "none" }}
+                              onChange={async (e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  const formData = new FormData();
+                                  formData.append("file", e.target.files[0]);
+                                  formData.append("upload_preset", "ml_default");
 
-        try {
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-          const data = await res.json();
-          if (data.secure_url) {
-            actualizarProducto(producto.id, "imagen", data.secure_url);
-          }
-        } catch (err) {
-          console.error("Error al subir imagen:", err);
-        }
-      }
-    }}
-  />
-</td>
+                                  try {
+                                    const res = await fetch(
+                                      "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
+                                      {
+                                        method: "POST",
+                                        body: formData,
+                                      }
+                                    );
+                                    const data = await res.json();
+                                    if (data.secure_url) {
+                                      actualizarProducto(producto.id, "imagen", data.secure_url);
+                                    }
+                                  } catch (err) {
+                                    console.error("Error al subir imagen:", err);
+                                  }
+                                }
+                              }}
+                            />
+                          </td>
 
 
 
@@ -546,7 +555,6 @@ const AdminDashboard = () => {
 
         <section className="row mb-5">
           <article className="col-12">
-            {/* Aquí va la Sección de Pedidos */}
             <div className="admin-pedidos-section mt-5">
               <AdminPedidos />
             </div>
