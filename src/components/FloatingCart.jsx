@@ -7,8 +7,6 @@ import { obtenerProductoPorId } from "/src/hooks/obtenerProductoPorId";
 
 import { writeBatch } from "firebase/firestore"; // Asegúrate de importarlo arriba
 
-
-
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
 
 import "./FloatingCart.css";

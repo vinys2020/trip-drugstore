@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import useProductosLimpieza from "../hooks/useProductoslimpieza";
+import usegolosinasychocolates from "../hooks/useProductosGolos";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
@@ -10,7 +10,7 @@ const HorizontalCarousel = () => {
   const navigate = useNavigate();
 
 
-  const { productos, loading } = useProductosLimpieza();
+  const { productos, loading } = usegolosinasychocolates();
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -28,7 +28,7 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    navigate(`/categorias/Articuloslimpiezaid/producto/${producto.id}`, {
+    navigate(`/categorias/golosinasychocolatesid/producto/${producto.id}`, {
       state: { producto },
     });
   };
@@ -55,7 +55,7 @@ const HorizontalCarousel = () => {
         Puede interesarte ⭐
         <a
           className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="/categorias/Articuloslimpiezaid"
+          href="/categorias/golosinasychocolatesid"
           target="_self"
           style={{ color: "#3483fa" }}
         >
@@ -130,7 +130,7 @@ const HorizontalCarousel = () => {
               className="scroll-producto-boton mt-md-4 mt-0"
               onClick={(e) => {
                 e.stopPropagation();
-                agregarAlCarrito(producto, "Articuloslimpiezaid");
+                agregarAlCarrito(producto, "golosinasychocolatesid");
               }}
             >
               Agregar al carrito

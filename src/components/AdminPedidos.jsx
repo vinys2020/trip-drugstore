@@ -4,13 +4,23 @@ import {
   collection,
   onSnapshot,
   updateDoc,
+  deleteDoc,
   doc
 } from "firebase/firestore";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
+
+import { getAuth } from "firebase/auth";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+
 import emailjs from '@emailjs/browser';
 
 import "./adminpedidos.css";
 
 emailjs.init('lO8HCYln-rXEwoAgm');  // Tu Public Key de EmailJS
+
+const adminEmail = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
 
 const AdminPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -18,6 +28,13 @@ const AdminPedidos = () => {
   const [filtro, setFiltro] = useState("Todos");
   const [paginaActual, setPaginaActual] = useState(1);
   const pedidosPorPagina = 5;
+  const auth = getAuth();
+const userEmail = auth.currentUser?.email;
+const esAdmin = adminEmail.includes(userEmail);
+const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+const [mostrarCalendario, setMostrarCalendario] = useState(false);
+
+
 
 
   useEffect(() => {
@@ -38,6 +55,19 @@ const AdminPedidos = () => {
   const handleVerDetalle = (pedidoId) => {
     setPedidoSeleccionado((prevId) => (prevId === pedidoId ? null : pedidoId));
   };
+
+
+
+const eliminarPedido = async (pedidoId) => {
+  if (window.confirm("¿Estás seguro de que deseas eliminar este pedido?")) {
+    try {
+      await deleteDoc(doc(db, "Pedidosid", pedidoId));
+      console.log(`Pedido ${pedidoId} eliminado`);
+    } catch (error) {
+      console.error("Error al eliminar el pedido:", error);
+    }
+  }
+};
 
 
 
@@ -90,11 +120,22 @@ const AdminPedidos = () => {
 
 
   const filtrarPedidos = () => {
-    return pedidos.filter((pedido) =>
-      filtro === "Todos"
-        ? true
-        : (pedido.estado || "").toLowerCase().trim() === filtro.toLowerCase().trim()
-    );
+    return pedidos.filter((pedido) => {
+      const coincideEstado =
+        filtro === "Todos" || (pedido.estado || "").toLowerCase().trim() === filtro.toLowerCase().trim();
+  
+      if (!fechaSeleccionada) return coincideEstado;
+  
+      // Convierte la fecha de Firestore a Date y compara solo la fecha (sin hora)
+      const fechaPedido = pedido.fecha?.toDate();
+      const mismaFecha =
+        fechaPedido &&
+        fechaPedido.getDate() === fechaSeleccionada.getDate() &&
+        fechaPedido.getMonth() === fechaSeleccionada.getMonth() &&
+        fechaPedido.getFullYear() === fechaSeleccionada.getFullYear();
+  
+      return coincideEstado && mismaFecha;
+    });
   };
 
 
@@ -125,21 +166,61 @@ const AdminPedidos = () => {
           <div className="adminpedidos-card shadow-lg rounded-4 p-4">
             <h2 className="adminpedidos-title mb-4 text-center text-dark">📦 Gestiona tus Pedidos</h2>
 
-            <div className="mb-3 d-flex gap-2 flex-wrap justify-content-center">
-              <select
-                className="form-select w-auto"
-                value={filtro}
-                onChange={(e) => {
-                  setFiltro(e.target.value);
-                  setPaginaActual(1);
-                }}
-              >
-                <option value="Todos">Todos</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En preparación">En preparación</option>
-                <option value="Listo">Listo</option>
-              </select>
-            </div>
+            <div className="position-relative">
+  <div className="mb-3 d-flex align-items-center gap-3 flex-wrap justify-content-center">
+    <div className="position-relative d-inline-block">
+      <button
+        className="btn btn-outline-primary d-flex align-items-center gap-2"
+        onClick={() => setMostrarCalendario((prev) => !prev)}
+      >
+        <FaRegCalendarAlt />
+        {mostrarCalendario ? "Ocultar calendario" : "Mostrar calendario"}
+      </button>
+
+      {mostrarCalendario && (
+        <div
+          className="position-absolute shadow p-2 bg-white rounded z-3"
+          style={{ top: "110%", left: 0 }}
+        >
+          <Calendar
+            onChange={(date) => {
+              setFechaSeleccionada(date);
+              setPaginaActual(1);
+              setMostrarCalendario(false); // opcional: cerrar al elegir
+            }}
+            value={fechaSeleccionada}
+            maxDetail="month"
+          />
+        </div>
+      )}
+    </div>
+
+    <select
+      className="form-select w-auto"
+      value={filtro}
+      onChange={(e) => {
+        setFiltro(e.target.value);
+        setPaginaActual(1);
+      }}
+    >
+      <option value="Todos">Todos</option>
+      <option value="Pendiente">Pendiente</option>
+      <option value="En preparación">En preparación</option>
+      <option value="Listo">Listo</option>
+    </select>
+  </div>
+
+  {fechaSeleccionada && (
+    <div className="d-flex justify-content-center mb-3">
+      <button
+        className="btn btn-sm btn-outline-secondary"
+        onClick={() => setFechaSeleccionada(null)}
+      >
+        Limpiar filtro de fecha
+      </button>
+    </div>
+  )}
+</div>
 
             {pedidosPaginados.length === 0 ? (
               <p>No hay pedidos para mostrar.</p>
@@ -175,6 +256,14 @@ const AdminPedidos = () => {
                       >
                         {pedidoSeleccionado === pedido.id ? "Cerrar detalles" : "Ver detalles"}
                       </button>
+                      {esAdmin && (
+    <button
+      className="btn btn-danger btn-sm w-100 w-md-auto text-white"
+      onClick={() => eliminarPedido(pedido.id)}
+    >
+      Eliminar
+    </button>
+  )}
                     </div>
 
                     {pedidoSeleccionado === pedido.id && (

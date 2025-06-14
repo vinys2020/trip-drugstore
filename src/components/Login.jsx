@@ -61,6 +61,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [esRegistro, setEsRegistro] = useState(false);
+  const [nombre, setNombre] = useState("");
+const [confirmarPassword, setConfirmarPassword] = useState("");
+
   const navigate = useNavigate();
 
   // Definimos los correos autorizados para admin y empleados
@@ -129,8 +132,18 @@ const Login = () => {
     e.preventDefault();
     try {
       if (esRegistro) {
+        if (!nombre.trim()) {
+          return alert("Por favor, ingresá tu nombre.");
+        }
+        if (password !== confirmarPassword) {
+          return alert("Las contraseñas no coinciden.");
+        }
+  
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCred.user, { photoURL: userimgdef });
+  
+        // Asignar el nombre ingresado al perfil
+        await updateProfile(userCred.user, { displayName: nombre, photoURL: userimgdef });
+  
         await guardarUsuarioEnFirestore(userCred.user);
       } else {
         const userCred = await signInWithEmailAndPassword(auth, email, password);
@@ -138,9 +151,10 @@ const Login = () => {
       }
       window.location.reload();
     } catch (error) {
-      alert(error.message);
+      alert("Ocurrió un error al iniciar sesión. Verificá tu email y contraseña.");
     }
   };
+  
 
   const cerrarSesion = () => {
     signOut(auth);
@@ -295,41 +309,67 @@ const Login = () => {
         </div>
 
         <div className="offcanvas-body">
-          <form onSubmit={loginConEmail}>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email:
-              </label>
-              <input
-                className="form-control"
-                type="email"
-                id="email"
-                placeholder="ejemplo@correo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+        <form onSubmit={loginConEmail}>
+  {esRegistro && (
+    <div className="mb-3">
+      <label htmlFor="nombre" className="form-label">Nombre:</label>
+      <input
+        className="form-control"
+        type="text"
+        id="nombre"
+        placeholder="Juan Pérez"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+        required
+      />
+    </div>
+  )}
 
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Contraseña:
-              </label>
-              <input
-                className="form-control"
-                type="password"
-                id="password"
-                placeholder="********"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+  <div className="mb-3">
+    <label htmlFor="email" className="form-label">Email:</label>
+    <input
+      className="form-control"
+      type="email"
+      id="email"
+      placeholder="ejemplo@correo.com"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+  </div>
 
-            <button type="submit" className="btn btn-warning w-100">
-              {esRegistro ? "Registrarse" : "Ingresar"}
-            </button>
-          </form>
+  <div className="mb-3">
+    <label htmlFor="password" className="form-label">Contraseña:</label>
+    <input
+      className="form-control"
+      type="password"
+      id="password"
+      placeholder="********"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+  </div>
+
+  {esRegistro && (
+    <div className="mb-3">
+      <label htmlFor="confirmarPassword" className="form-label">Confirmar Contraseña:</label>
+      <input
+        className="form-control"
+        type="password"
+        id="confirmarPassword"
+        placeholder="********"
+        value={confirmarPassword}
+        onChange={(e) => setConfirmarPassword(e.target.value)}
+        required
+      />
+    </div>
+  )}
+
+  <button type="submit" className="btn btn-warning w-100">
+    {esRegistro ? "Registrarse" : "Ingresar"}
+  </button>
+</form>
 
           <hr className="my-4" />
 
