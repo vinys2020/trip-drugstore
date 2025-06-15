@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import useProductosPers from "../hooks/useProductosPers";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../context/CartContext"; // ✅ Importar el contexto
+import { CartContext } from "../context/CartContext";
 import "./VerticalCarousel.css";
 
 const VerticalCarousel = () => {
   const navigate = useNavigate();
   const { productos, loading } = useProductosPers();
-  const { agregarAlCarrito } = useContext(CartContext); // ✅ Usar el contexto
+  const { agregarAlCarrito } = useContext(CartContext);
 
   const handleProductoClick = (producto) => {
     if (!producto.id) {
@@ -15,7 +15,6 @@ const VerticalCarousel = () => {
       return;
     }
 
-    // Si no tiene categoriaId, le asigno el valor por defecto
     const categoriaId = producto.categoriaId || "Cuidadopersonalid";
 
     navigate(`/categorias/${categoriaId}/producto/${producto.id}`, {
@@ -37,7 +36,6 @@ const VerticalCarousel = () => {
 
   return (
     <div className="container">
-      {/* Título */}
       <div
         className="container"
         style={{
@@ -60,7 +58,6 @@ const VerticalCarousel = () => {
         </h3>
       </div>
 
-      {/* Carrusel de productos */}
       <div className="vc-carousel-wrapper">
         <div className="vc-carousel-container">
           {productos.slice(0, 4).map((producto, index) => (
@@ -83,12 +80,11 @@ const VerticalCarousel = () => {
                 </div>
                 <div className="vc-precio-wrapper">
                   <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-                    {/* Precio anterior */}
+
                     <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }}>
                       ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
                     </span>
 
-                    {/* Precio actual */}
                     <p className="scroll-producto-precio mb-0">
                       ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
                     </p>
@@ -100,15 +96,17 @@ const VerticalCarousel = () => {
                   </div>
                 </div>
 
-                {/* ✅ Botón Agregar al carrito */}
                 <button
-                  className="scroll-producto-boton mt-md-4 mt-2"
+                  className="scroll-producto-boton mt-md-4 mt-0"
+                  disabled={producto.stock === 0}
                   onClick={(e) => {
                     e.stopPropagation();
-                    agregarAlCarrito(producto, "Cuidadopersonalid"); // PASO LA CATEGORÍA EXPLÍCITA
+                    if (producto.stock > 0) {
+                      agregarAlCarrito(producto, "Cuidadopersonalid");
+                    }
                   }}
                 >
-                  Agregar al carrito
+                  {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
                 </button>
               </div>
             </div>
@@ -116,7 +114,6 @@ const VerticalCarousel = () => {
         </div>
       </div>
 
-      {/* Ver más */}
       <div
         style={{
           backgroundColor: "white",

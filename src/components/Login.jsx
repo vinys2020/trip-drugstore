@@ -62,11 +62,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [esRegistro, setEsRegistro] = useState(false);
   const [nombre, setNombre] = useState("");
-const [confirmarPassword, setConfirmarPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
 
   const navigate = useNavigate();
 
-  // Definimos los correos autorizados para admin y empleados
   const correosAdmin = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
   const correosEmpleado = ["faculez1@gmail.com"];
 
@@ -80,19 +79,15 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
       if (currentUser) {
         document.body.classList.remove("overflow-hidden");
 
-        // Primero buscamos el usuario en Firestore para saber si es admin o empleado
         const ref = doc(db, "Usuariosid", currentUser.uid);
         const snapshot = await getDoc(ref);
 
-        // Si no existe en Firestore, guardamos el usuario (solo la primera vez)
         if (!snapshot.exists()) {
           await guardarUsuarioEnFirestore(currentUser);
         }
 
-        // Obtenemos datos del usuario guardado
         const userData = snapshot.exists() ? snapshot.data() : null;
 
-        // Navegamos según el rol:
         if (userData?.esAdmin || correosAdmin.includes(currentUser.email)) {
           navigate("/admin");
         } else if (userData?.esEmpleado || correosEmpleado.includes(currentUser.email)) {
@@ -138,12 +133,11 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
         if (password !== confirmarPassword) {
           return alert("Las contraseñas no coinciden.");
         }
-  
+
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
-  
-        // Asignar el nombre ingresado al perfil
+
         await updateProfile(userCred.user, { displayName: nombre, photoURL: userimgdef });
-  
+
         await guardarUsuarioEnFirestore(userCred.user);
       } else {
         const userCred = await signInWithEmailAndPassword(auth, email, password);
@@ -154,7 +148,7 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
       alert("Ocurrió un error al iniciar sesión. Verificá tu email y contraseña.");
     }
   };
-  
+
 
   const cerrarSesion = () => {
     signOut(auth);
@@ -166,7 +160,7 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
     <section className="login-page">
       <div className="container-main">
         <div className="row col-12">
-          {/* Sidebar */}
+
           <aside className="col-12 col-lg-3 login-sidebar bg-dark">
             <div className="text-center mb-4 mt-lg-3 mt-4 me-5">
               <Link to="/" className="d-inline-block">
@@ -183,7 +177,6 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
             </div>
             <h2 className="text-center mb-2 text-white">¡Bienvenido a Trip Platform!</h2>
 
-            {/* Aquí mostramos el saludo para usar el estado user y que no aparezca apagado */}
             {user && (
               <p className="text-center text-white mb-3">
                 Hola, {user.displayName || user.email}
@@ -227,14 +220,11 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
             </div>
           </aside>
 
-          {/* Main content */}
           <div className="maincont col-12 col-md-12 col-lg-9">
-            {/* ¿Cómo funciona? */}
             <article className="bg-white como-funciona-articulo mt-lg-5">
               <h1 className="comofunciona como-funciona-titulo">¿Cómo funciona?</h1>
             </article>
 
-            {/* Tarjetas en columna */}
             <div className="container">
               <div className="row g-4 justify-content-center align-items-stech p-2 p-md-5 p-lg-4 sin-margen">
                 {pasos.map((paso, index) => (
@@ -254,7 +244,6 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
               </div>
             </div>
 
-            {/* Tarjeta puntos */}
             <div className="justify-content-center p-4 mb-0 mt-5 mt-lg-5">
               <div className="col-12 container">
                 <div className="info-card text-white bg-primary p-5 rounded-4 shadow-sm text-center">
@@ -272,7 +261,7 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
             <div className="container mb-5 p-lg-5 p-1 mt-lg-0 mt-5">
               <h2 className="text-center fw-bold mb-5">Nuestros clientes opinan</h2>
               <div className="row g-4 justify-content-center">
-                {/* Reseña 1 */}
+
                 <div className="col-12 col-md-4">
                   <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
                     <h5 className="fw-bold text-center text-primary">María L.</h5>
@@ -280,7 +269,6 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
                   </div>
                 </div>
 
-                {/* Reseña 2 */}
                 <div className="col-12 col-md-4">
                   <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
                     <h5 className="fw-bold text-center text-primary">Ariel Quinteros</h5>
@@ -288,12 +276,12 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
                   </div>
                 </div>
 
-                {/* Reseña 3 */}
                 <div className="col-12 col-md-4">
                   <div className="info-card bg-light text-dark p-4 rounded-4 shadow-sm h-100">
                     <h5 className="fw-bold text-center text-primary">Juan Velázquez</h5>
                     <p className="fst-italic text-center">"¡Súper útil! puedo hacer mis pedidos cuando quiero"</p>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -301,7 +289,6 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
         </div>
       </div>
 
-      {/* Offcanvas */}
       <div className="offcanvas offcanvas-start text-white bg-dark" id="offcanvasLogin" tabIndex="-1">
         <div className="offcanvas-header border-bottom border-secondary">
           <h5 className="offcanvas-title">{esRegistro ? "Registro" : "Iniciar sesión"}</h5>
@@ -309,67 +296,67 @@ const [confirmarPassword, setConfirmarPassword] = useState("");
         </div>
 
         <div className="offcanvas-body">
-        <form onSubmit={loginConEmail}>
-  {esRegistro && (
-    <div className="mb-3">
-      <label htmlFor="nombre" className="form-label">Nombre:</label>
-      <input
-        className="form-control"
-        type="text"
-        id="nombre"
-        placeholder="Juan Pérez"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        required
-      />
-    </div>
-  )}
+          <form onSubmit={loginConEmail}>
+            {esRegistro && (
+              <div className="mb-3">
+                <label htmlFor="nombre" className="form-label">Nombre:</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="nombre"
+                  placeholder="Juan Pérez"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
-  <div className="mb-3">
-    <label htmlFor="email" className="form-label">Email:</label>
-    <input
-      className="form-control"
-      type="email"
-      id="email"
-      placeholder="ejemplo@correo.com"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      required
-    />
-  </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email:</label>
+              <input
+                className="form-control"
+                type="email"
+                id="email"
+                placeholder="ejemplo@correo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-  <div className="mb-3">
-    <label htmlFor="password" className="form-label">Contraseña:</label>
-    <input
-      className="form-control"
-      type="password"
-      id="password"
-      placeholder="********"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      required
-    />
-  </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Contraseña:</label>
+              <input
+                className="form-control"
+                type="password"
+                id="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-  {esRegistro && (
-    <div className="mb-3">
-      <label htmlFor="confirmarPassword" className="form-label">Confirmar Contraseña:</label>
-      <input
-        className="form-control"
-        type="password"
-        id="confirmarPassword"
-        placeholder="********"
-        value={confirmarPassword}
-        onChange={(e) => setConfirmarPassword(e.target.value)}
-        required
-      />
-    </div>
-  )}
+            {esRegistro && (
+              <div className="mb-3">
+                <label htmlFor="confirmarPassword" className="form-label">Confirmar Contraseña:</label>
+                <input
+                  className="form-control"
+                  type="password"
+                  id="confirmarPassword"
+                  placeholder="********"
+                  value={confirmarPassword}
+                  onChange={(e) => setConfirmarPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
-  <button type="submit" className="btn btn-warning w-100">
-    {esRegistro ? "Registrarse" : "Ingresar"}
-  </button>
-</form>
+            <button type="submit" className="btn btn-warning w-100">
+              {esRegistro ? "Registrarse" : "Ingresar"}
+            </button>
+          </form>
 
           <hr className="my-4" />
 

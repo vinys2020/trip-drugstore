@@ -10,13 +10,11 @@ const BannerCard = ({ altText = "Promoción", large = true }) => {
     <Link to="/categorias/Almacenid?search=Cafe" className="block">
       <div className="container">
         <div className={`andes-card banner-card andes-card--animated andes-card--flat andes-card--padding-16 ${large ? "banner-large" : ""}`}>
-          {/* Imagen de fondo para escritorio */}
           <div
             className="banner-image"
             style={{ backgroundImage: `url(${desktopImageUrl})` }}
             aria-label={altText}
           />
-          {/* Imagen para móviles */}
           <img
             src={mobileImageUrl}
             alt={altText}

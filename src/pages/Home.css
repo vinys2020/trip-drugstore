@@ -1,198 +1,198 @@
+.home-container {
+  background-color: green;
+}
 
-  .home-container {
-    background-color: green;
-  }
-  .swiper-fullscreen {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.swiper-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  body, html {
-    overflow-x: hidden;
-  }
-  
-  
-  .hero {
-    width: 100vw;  /* Ocupar todo el ancho de la pantalla */
-    height: 100vh; /* Ocupar toda la pantalla */
-    background-color: #4f5050; /* Color de fondo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 20px; /* Añadir algo de espacio en los costados */
-  }
-  
-  .hero-content {
-    max-width: 800px; /* Limitar el ancho del contenido */
-  }
-  
+body,
+html {
+  overflow-x: hidden;
+}
+
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+  background-color: #4f5050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero p {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
   .hero h1 {
-    font-size: 3rem;
-    font-weight: bold;
+    font-size: 2rem;
   }
-  
+
   .hero p {
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
-  
-  @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2rem;
-    }
-    .hero p {
-      font-size: 1rem;
-    }
-  }
-  
-  
+}
 
-  .title {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  .text-highlight {
-    color: #007bff;
-  }
-  
-  .about img {
-    max-width: 100%;
-    height: auto;
-  }
-  
+
+
+.title {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.text-highlight {
+  color: #007bff;
+}
+
+.about img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card {
+  padding: 0px;
+  height: 400px;
+  max-width: 100%;
+
+
+}
+
+
+
+.card-body {
+  padding: 0px
+}
+
+@media (max-width: 768px) {
   .card {
-    padding: 0px;
-    height: 400px;
+    height: 200px;
     max-width: 100%;
 
-
   }
 
-
-  
-  .card-body {
-    padding: 0px
-  }
-
-  @media (max-width: 768px) {
-    .card {
-      height: 200px;
-      max-width: 100%;
-
-    }
-
-  }
-  
-
-  
-  .custom-btn {
-    background-color: #ffe600; /* Amarillo brillante como color base */
-    color: #000000; /* Texto negro */
-    border-radius: 20px; /* Bordes más redondeados */
-    padding: 14px 50px; /* Mayor espaciado para un botón más grande */
-    font-size: 1.1rem; /* Texto más grande */
-    font-weight: 600; /* Peso de fuente más ligero */
-    border: 1px solid transparent; /* Borde más fino y sutil */
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-    transition: all 0.3s ease-in-out; /* Transición suave para agrandar y cambiar colores */
-  }
-  
-  .custom-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background-color: #000;
-    transition: all 0.5s ease;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.1; /* Opacidad baja para un efecto suave */
-  }
-  
-  .custom-btn:hover {
-    background-color: #2f2f2f; /* Cambia el fondo a gris oscuro en hover */
-    color: #ffe600; /* Cambia el color del texto a amarillo */
-    transform: scale(1.05); /* Efecto de agrandar el botón */
-  }
-  
-  .custom-btn:hover::before {
-    width: 0;
-    opacity: 0; /* El círculo de expansión desaparece */
-  }
-  
-  .custom-btn:active {
-    transform: translateY(2px); /* Efecto de "presionar" */
-    box-shadow: none; /* Elimina la sombra al hacer clic */
-    border-color: #ffc107; /* Mantener el borde amarillo en hover */
-    color: #ffffff; /* Texto blanco */
-  }
-  
-  
-  .swiper-section {
-    width: 100%;
-    overflow: hidden;
-    margin-top: 20px;
-  }
-  
-  .swiper-section .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Opción segura para buena apariencia */
-    object-position: center;
-    background-color: #f4f4f4;
-  }
+}
 
 
-  /* Contenedor de la sección */
+
+.custom-btn {
+  background-color: #ffe600;
+  color: #000000;
+  border-radius: 20px;
+  padding: 14px 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: #000;
+  transition: all 0.5s ease;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+}
+
+.custom-btn:hover {
+  background-color: #2f2f2f;
+  color: #ffe600;
+  transform: scale(1.05);
+}
+
+.custom-btn:hover::before {
+  width: 0;
+  opacity: 0;
+}
+
+.custom-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+  border-color: #ffc107;
+  color: #ffffff;
+}
+
+
+.swiper-section {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.swiper-section .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background-color: #f4f4f4;
+}
+
+
 .splinter-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;
   padding: 0 10px;
 }
 
-/* Estilo de cada tarjeta */
 .bebida-card {
-  background: #1a1a1a; /* Color oscuro */
+  background: #1a1a1a;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out;
 }
 
-/* Animación al pasar el mouse */
 .bebida-card:hover {
   transform: translateY(-5px);
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Cuerpo de la tarjeta con imagen de fondo */
 .bebida-card .card-body {
   height: auto;
   background-size: cover;
   background-position: center;
 }
 
-/* Asignar imágenes de fondo a cada tarjeta */
 .bebida-card:nth-child(1) .card-body {
   background-image: url('../assets/bebida1.jpg');
 }
+
 .bebida-card:nth-child(2) .card-body {
   background-image: url('../assets/bebida2.jpg');
 }
+
 .bebida-card:nth-child(3) .card-body {
   background-image: url('../assets/bebida3.jpg');
 }
+
 .bebida-card:nth-child(4) .card-body {
   background-image: url('../assets/bebida4.jpg');
 }
@@ -204,13 +204,13 @@
   border-radius: 15px;
 }
 
-/* Responsive: 2 tarjetas por fila en móviles */
 @media (max-width: 768px) {
   .splinter-row {
-      grid-template-columns: repeat(2, 1fr);
-      
+    grid-template-columns: repeat(2, 1fr);
+
   }
 }
+
 @media (max-width: 576px) {
   .bebida-card {
     height: 190px;
@@ -219,16 +219,16 @@
 
 @media (max-width: 768px) {
   .swiper-fullscreen {
-    margin-top: 60px; /* Empuja el Swiper debajo de la navbar */
+    margin-top: 60px;
   }
 
 
   .swiper-section {
     height: 100%;
-    margin-top: 60px; /* Asegura separación desde la navbar */
+    margin-top: 60px;
     padding: 0;
     overflow: hidden;
-    position: relative; /* Evita usar absolute aquí para respetar el flujo */
+    position: relative;
   }
 
   .swiper-section .swiper-slide img {
@@ -239,7 +239,7 @@
     border-radius: 0;
   }
 
-  
+
 
 
   .swiper-button-next,

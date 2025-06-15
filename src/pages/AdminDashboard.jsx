@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
 import "./admindashboard.css";
 import {
@@ -21,8 +20,6 @@ import {
 import CrearCategoriaProducto from "../components/CrearCategoriaProducto";
 import { db } from "../config/firebase";
 import AdminPedidos from "../components/AdminPedidos";
-
-
 
 
 
@@ -62,7 +59,7 @@ const AdminDashboard = () => {
   const subirImagenCloudinary = async (file, productoId) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "ml_default");  // tu preset aquí
+    formData.append("upload_preset", "ml_default");  
 
     try {
       const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
@@ -71,7 +68,6 @@ const AdminDashboard = () => {
       });
       const data = await res.json();
       if (data.secure_url) {
-        // Actualizamos en Firebase la URL de la imagen del producto
         await actualizarProducto(productoId, "imagen", data.secure_url);
       }
     } catch (error) {
@@ -98,7 +94,6 @@ const AdminDashboard = () => {
 
     const productosRef = collection(db, `Categoriasid/${categoriaSeleccionada}/Productosid`);
 
-    // Armar el objeto base del producto
     const productoAGuardar = {
       ...nuevoProducto,
       precio: Number(nuevoProducto.precio),
@@ -106,12 +101,9 @@ const AdminDashboard = () => {
       activo: true,
     };
 
-    // Si la categoría es Bebidasid, agregar contenido
     if (categoriaSeleccionada === "Bebidasid") {
-      // Si nuevoProducto.contenido no existe, asignar "sin alcohol" por defecto
       productoAGuardar.contenido = nuevoProducto.contenido || "sin alcohol";
     } else {
-      // Para evitar que el campo contenido se guarde en otras categorías
       delete productoAGuardar.contenido;
     }
 
@@ -129,7 +121,6 @@ const AdminDashboard = () => {
         [campo]: campo === "precio" || campo === "stock" ? Number(valor) : valor,
       });
 
-      // Actualizar producto localmente en el estado sin recargar toda la lista
       setProductos((prev) =>
         prev.map((p) =>
           p.id === id
@@ -163,7 +154,6 @@ const AdminDashboard = () => {
 
         </header>
 
-        {/* Estadísticas */}
         <section className="row g-4 mb-5">
           
           <article className="col-12 col-md-4">
@@ -197,8 +187,6 @@ const AdminDashboard = () => {
           </article>
         </section>
 
-
-        {/* CRUD de productos */}
         <section className="row mt-5">
           <article className="col-12 mt-lg-5">
             <div className="cards shadow-sm rounded-4">
@@ -227,12 +215,11 @@ const AdminDashboard = () => {
               </div>
 
               <h3 className="mb-0 text-black text-center mt-5">
-                <i className="bi bi-gear"></i> {/* Este es el ícono de configuración */}
+                <i className="bi bi-gear"></i> 
                 {categoriaSeleccionada}
               </h3>
               <hr className="bg-dark mb-4" />
 
-              {/* Formulario de nuevo producto */}
               <div className="row g-2 mb-4">
                 <h4 className="text-black d-flex align-items-center gap-2 mb-3">
                   <i className="bi bi-plus-circle"></i>
@@ -268,7 +255,6 @@ const AdminDashboard = () => {
                         })
                       }
                       onBlur={() => {
-                        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
                         if (!nuevoProducto.contenido) {
                           setNuevoProducto({
                             ...nuevoProducto,
@@ -283,12 +269,8 @@ const AdminDashboard = () => {
                   </div>
                 )}
 
-
-
-
-                {/* Campo especial para imagen con input file */}
                 <div className="col-md-4">
-                  {/* Campo de URL manual */}
+
                   <div className="mb-2">
                     <input
                       className="form-control"
@@ -303,9 +285,6 @@ const AdminDashboard = () => {
                     />
                   </div>
 
-
-
-                  {/* Selector de archivo */}
                   <div>
                     <input
                       type="file"
@@ -315,7 +294,7 @@ const AdminDashboard = () => {
                         if (e.target.files && e.target.files[0]) {
                           const formData = new FormData();
                           formData.append("file", e.target.files[0]);
-                          formData.append("upload_preset", "ml_default"); // reemplazar si usás otro preset
+                          formData.append("upload_preset", "ml_default"); 
 
                           try {
                             const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
@@ -362,8 +341,6 @@ const AdminDashboard = () => {
               </div>
 
 
-
-              {/* Tabla de productos */}
               <div className="table-responsive mb-5">
 
                 <table className="table table-bordered table-striped mb-5">
@@ -377,9 +354,6 @@ const AdminDashboard = () => {
                       {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
                       <th>Estado</th>
                       <th>Acciones</th>
-
-
-
                     </tr>
                   </thead>
                   <tbody>
@@ -422,7 +396,7 @@ const AdminDashboard = () => {
                               }
                               style={{ flex: 1 }}
                             />
-                            {/* Mostrar imagen */}
+
                             {producto.imagen && (
                               <img
                                 src={producto.imagen}
@@ -474,9 +448,6 @@ const AdminDashboard = () => {
                               }}
                             />
                           </td>
-
-
-
                           <td>
                             <input
                               className="form-control"
@@ -507,7 +478,6 @@ const AdminDashboard = () => {
                                   actualizarProducto(producto.id, "contenido", e.target.value)
                                 }
                                 onBlur={() => {
-                                  // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
                                   if (!producto.contenido) {
                                     actualizarProducto(producto.id, "contenido", "sin alcohol");
                                   }
@@ -518,11 +488,6 @@ const AdminDashboard = () => {
                               </select>
                             </td>
                           )}
-
-
-
-
-
 
                           <td className="text-center">
                             <button
@@ -562,8 +527,6 @@ const AdminDashboard = () => {
         </section>
 
 
-
-        {/* Gráfico de pedidos por día */}
         <section className="row py-5 mb-5">
           <article className="col-12">
             <h2 className="text-center mb-4 text-white mt-lg-3">Estadisticas</h2>

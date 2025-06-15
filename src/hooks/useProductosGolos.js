@@ -9,7 +9,7 @@ const usegolosinasychocolates = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       const productosRef = collection(db, "Categoriasid", "golosinasychocolatesid", "Productosid");
-      const q = query(productosRef, where("activo", "==", true)); // 👈 FILTRA solo activos
+      const q = query(productosRef, where("activo", "==", true)); 
 
       try {
         const snapshot = await getDocs(q);

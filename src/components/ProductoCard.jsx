@@ -9,7 +9,6 @@ export default function ProductoDetalle() {
   const [producto, setProducto] = useState(null);
   const [favorito, setFavorito] = useState(false);
 
-  // Para zoom
   const imgRef = useRef(null);
   const zoomRef = useRef(null);
   const lensRef = useRef(null);
@@ -39,24 +38,19 @@ export default function ProductoDetalle() {
 
     const rect = img.getBoundingClientRect();
 
-    // Calculate cursor position relative to image
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    // Consider page scroll for mobile/tablet
     x = x - window.pageXOffset;
     y = y - window.pageYOffset;
 
-    // Prevent lens from moving outside image
     if (x < lens.offsetWidth / 2) x = lens.offsetWidth / 2;
     if (x > img.width - lens.offsetWidth / 2) x = img.width - lens.offsetWidth / 2;
     if (y < lens.offsetHeight / 2) y = lens.offsetHeight / 2;
     if (y > img.height - lens.offsetHeight / 2) y = img.height - lens.offsetHeight / 2;
 
-    // Position lens
     setLensPos({ top: y - lens.offsetHeight / 2, left: x - lens.offsetWidth / 2 });
 
-    // Calculate zoom background position
     const fx = zoom.offsetWidth / lens.offsetWidth;
     const fy = zoom.offsetHeight / lens.offsetHeight;
 
@@ -72,7 +66,7 @@ export default function ProductoDetalle() {
   return (
     <main className="producto-detalle-page container py-5">
       <article className="row justify-content-center g-4">
-        {/* Imagen y zoom */}
+
         <section
           className="col-lg-6 col-md-8 col-sm-10 text-center producto-zoom-container"
           onMouseEnter={() => setZoomVisible(true)}
@@ -109,7 +103,6 @@ export default function ProductoDetalle() {
           )}
         </section>
 
-        {/* Información del producto */}
         <section className="col-lg-5 col-md-8 col-sm-10 d-flex flex-column justify-content-between">
           <header className="d-flex justify-content-between align-items-start mb-3">
             <h1 className="producto-titulo fw-bold">{producto.nombre}</h1>
@@ -169,8 +162,6 @@ export default function ProductoDetalle() {
             </button>
           </footer>
         </section>
-
-
 
       </article>
     </main>

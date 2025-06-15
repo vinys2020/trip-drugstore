@@ -71,6 +71,6 @@ button:focus-visible {
 
 @media (max-width: 600px) {
   h1 {
-    font-size: 2em; /* Ajustar tamaño de fuente en dispositivos pequeños */
+    font-size: 2em;
   }
 }

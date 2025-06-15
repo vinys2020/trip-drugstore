@@ -3,10 +3,7 @@ import { CartContext } from "../context/CartContext";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { db, auth } from "../config/firebase";
 import { getDoc, doc, collection, addDoc, Timestamp, query, where, getDocs, setDoc } from "firebase/firestore";
-import { obtenerProductoPorId } from "/src/hooks/obtenerProductoPorId";
-
-import { writeBatch } from "firebase/firestore"; // Asegúrate de importarlo arriba
-
+import { writeBatch } from "firebase/firestore";
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
 
 import "./FloatingCart.css";
@@ -19,8 +16,6 @@ const FloatingCart = () => {
     totalItems,
     totalPrecio,
     aplicarCupon,
-    coupon,
-    setCoupon,
     discount,
     telefonoUsuario,
     setTelefonoUsuario,
@@ -49,10 +44,10 @@ const FloatingCart = () => {
     const user = auth.currentUser;
     if (user) {
       setUsuario({
-        nombre: user.displayName, // <-- agregamos el nombre
+        nombre: user.displayName,
         email: user.email,
         telefono: telefonoUsuario,
-        uid: user.uid,  // <--- Este campo es necesario para obtener cupones
+        uid: user.uid,
 
       });
     }
@@ -62,15 +57,12 @@ const FloatingCart = () => {
     const idCupon = e.target.value;
     const cupon = cupones.find((c) => c.id === idCupon) || null;
     setCuponSeleccionado(cupon);
-    aplicarCupon(cupon ? cupon : ""); // Aplica o quita automáticamente
+    aplicarCupon(cupon ? cupon : "");
   };
 
 
 
   const valorSelect = cuponSeleccionado ? cuponSeleccionado.id : "";
-
-
-
 
 
   const registrarPedido = async () => {
@@ -98,7 +90,6 @@ const FloatingCart = () => {
         }
 
         if (productoId && cantidad > 0) {
-          // Obtener referencia y docSnap directamente aquí:
           const docRef = doc(db, `Categoriasid/${categoriaId}/Productosid/${productoId}`);
           const docSnap = await getDoc(docRef);
 
@@ -128,9 +119,6 @@ const FloatingCart = () => {
       }
 
 
-
-
-      // 2) Crear el pedido
       const pedidoData = {
         cliente: {
           nombre: usuario.nombre,
@@ -156,8 +144,6 @@ const FloatingCart = () => {
 
       await addDoc(collection(db, "Pedidosid"), pedidoData);
 
-      // 3) Actualizar stock con batch
-
       const batch = writeBatch(db);
 
       productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
@@ -177,8 +163,6 @@ const FloatingCart = () => {
         console.error("Error en batch commit:", error);
       }
 
-
-      // 4) Sumar puntos
       const puntosGanados = totalItems > 1 ? 50 : 25;
 
       const usuariosCollection = collection(db, "Usuariosid");
@@ -197,7 +181,6 @@ const FloatingCart = () => {
         console.warn(`No se encontró ningún documento en "Usuariosid" con email = ${usuario.email}.`);
       }
 
-      // 5) Limpiar estado
       vaciarCarrito();
       setIsOpen(false);
       setStep(1);
@@ -213,8 +196,6 @@ const FloatingCart = () => {
       setIsLoading(false);
     }
   };
-
-
 
   const handleTelefonoChange = (e) => {
     setTelefonoUsuario(e.target.value);
@@ -240,12 +221,8 @@ const FloatingCart = () => {
     }
   };
 
-  // En el cuerpo del componente, antes del return
   const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
   const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
-
-
-
 
   return (
     <>
@@ -398,7 +375,6 @@ const FloatingCart = () => {
 
                   <hr className="my-3" />
 
-                  {/* Sección para aplicar cupon */}
                   <div className="coupon-section mb-3">
                     <label htmlFor="couponSelect" className="form-label">
                       Selecciona un Cupón
@@ -425,10 +401,6 @@ const FloatingCart = () => {
                         </option>
                       )}
                     </select>
-
-
-
-
 
                   </div>
 

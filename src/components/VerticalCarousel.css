@@ -3,16 +3,16 @@
     flex-direction: row;
     gap: 1rem;
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE y Edge */
-    -webkit-overflow-scrolling: touch; /* Suaviza en iOS */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .vc-carousel-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
 }
 
-  
+
 .vc-product-card {
     display: flex;
     flex-direction: row;
@@ -23,9 +23,9 @@
     border-radius: 0rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: "Proxima Nova", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    flex: 0 0 auto; /* Necesario para scroll horizontal */
+    flex: 0 0 auto;
 }
-  
+
 .vc-product-img-wrapper {
     width: 60%;
     background-color: #f3f4f6;
@@ -33,14 +33,14 @@
     align-items: cover;
     justify-content: center;
 }
-  
+
 .vc-product-img {
     width: 100%;
     height: auto;
     object-fit: contain;
     padding: 1px 0px 0px 0px;
 }
-  
+
 .vc-product-body {
     width: 70%;
     padding: 1rem 1.5rem;
@@ -48,7 +48,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
-  
+
 .vc-product-title {
     font-size: 0.9rem;
     font-weight: 400;
@@ -59,18 +59,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-  
+
 .vc-precio-wrapper {
     margin-top: 0.5rem;
 }
-  
+
 .vc-precio-anterior {
     text-decoration: line-through;
     color: #9ca3af;
     font-size: 0.95rem;
     margin: 0;
 }
-  
+
 .vc-price-current {
     display: flex;
     align-items: center;
@@ -78,7 +78,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
 }
-  
+
 .vc-precio-actual {
     font-size: 1.25rem;
     font-weight: 500;
@@ -90,7 +90,7 @@
     align-items: center;
     justify-content: space-between;
 }
-  
+
 .vc-descuento {
     font-size: 0.8rem;
     color: #28a745;
@@ -103,7 +103,7 @@
     text-align: center;
     display: inline-block;
 }
-  
+
 .dynamic-carousel__shipping-container {
     display: flex;
     align-items: center;
@@ -113,11 +113,11 @@
     color: #00a650;
     font-weight: bold;
 }
-  
+
 .dynamic-carousel__shipping-container-fulfillment {
     fill: #00a650;
 }
-  
+
 .vc-product-boton {
     padding: 1rem 1.25rem;
     background-color: #3b82f6;
@@ -129,31 +129,31 @@
     align-self: flex-start;
     transition: background-color 0.2s ease;
 }
-  
+
 .vc-product-boton:hover {
     background-color: #2563eb;
 }
 
 .vc-carousel-wrapper {
-    overflow-x: auto; /* scroll horizontal en PC */
+    overflow-x: auto;
     overflow-y: hidden;
     border: 1px solid #ddd;
     padding: 10px;
     background-color: #fff;
 }
 
-/* === Estilos para MÓVIL === */
 @media (max-width: 1230px) {
     .vc-carousel-container {
-        flex-direction: column; /* vertical en móvil */
+        flex-direction: column;
         gap: 1px;
     }
 
     .vc-product-boton {
         padding: 0.2rem 1.25rem;
     }
+
     .vc-carousel-container .vc-product-card:nth-child(n+4) {
-        display: none; /* Ocultar los elementos a partir del quinto */
+        display: none;
     }
 
     .vc-product-img {
@@ -175,11 +175,10 @@
     }
 }
 
-/* === Estilos para DESKTOP === */
 @media (min-width: 1231px) {
     .vc-carousel-container {
         flex-direction: row;
-        flex-wrap: wrap; /* permite múltiples filas */
+        flex-wrap: wrap;
         gap: 0.7em;
         padding: 1rem 2rem;
         justify-content: center;
@@ -203,7 +202,7 @@
         width: 100%;
         height: auto;
         background-color: #f9fafb;
-        }
+    }
 
     .vc-product-body {
         width: 50%;
@@ -258,20 +257,25 @@
 
 .custom-loader-spin {
     border: 6px solid #f3f3f3;
-    border-top: 6px solid #ffc107; /* amarillo */
+    border-top: 6px solid #ffc107;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     animation: custom-spin 1s linear infinite;
     margin: auto;
-  }
-  
-  @keyframes custom-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
 
-  .vc-product-boton {
+@keyframes custom-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.vc-product-boton {
     background-color: #3483fa;
     color: white;
     border: none;
@@ -281,13 +285,13 @@
     cursor: pointer;
     width: 100%;
     margin-top: 6px;
-  }
-  
-  
-  .vc-product-boton:hover {
+}
+
+
+.vc-product-boton:hover {
     background-color: #2968c8;
-  }
-  
+}
+
 .vc-btn-move-left,
 .vc-btn-move-right {
     background-color: rgba(0, 0, 0, 0.6);
@@ -306,32 +310,31 @@
 
 @media (max-width: 768px) {
     .vc-product-img-wrapper {
-      width: 100%;
-      height: auto; /* o el alto que desees */
-      background-color: transparent; /* quitar el gris */
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        width: 100%;
+        height: auto;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-  
+
     .vc-product-img {
-      width: 110%;
-      height: 100%;
-      object-fit: fill; /* rellena el espacio sin dejar bordes */
-      border-radius: 0;
-      padding: 0; /* quitar padding */
-      background-color: white; /* fondo blanco si es necesario */
+        width: 110%;
+        height: 100%;
+        object-fit: fill;
+        border-radius: 0;
+        padding: 0;
+        background-color: white;
     }
-  
+
     .vc-product-card {
-      flex-direction: row;
-      border-radius: 0rem;
-      overflow: hidden;
+        flex-direction: row;
+        border-radius: 0rem;
+        overflow: hidden;
     }
-  
+
     .vc-product-body {
-      width: 100%;
-      padding: 1rem;
+        width: 100%;
+        padding: 1rem;
     }
-  }
-  
+}

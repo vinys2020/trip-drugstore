@@ -8,7 +8,6 @@ const useProductosCarrit = (cart) => {
   const [stockDisponible, setStockDisponible] = useState(true);
   const [error, setError] = useState(null);
 
-  // Traer datos frescos de cada producto en carrito desde Firebase
   const fetchProductosCarrito = async () => {
     setLoading(true);
     setError(null);
@@ -43,7 +42,6 @@ const useProductosCarrit = (cart) => {
     }
   };
 
-  // Verificar si hay stock suficiente para todos los productos en carrito
   const verificarStock = () => {
     for (const producto of productosActualizados) {
       if (producto.stock < producto.cantidad) {
@@ -55,7 +53,6 @@ const useProductosCarrit = (cart) => {
     return true;
   };
 
-  // Descontar stock con transacción
   const descontarStock = async () => {
     setError(null);
     try {
@@ -87,7 +84,6 @@ const useProductosCarrit = (cart) => {
     }
   };
 
-  // Refrescar productos actualizados cada vez que cambie el carrito
   useEffect(() => {
     if (cart.length > 0) {
       fetchProductosCarrito();

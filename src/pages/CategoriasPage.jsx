@@ -5,8 +5,6 @@ import { db } from "../config/firebase";
 import { CartContext } from "../context/CartContext";
 import FiltrosResponsive from "../components/FiltrosResponsive";
 
-
-
 import "./CategoriasPage.css";
 
 export default function CategoriasPage() {
@@ -78,7 +76,7 @@ export default function CategoriasPage() {
         return;
       }
 
-      setProductos([]); // Limpia antes de cargar nuevos
+      setProductos([]);
       setCargando(true);
 
       const productosRef = collection(db, "Categoriasid", categoriaId, "Productosid");
@@ -151,7 +149,7 @@ export default function CategoriasPage() {
 
   return (
     <div className="categoriaspage-container">
-      {/* Sidebar */}
+      
       <FiltrosResponsive mostrar={mostrarFiltros} toggleMostrar={toggleMostrarFiltros}>
         <nav className="categoriaspage-sidebar mt-3" aria-label="Filtros y categorías">
           <h2 className="categoriaspage-sidebar-title mt-4">Categorías</h2>
@@ -194,38 +192,38 @@ export default function CategoriasPage() {
 
           <label className="form-label">Marca:</label>
           <select
-  className="form-select mb-3"
-  value={marcaSeleccionada}
-  onChange={(e) => {
-    setMarcaSeleccionada(e.target.value);
-    actualizarURL({ marca: e.target.value });
-  }}
->
-  <option value="">Todas</option>
-  {marcasDisponibles.map((marca) => (
-    <option key={marca} value={marca}>
-      {marca}
-    </option>
-  ))}
-</select>
+            className="form-select mb-3"
+            value={marcaSeleccionada}
+            onChange={(e) => {
+              setMarcaSeleccionada(e.target.value);
+              actualizarURL({ marca: e.target.value });
+            }}
+          >
+            <option value="">Todas</option>
+            {marcasDisponibles.map((marca) => (
+              <option key={marca} value={marca}>
+                {marca}
+              </option>
+            ))}
+          </select>
 
           {categoriaSeleccionada?.nombre?.toLowerCase().trim() === "bebidas" && (
-  <>
-    <label className="form-label">Contenido de alcohol:</label>
-    <select
-      className="form-select mb-3"
-      value={filtroAlcohol}
-      onChange={(e) => {
-        setFiltroAlcohol(e.target.value);
-        actualizarURL({ alcohol: e.target.value });
-      }}
-    >
-      <option value="todos">Todos</option>
-      <option value="con">Con Alcohol</option>
-      <option value="sin">Sin Alcohol</option>
-    </select>
-  </>
-)}
+            <>
+              <label className="form-label">Contenido de alcohol:</label>
+              <select
+                className="form-select mb-3"
+                value={filtroAlcohol}
+                onChange={(e) => {
+                  setFiltroAlcohol(e.target.value);
+                  actualizarURL({ alcohol: e.target.value });
+                }}
+              >
+                <option value="todos">Todos</option>
+                <option value="con">Con Alcohol</option>
+                <option value="sin">Sin Alcohol</option>
+              </select>
+            </>
+          )}
 
           <label className="form-label">Ordenar por:</label>
           <select
@@ -240,7 +238,6 @@ export default function CategoriasPage() {
         </nav>
       </FiltrosResponsive>
 
-      {/* Contenido principal */}
       <main className="categoriaspage-main mt-3" style={{ flex: "3" }}>
         <h1 className="categoriaspage-title">
           {categoriaSeleccionada ? categoriaSeleccionada.nombre : "Productos"}
@@ -265,7 +262,6 @@ export default function CategoriasPage() {
             style={{ minWidth: "200px", flex: 1 }}
           />
 
-          {/* Solo mostrar el botón "Filtrar" en pantallas chicas */}
           <button
             className="btn btn-outline-secondary d-flex align-items-center d-md-none"
             onClick={toggleMostrarFiltros}
@@ -301,7 +297,7 @@ export default function CategoriasPage() {
               <article
                 key={producto.id}
                 className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3 mb-4"
-                style={{ cursor: "default" }} // El cursor pointer solo en la imagen
+                style={{ cursor: "default" }}
               >
                 <div className="card h-100 shadow-sm">
                   <div
@@ -336,15 +332,15 @@ export default function CategoriasPage() {
                       Precio: <span className="fw-bold">${producto.precio?.toFixed(2)}</span>
                     </p>
                     <button
-  className="btn btn-warning-custom mt-auto"
-  disabled={producto.stock === 0}
-  onClick={(e) => {
-    e.stopPropagation();
-    agregarAlCarrito(producto, categoriaId);
-  }}
->
-  {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
-</button>
+                      className="btn btn-warning-custom mt-auto"
+                      disabled={producto.stock === 0}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        agregarAlCarrito(producto, categoriaId);
+                      }}
+                    >
+                      {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
+                    </button>
 
                   </div>
                 </div>

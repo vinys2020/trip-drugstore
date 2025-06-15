@@ -2,33 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Home.css";
-import HorizontalScroll2 from "../components/HorizontalScroll2"; // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalScroll2 from "../components/HorizontalScroll2";
 import HorizontalCarousel from "../components/HorizontalCarousel";
 import HorizontalChoc from "../components/HorizontalChoc";
 import HorizontalGolos from "../components/HorizontalGolos";
 import HorizontalAlms from "../components/HorizontalAlms";
-import HorizontalBeb from "../components/HorizontalBeb"; // asegurate de la ruta correcta // Importa el componente Swiper
+import HorizontalBeb from "../components/HorizontalBeb"; 
 import Horizontalots from "../components/Horizontalots";
-import Horizontalcig from "../components/Horizontalcig"; // asegurate de la ruta correcta // Importa el componente Swiper
-import BannerCard from "../components/BannerCard";
-import BannerCard2 from "../components/BannerCard2";
+import Horizontalcig from "../components/Horizontalcig";
 import BannerCard3 from "../components/BannerCard3";
 import BannerCard4 from "../components/Baner4";
 import BannerCard5 from "../components/Banner5";
 import BannerCard6 from "../components/Banner6cafetrip";
 import BannerCard7 from "../components/Banner7cho";
 import BannerCard8 from "../components/Banner8dep";
-
-
-
-
-
 import VerticalCarousel from "../components/VerticalCarousel";
 import VerticalCarouselPers from "../components/VerticalCarouselPers";
-
 import SwiperComponent from "../components/SwiperComponent";
-import HorizontalScroll from "../components/HorizontalScroll"; // asegurate de la ruta correcta // Importa el componente Swiper
-import promocion1 from "../assets/coca.webp"; // Asegúrate de que estas imágenes existan
+import HorizontalScroll from "../components/HorizontalScroll";
+import promocion1 from "../assets/coca.webp";
 import promocion2 from "../assets/portada22.webp";
 import promocion3 from "../assets/cofler.webp";
 import promocion4 from "../assets/galletitas.webp";
@@ -64,34 +56,31 @@ const Home = () => {
         </div>
       </div>
 
-     <div className="container-fluid w-100 p-0 app-scroll-container" >
-      
+      <div className="container-fluid w-100 p-0 app-scroll-container" >
 
 
+        <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 mt-lg-3">
+          <div className="container ">
+            <div className="row justify-content-center">
+              <article className="col-12 col-lg-12 mt-lg-4 mt-4">
+                <h1 className="fw-bold display-5  text-warning">
+                  Bienvenido a <span className=" text-white">Trip Drugstore</span>
+                </h1>
+                <p className="lead mt-3 text-white">
+                  Ganá tiempo comprando online, Hacé tu pedido y retiralo listo al instante.</p>
+                <Link
+                  to="/categorias/Snacksygalletitasid"
+                  className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2"
+                >
+                  Ver Productos 🛒
+                </Link>
 
-      {/* Sección Hero */}
-      <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 mt-lg-3">
-        <div className="container ">
-          <div className="row justify-content-center">
-            <article className="col-12 col-lg-12 mt-lg-4 mt-4">
-              <h1 className="fw-bold display-5  text-warning">
-                Bienvenido a <span className=" text-white">Trip Drugstore</span>
-              </h1>
-              <p className="lead mt-3 text-white">
-              Ganá tiempo comprando online, Hacé tu pedido y retiralo listo al instante.</p>
-              <Link
-  to="/categorias/Snacksygalletitasid"
-  className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2"
->
-  Ver Productos 🛒
-</Link>
-
-            </article>
+              </article>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="recomendados" className="py-2">
+        <section id="recomendados" className="py-2">
           <div className="container">
             <article className="row">
               <div className="col-12">
@@ -105,21 +94,19 @@ const Home = () => {
 
 
         <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
+          <div className="container-fluid w-100 mt-3">
 
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalAlms />
+            <div className="container px-0">
+              <HorizontalAlms />
+            </div>
           </div>
-        </div>
 
         </section>
 
         <div className="mt-2 mx-lg-5">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard8
             altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
+            large={true}
           />
         </div>
 
@@ -127,18 +114,18 @@ const Home = () => {
           <div className="container mt-md-4">
             <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas! 🥂</h3>
             <div className="row g-3 justify-content-center">
-            <div className="col-6 col-md-3">
-  <Link to="/categorias/Bebidasid?search=cerveza">
-    <article
-      className="bebida-card"
-      style={{
-        backgroundImage: `url(${bebida1})`,
-      }}
-    >
-      <div className="card-body"></div>
-    </article>
-  </Link>
-</div>
+              <div className="col-6 col-md-3">
+                <Link to="/categorias/Bebidasid?search=cerveza">
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${bebida1})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
 
 
               <div className="col-6 col-md-3">
@@ -154,64 +141,62 @@ const Home = () => {
               </div>
 
               <div className="col-6 col-md-3">
-  <Link
-    to={{
-      pathname: "/categorias/Bebidasid",
-      search: "?alcohol=con",
-    }}
-  >
-    <article
-      className="bebida-card"
-      style={{
-        backgroundImage: `url(${bebida3})`,
-      }}
-    >
-      <div className="card-body"></div>
-    </article>
-  </Link>
-</div>
+                <Link
+                  to={{
+                    pathname: "/categorias/Bebidasid",
+                    search: "?alcohol=con",
+                  }}
+                >
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${bebida3})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
 
               <div className="col-6 col-md-3">
-  <Link
-    to={{
-      pathname: "/categorias/Bebidasid",
-      search: "?alcohol=sin",
-    }}
-  >
-    <article
-      className="bebida-card"
-      style={{
-        backgroundImage: `url(${bebida4})`,
-      }}
-    >
-      <div className="card-body"></div>
-    </article>
-  </Link>
-</div>
+                <Link
+                  to={{
+                    pathname: "/categorias/Bebidasid",
+                    search: "?alcohol=sin",
+                  }}
+                >
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${bebida4})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
+          <div className="container-fluid w-100 mt-3">
 
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalBeb />
+            <div className="container px-0">
+              <HorizontalBeb />
+            </div>
           </div>
-        </div>
 
         </section>
 
 
 
-      <div className="mt-2 mb-5">
-        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard6
-          altText="Promo banner grande"
-          large={true} // Esto controla si es una imagen grande
-        />
-      </div>
+        <div className="mt-2 mb-5">
+          <BannerCard6
+            altText="Promo banner grande"
+            large={true}
+          />
+        </div>
 
 
         <section id="servicios" className="mb-md-2 mt-lg-5 mb-4 mx-lg-5 mt-3">
@@ -224,10 +209,9 @@ const Home = () => {
         </section>
 
         <div className="mt-5 mb-5 mx-lg-5">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard7
             altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
+            large={true}
           />
         </div>
 
@@ -235,41 +219,32 @@ const Home = () => {
           <div className="container-fluid w-100 mt-md-4 mt-2">
             <div className="container px-0">
               <HorizontalChoc />
-            </div>          
+            </div>
           </div>
         </section>
 
         <div className="mt-0 mb-4">
-        {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
-        <BannerCard5
-          altText="Promo banner grande"
-          large={true} // Esto controla si es una imagen grande
-        />
-      </div>
-
-
-
+          <BannerCard5
+            altText="Promo banner grande"
+            large={true} 
+          />
+        </div>
 
         <section id="servicios" className="mx-lg-5 mb-0 mt-lg-5">
-        <div className="container-fluid w-100 mt-3">
+          <div className="container-fluid w-100 mt-3">
 
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalGolos />
+            <div className="container px-0">
+              <HorizontalGolos />
+            </div>
           </div>
-        </div>
 
         </section>
 
 
-
-      
-
         <div className="mt-4 mb-5 mx-lg-5">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard4
             altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
+            large={true}
           />
         </div>
 
@@ -285,132 +260,120 @@ const Home = () => {
             </article>
 
 
-            {/* Sección Especial Bebidas */}
             <div className="row g-3 justify-content-center p-md-3">
-  <div className="col-6 col-md-3">
-    <Link to="/categorias/Snacksygalletitasid">
-      <article
-        className="bebida-card"
-        style={{
-          backgroundImage: `url(${almacen1})`,
-        }}
-      >
-        <div className="card-body"></div>
-      </article>
-    </Link>
-  </div>
+              <div className="col-6 col-md-3">
+                <Link to="/categorias/Snacksygalletitasid">
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${almacen1})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
 
-  <div className="col-6 col-md-3">
-    <Link to="/categorias/Congeladosid">
-      <article
-        className="bebida-card"
-        style={{
-          backgroundImage: `url(${almacen2})`,
-        }}
-      >
-        <div className="card-body"></div>
-      </article>
-    </Link>
-  </div>
+              <div className="col-6 col-md-3">
+                <Link to="/categorias/Congeladosid">
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${almacen2})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
 
-  <div className="col-6 col-md-3">
-    <Link to="/categorias/Articuloslimpiezaid">
-      <article
-        className="bebida-card"
-        style={{
-          backgroundImage: `url(${almacen3})`,
-        }}
-      >
-        <div className="card-body"></div>
-      </article>
-    </Link>
-  </div>
+              <div className="col-6 col-md-3">
+                <Link to="/categorias/Articuloslimpiezaid">
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${almacen3})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
 
-  <div className="col-6 col-md-3">
-    <Link to="/categorias/Cuidadopersonalid">
-      <article
-        className="bebida-card"
-        style={{
-          backgroundImage: `url(${almacen4})`,
-        }}
-      >
-        <div className="card-body"></div>
-      </article>
-    </Link>
-  </div>
-</div>
+              <div className="col-6 col-md-3">
+                <Link to="/categorias/Cuidadopersonalid">
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${almacen4})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
         <div className="justify-content-center p-0 mb-5 mt-5 mt-lg-5">
-              <div className="col-12 container">
-                <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-                  <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
-                  <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
-                  <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
-                </div>
-              </div>
+          <div className="col-12 container">
+            <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+              <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+              <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
+              <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
             </div>
-
-
-
+          </div>
+        </div>
 
 
         <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
-
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <HorizontalCarousel />
+          <div className="container-fluid w-100 mt-3">
+            <div className="container px-0">
+              <HorizontalCarousel />
+            </div>
           </div>
-        </div>
 
         </section>
 
         <section id="servicios" className="mb-md-2 mt-md-0  mb-4 ms-md-3 mx-md-2 mx-lg-5">
+
           <div className=" w-100 mt-md-4">
             <VerticalCarouselPers />
-
           </div>
 
         </section>
 
         <div className="mt-5 mb-5 mx-lg-5">
-          {/* Usamos BannerCard con la imagen de escritorio y la de móvil */}
           <BannerCard3
             altText="Promo banner grande"
-            large={true} // Esto controla si es una imagen grande
+            large={true} 
           />
         </div>
 
         <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
+          <div className="container-fluid w-100 mt-3">
 
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <Horizontalots />
+            <div className="container px-0">
+              <Horizontalots />
+            </div>
           </div>
-        </div>
 
         </section>
 
 
 
         <section id="servicios" className="mx-lg-5">
-        <div className="container-fluid w-100 mt-3">
+          <div className="container-fluid w-100 mt-3">
 
-          {/* Contenedor para el HorizontalCarousel */}
-          <div className="container px-0">
-            <Horizontalcig />
+            <div className="container px-0">
+              <Horizontalcig />
+            </div>
           </div>
-        </div>
 
         </section>
 
-
-
-
-    </div>
+      </div>
     </>
   );
 };

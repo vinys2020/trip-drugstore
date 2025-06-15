@@ -1,14 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './PreguntasFrecuentes.css'; // Asegúrate de que la ruta sea correcta
+import './PreguntasFrecuentes.css';
 
-
-
-
-
-// components/PreguntasFrecuentes.jsx
 const PreguntasFrecuentes = () => {
-  // Definir las preguntas y respuestas en un array para mejor mantenimiento
   const faqs = [
     {
       pregunta: "¿Cómo realizo un pedido?",

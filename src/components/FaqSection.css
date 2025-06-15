@@ -21,7 +21,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Estilo personalizado para ítems del acordeón */
 .custom-accordion-item {
   background-color: #1f1f1f;
   border: 1px solid #333;
@@ -55,7 +54,6 @@
   border-top: 1px solid #444;
 }
 
-/* Elimina borde del acordeón por defecto */
 .accordion-button:focus {
   box-shadow: none;
 }

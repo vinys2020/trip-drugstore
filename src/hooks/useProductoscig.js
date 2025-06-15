@@ -10,13 +10,13 @@ const useProductoscig = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       const productosRef = collection(db, "Categoriasid", "Cigarrillosid", "Productosid");
-      const q = query(productosRef, where("activo", "==", true)); // Filtra solo activos
+      const q = query(productosRef, where("activo", "==", true)); 
 
       try {
         const snapshot = await getDocs(q);
         const productosData = snapshot.docs.map(doc => ({
           id: doc.id,
-          categoriaId: "Cigarrillosid", // ✅ Forzamos este campo
+          categoriaId: "Cigarrillosid",
           ...doc.data(),
         }));
         setProductos(productosData);

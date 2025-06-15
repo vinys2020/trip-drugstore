@@ -1,4 +1,3 @@
-// hooks/useProductosLimpieza.js
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -10,7 +9,7 @@ const useProductosLimpieza = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       const productosRef = collection(db, "Categoriasid", "Articuloslimpiezaid", "Productosid");
-      const q = query(productosRef, where("activo", "==", true)); // 👈 FILTRA solo activos
+      const q = query(productosRef, where("activo", "==", true)); 
 
       try {
         const snapshot = await getDocs(q);

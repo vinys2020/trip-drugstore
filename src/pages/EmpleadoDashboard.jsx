@@ -27,7 +27,6 @@ const EmpleadoDashboard = ({ user }) => {
     contenido: "sin alcohol",
   });
 
-  // Obtener categorías
   const obtenerCategorias = async () => {
     const categoriasRef = collection(db, "Categoriasid");
     const data = await getDocs(categoriasRef);
@@ -35,7 +34,6 @@ const EmpleadoDashboard = ({ user }) => {
     setCategorias(categoriasList);
   };
 
-  // Obtener productos según categoría seleccionada
   const obtenerProductos = async () => {
     const productosRef = collection(
       db,
@@ -54,7 +52,6 @@ const EmpleadoDashboard = ({ user }) => {
     if (categoriaSeleccionada) obtenerProductos();
   }, [categoriaSeleccionada]);
 
-  // Crear producto nuevo
   const crearProducto = async () => {
     if (!nuevoProducto.nombre || !nuevoProducto.precio) {
       alert("Nombre y precio son obligatorios");
@@ -73,7 +70,6 @@ const EmpleadoDashboard = ({ user }) => {
       activo: true,
     };
 
-    // Ajustar contenido solo si es Bebidasid
     if (categoriaSeleccionada === "Bebidasid") {
       productoAGuardar.contenido = nuevoProducto.contenido || "sin alcohol";
     } else {
@@ -96,7 +92,6 @@ const EmpleadoDashboard = ({ user }) => {
     }
   };
 
-  // Actualizar producto en Firestore y estado local
   const actualizarProducto = async (id, campo, valor) => {
     const productoDoc = doc(
       db,
@@ -108,8 +103,8 @@ const EmpleadoDashboard = ({ user }) => {
         campo === "precio" || campo === "stock"
           ? Number(valor)
           : campo === "activo"
-          ? Boolean(valor)
-          : valor;
+            ? Boolean(valor)
+            : valor;
 
       await updateDoc(productoDoc, {
         [campo]: valorActualizado,
@@ -119,9 +114,9 @@ const EmpleadoDashboard = ({ user }) => {
         prev.map((p) =>
           p.id === id
             ? {
-                ...p,
-                [campo]: valorActualizado,
-              }
+              ...p,
+              [campo]: valorActualizado,
+            }
             : p
         )
       );
@@ -130,7 +125,6 @@ const EmpleadoDashboard = ({ user }) => {
     }
   };
 
-  // Eliminar producto
   const eliminarProducto = async (id) => {
     if (!window.confirm("¿Estás seguro que quieres eliminar este producto?")) {
       return;
@@ -152,6 +146,7 @@ const EmpleadoDashboard = ({ user }) => {
   return (
     <section className="admin-dashboard py-5 mt-lg-5">
       <div className="container-fluid px-4 px-md-5">
+
         <header className="text-center mb-5">
           <h1 className="fw-bold display-5">Panel de Empleado</h1>
           <p className="text-white fs-5 ">
@@ -159,9 +154,6 @@ const EmpleadoDashboard = ({ user }) => {
           </p>
         </header>
 
-
-
-        {/* CRUD de productos */}
         <section className="row mt-5">
           <article className="col-12 mt-lg-5">
             <div className="cards shadow-sm rounded-4">
@@ -190,18 +182,16 @@ const EmpleadoDashboard = ({ user }) => {
               </div>
 
               <h3 className="mb-0 text-black text-center mt-5">
-                <i className="bi bi-gear"></i> {/* Este es el ícono de configuración */}
+                <i className="bi bi-gear"></i>
                 {categoriaSeleccionada}
               </h3>
               <hr className="bg-dark mb-4" />
 
-              {/* Formulario de nuevo producto */}
               <div className="row g-2 mb-4">
                 <h4 className="text-black d-flex align-items-center gap-2 mb-3">
                   <i className="bi bi-plus-circle"></i>
                   Agregar producto
                 </h4>
-
 
                 {["nombre", "precio", "marca", "stock"].map((campo) => (
                   <div className="col-md-4" key={campo}>
@@ -231,7 +221,6 @@ const EmpleadoDashboard = ({ user }) => {
                         })
                       }
                       onBlur={() => {
-                        // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
                         if (!nuevoProducto.contenido) {
                           setNuevoProducto({
                             ...nuevoProducto,
@@ -246,12 +235,7 @@ const EmpleadoDashboard = ({ user }) => {
                   </div>
                 )}
 
-
-
-
-                {/* Campo especial para imagen con input file */}
                 <div className="col-md-4">
-                  {/* Campo de URL manual */}
                   <div className="mb-2">
                     <input
                       className="form-control"
@@ -267,8 +251,6 @@ const EmpleadoDashboard = ({ user }) => {
                   </div>
 
 
-
-                  {/* Selector de archivo */}
                   <div>
                     <input
                       type="file"
@@ -278,7 +260,7 @@ const EmpleadoDashboard = ({ user }) => {
                         if (e.target.files && e.target.files[0]) {
                           const formData = new FormData();
                           formData.append("file", e.target.files[0]);
-                          formData.append("upload_preset", "ml_default"); // reemplazar si usás otro preset
+                          formData.append("upload_preset", "ml_default");
 
                           try {
                             const res = await fetch("https://api.cloudinary.com/v1_1/dcggcw8df/upload", {
@@ -324,9 +306,6 @@ const EmpleadoDashboard = ({ user }) => {
                 />
               </div>
 
-
-
-              {/* Tabla de productos */}
               <div className="table-responsive mb-5">
 
                 <table className="table table-bordered table-striped mb-5">
@@ -339,10 +318,6 @@ const EmpleadoDashboard = ({ user }) => {
                       <th>Stock</th>
                       {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
                       <th>Estado</th>
-                      <th>Acciones</th>
-
-
-
                     </tr>
                   </thead>
                   <tbody>
@@ -353,14 +328,14 @@ const EmpleadoDashboard = ({ user }) => {
                       .map((producto) => (
                         <tr key={producto.id}>
                           <td>
-                          <input
-  className="form-control"
-  style={{ minWidth: "400px" }}
-  value={producto.nombre}
-  onChange={(e) =>
-    actualizarProducto(producto.id, "nombre", e.target.value)
-  }
-/>
+                            <input
+                              className="form-control"
+                              style={{ minWidth: "400px" }}
+                              value={producto.nombre}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "nombre", e.target.value)
+                              }
+                            />
                           </td>
                           <td>
                             <input
@@ -375,71 +350,67 @@ const EmpleadoDashboard = ({ user }) => {
                             />
                           </td>
                           <td style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Imagen URL"
-    value={producto.imagen || ""}
-    onChange={(e) =>
-      actualizarProducto(producto.id, "imagen", e.target.value)
-    }
-    style={{ flex: 1 }}
-  />
-  {/* Mostrar imagen */}
-  {producto.imagen && (
-    <img
-      src={producto.imagen}
-      alt={producto.nombre}
-      style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
-    />
-  )}
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Imagen URL"
+                              value={producto.imagen || ""}
+                              onChange={(e) =>
+                                actualizarProducto(producto.id, "imagen", e.target.value)
+                              }
+                              style={{ flex: 1 }}
+                            />
+                            {producto.imagen && (
+                              <img
+                                src={producto.imagen}
+                                alt={producto.nombre}
+                                style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+                              />
+                            )}
 
-  <label
-    htmlFor={`file-upload-${producto.id}`}
-    style={{
-      padding: "6px 12px",
-      backgroundColor: "#007bff",
-      color: "white",
-      borderRadius: "4px",
-      cursor: "pointer",
-      userSelect: "none",
-    }}
-  >
-    Subir
-  </label>
-  <input
-    id={`file-upload-${producto.id}`}
-    type="file"
-    accept="image/*"
-    style={{ display: "none" }}
-    onChange={async (e) => {
-      if (e.target.files && e.target.files[0]) {
-        const formData = new FormData();
-        formData.append("file", e.target.files[0]);
-        formData.append("upload_preset", "ml_default");
+                            <label
+                              htmlFor={`file-upload-${producto.id}`}
+                              style={{
+                                padding: "6px 12px",
+                                backgroundColor: "#007bff",
+                                color: "white",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                userSelect: "none",
+                              }}
+                            >
+                              Subir
+                            </label>
+                            <input
+                              id={`file-upload-${producto.id}`}
+                              type="file"
+                              accept="image/*"
+                              style={{ display: "none" }}
+                              onChange={async (e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  const formData = new FormData();
+                                  formData.append("file", e.target.files[0]);
+                                  formData.append("upload_preset", "ml_default");
 
-        try {
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-          const data = await res.json();
-          if (data.secure_url) {
-            actualizarProducto(producto.id, "imagen", data.secure_url);
-          }
-        } catch (err) {
-          console.error("Error al subir imagen:", err);
-        }
-      }
-    }}
-  />
-</td>
-
-
-
+                                  try {
+                                    const res = await fetch(
+                                      "https://api.cloudinary.com/v1_1/dcggcw8df/upload",
+                                      {
+                                        method: "POST",
+                                        body: formData,
+                                      }
+                                    );
+                                    const data = await res.json();
+                                    if (data.secure_url) {
+                                      actualizarProducto(producto.id, "imagen", data.secure_url);
+                                    }
+                                  } catch (err) {
+                                    console.error("Error al subir imagen:", err);
+                                  }
+                                }
+                              }}
+                            />
+                          </td>
                           <td>
                             <input
                               className="form-control"
@@ -470,7 +441,6 @@ const EmpleadoDashboard = ({ user }) => {
                                   actualizarProducto(producto.id, "contenido", e.target.value)
                                 }
                                 onBlur={() => {
-                                  // Si queda vacío al perder foco, lo vuelve a poner "sin alcohol"
                                   if (!producto.contenido) {
                                     actualizarProducto(producto.id, "contenido", "sin alcohol");
                                   }
@@ -481,11 +451,6 @@ const EmpleadoDashboard = ({ user }) => {
                               </select>
                             </td>
                           )}
-
-
-
-
-
 
                           <td className="text-center">
                             <button
@@ -498,14 +463,6 @@ const EmpleadoDashboard = ({ user }) => {
                               {producto.activo ? "Activo" : "Inactivo"}
                             </button>
                           </td>
-                          <td>
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => eliminarProducto(producto.id)}
-                            >
-                              Eliminar
-                            </button>
-                          </td>
                         </tr>
                       ))}
                   </tbody>
@@ -515,18 +472,13 @@ const EmpleadoDashboard = ({ user }) => {
           </article>
         </section>
 
-
         <section className="row mb-5">
           <article className="col-12">
-            {/* Aquí va la Sección de Pedidos */}
             <div className="admin-pedidos-section mt-5">
               <AdminPedidos />
             </div>
           </article>
         </section>
-
-
-
 
       </div>
     </section>

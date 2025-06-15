@@ -8,7 +8,7 @@ import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import useProductos from "../hooks/useProductos"; // Hook que trae todos los productos activos
+import useProductos from "../hooks/useProductos";
 import FloatingCart from "../components/FloatingCart";
 import CategoriasDropdown from "../components/CategoriasDropdown";
 
@@ -39,7 +39,6 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     setBusqueda(query);
 
     if (query) {
-      // Filtrar los productos activos según la búsqueda
       const productosFiltrados = productos.filter((producto) =>
         producto.nombre && producto.nombre.toLowerCase().includes(query.toLowerCase())
       );
@@ -59,7 +58,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
       setSugerencias([]);
     }
   };
-  
+
 
   const cerrarSesion = () => {
     signOut(auth)
@@ -122,9 +121,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
   return (
     <nav
-      className={`navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow ${
-        scrollingDown ? "navbar-hidden" : ""
-      } ${scrollingUp ? "navbar-visible" : ""}`}
+      className={`navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow ${scrollingDown ? "navbar-hidden" : ""
+        } ${scrollingUp ? "navbar-visible" : ""}`}
       style={{ top: scrollingDown ? `-${navbarHeight}px` : "0px" }}
     >
       <div className="container d-flex align-items-center justify-content-between">
@@ -167,7 +165,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 className="list-group position-absolute start-0 shadow bg-dark px-0 border border-light px-1 py-1"
                 style={{ width: "92%", zIndex: 10 }}
               >
-{sugerencias.slice(0, 7).map((producto) => (
+                {sugerencias.slice(0, 7).map((producto) => (
                   <li
                     key={producto.id}
                     className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0 mb-lg-1 "
@@ -179,7 +177,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                     }}
                   >
                     <div className="d-flex align-items-center">
-                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "18px"}}>
+                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "18px" }}>
                         <FaSearch size={23} />
                       </div>
                       <div className="flex-grow-1">
@@ -234,54 +232,54 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         <div className="collapse navbar-collapse ms-lg-2" id="navbarNav" ref={navbarRef}>
           <ul className="navbar-nav ms-auto">
 
-          <CategoriasDropdown
-  onCloseNavbar={() => {
-    const navbar = document.getElementById("navbarNav");
-    if (navbar && navbar.classList.contains("show")) {
-      navbar.classList.remove("show");
-    }
-  }}
-/>
+            <CategoriasDropdown
+              onCloseNavbar={() => {
+                const navbar = document.getElementById("navbarNav");
+                if (navbar && navbar.classList.contains("show")) {
+                  navbar.classList.remove("show");
+                }
+              }}
+            />
 
 
-<li className="nav-item">
-  <Link
-    className="nav-link"
-    to="/Perfil"
-    onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}
-  >
-    Mis Compras
-  </Link>
-</li>
             <li className="nav-item">
-              <Link className="nav-link" to="/ayuda"     onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}>
+              <Link
+                className="nav-link"
+                to="/Perfil"
+                onClick={() => {
+                  document.getElementById("navbarNav").classList.remove("show");
+                }}
+              >
+                Mis Compras
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ayuda" onClick={() => {
+                document.getElementById("navbarNav").classList.remove("show");
+              }}>
                 Ayuda
               </Link>
             </li>
-            
-            {user && adminEmail.includes(user.email) && (
-  <li className="nav-item">
-    <Link className="nav-link" to="/admin" onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}>
-      Admin
-    </Link>
-  </li>
-)}
 
-{user && empleadosEmails.includes(user.email) && (
-  <li className="nav-item">
-    <Link className="nav-link" to="/empleado" onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}>
-      Empleado
-    </Link>
-  </li>
-)}
+            {user && adminEmail.includes(user.email) && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/admin" onClick={() => {
+                  document.getElementById("navbarNav").classList.remove("show");
+                }}>
+                  Admin
+                </Link>
+              </li>
+            )}
+
+            {user && empleadosEmails.includes(user.email) && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/empleado" onClick={() => {
+                  document.getElementById("navbarNav").classList.remove("show");
+                }}>
+                  Empleado
+                </Link>
+              </li>
+            )}
 
             {user ? (
               <>
@@ -291,9 +289,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                   </button>
                 </li>
                 <li className="nav-item align-items-center">
-                  <Link className="nav-link d-flex align-items" to="/perfil"     onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}>
+                  <Link className="nav-link d-flex align-items" to="/perfil" onClick={() => {
+                    document.getElementById("navbarNav").classList.remove("show");
+                  }}>
                     <img
                       src={user.photoURL || "https://via.placeholder.com/40"}
                       alt="Avatar"
@@ -306,9 +304,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </>
             ) : (
               <li className="nav-item">
-                <Link className="nav-link" to="/login"     onClick={() => {
-      document.getElementById("navbarNav").classList.remove("show");
-    }}>
+                <Link className="nav-link" to="/login" onClick={() => {
+                  document.getElementById("navbarNav").classList.remove("show");
+                }}>
                   Iniciar Sesión
                 </Link>
               </li>

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Evitar el overflow horizontal en toda la página */
+  overflow-x: hidden;
 }
 
 .carousel-scroll-container {
@@ -11,65 +11,63 @@ body {
   height: 200px;
   margin-left: 10px;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   justify-content: flex-start;
-  touch-action: pan-x; /* Habilita el scroll horizontal por gesto táctil */
-  scroll-behavior: smooth; /* Desplazamiento suave */
-  overflow-x: hidden; /* Evitar el scroll horizontal por defecto */
+  touch-action: pan-x;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .carousel-scroll-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari y Opera */
+  display: none;
 }
 
 .carousel-scroll-card {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  border-radius: 12px; /* Mantener bordes redondeados */
+  border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 200px; /* Ajustar tamaño mínimo */
-  max-width: 230px; /* Ajustar tamaño máximo */
-  height: 100%; /* Asegurar que la tarjeta ocupe todo el espacio */
+  min-width: 200px;
+  max-width: 230px;
+  height: 100%;
 }
 
 .carousel-scroll-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: scale(1.02); /* Efecto de hover */
+  transform: scale(1.02);
 }
 
 .carousel-scroll-card img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+  object-fit: cover;
 }
 
-/* En PC: mostrar todos los elementos sin scroll */
 @media (min-width: 768px) {
   .carousel-scroll-container {
-    overflow-x: hidden; /* Sin scroll horizontal */
-    justify-content: space-between; /* Distribuye los elementos equitativamente */
+    overflow-x: hidden;
+    justify-content: space-between;
   }
 
   .carousel-scroll-card {
     flex: 0 0 auto;
-    max-width: 230px; /* Ajuste para el tamaño en pantalla grande */
+    max-width: 230px;
   }
 }
 
-/* En Móviles: habilitar el scroll horizontal */
 @media (max-width: 767px) {
   .carousel-scroll-container {
-    overflow-x: auto; /* Permitir desplazamiento horizontal */
-    padding: 10px 0; /* Ajustar el padding */
+    overflow-x: auto;
+    padding: 10px 0;
   }
 
   .carousel-scroll-card {
-    min-width: 200px; /* Ajustar tamaño mínimo */
-    max-width: 200px; /* Ajustar tamaño máximo */
-    height: 200px; /* Ajustar altura */
+    min-width: 200px;
+    max-width: 200px;
+    height: 200px;
   }
 }

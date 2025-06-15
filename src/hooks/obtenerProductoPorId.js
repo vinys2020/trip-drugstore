@@ -9,7 +9,7 @@ export const obtenerProductoPorId = async (categoriaId, productoId) => {
       if (docSnap.exists()) {
         return { 
           id: docSnap.id, 
-          categoriaId,            // <--- agregar esta línea
+          categoriaId,         
           ...docSnap.data() 
         };
       } else {

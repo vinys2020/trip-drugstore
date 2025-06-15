@@ -1,13 +1,13 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Footer.css"; // Archivo de estilos opcional
+import "./Footer.css";
 
 const Footer = () => {
   return (
     <footer className="footer bg-dark text-white py-4 w-100">
       <div className="container">
         <div className="row">
-          {/* Logo y descripción */}
+
           <div className="col-md-4 text-center text-md-start mb-3 mb-md-0">
             <h4 className="fw-bold">Trip Drugstore</h4>
 
@@ -21,7 +21,6 @@ const Footer = () => {
 
           </div>
 
-          {/* Enlaces rápidos */}
           <div className="col-md-4 text-center mb-3 mb-md-0">
             <h5 className="fw-bold text">Enlaces</h5>
             <ul className="list-unstyled d-flex justify-content-center flex-wrap">
@@ -46,7 +45,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Redes sociales */}
           <div className="col-md-4 text-center text-md-end">
             <h5 className="fw-bold">Contactanos</h5>
             <div className="d-flex justify-content-center justify-content-md-end gap-3">
@@ -66,10 +64,9 @@ const Footer = () => {
 
         <hr className="my-3 text-white" />
 
-        {/* Copyright */}
         <div className="text-center">
           <p className="mb-0">
-            © 2025 Trip Drugstore - Página creada por <a href="https://www.instagram.com/publik.tuc/" className="text-info text-decoration-underline" target="_blank" rel="noreferrer">Publik.</a>
+            © 2025 Trip Drugstore - Página creada por <a href="https://www.instagram.com/publik.tuc/" className="text-info text-decoration-underline" target="_blank" rel="noreferrer"><b>Publik.</b></a>
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { db, auth } from "../config/firebase";
 import { getDoc, doc, collection, addDoc, Timestamp, query, where, getDocs, setDoc, writeBatch } from "firebase/firestore";
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
 import HorizontalCarrito from "../components/HorizontalCarrito";
+
 import "./Carrito.css";
 
 const Carrito = () => {
@@ -38,10 +39,10 @@ const Carrito = () => {
     const user = auth.currentUser;
     if (user) {
       setUsuario({
-        nombre: user.displayName, // <-- agregamos el nombre
+        nombre: user.displayName,
         email: user.email,
         telefono: telefonoUsuario,
-        uid: user.uid,  // <--- Este campo es necesario para obtener cupones
+        uid: user.uid,
 
       });
     }
@@ -52,7 +53,7 @@ const Carrito = () => {
     const idCupon = e.target.value;
     const cupon = cupones.find((c) => c.id === idCupon) || null;
     setCuponSeleccionado(cupon);
-    aplicarCupon(cupon ? cupon : ""); // Aplica o quita automáticamente
+    aplicarCupon(cupon ? cupon : "");
   };
 
 
@@ -78,43 +79,42 @@ const Carrito = () => {
       setStep(2);
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     try {
-      // Recalcular total con descuento aquí para asegurar valor actualizado
+
       const totalConDescuentoLocal = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
-  
       const productosAFinalizar = [];
-  
+
       for (const producto of cart) {
         const { id: productoId, categoriaId, cantidad, nombre } = producto;
-  
+
         if (!categoriaId) {
           alert(`Falta categoriaId para el producto: ${nombre}`);
           setIsLoading(false);
           return;
         }
-  
+
         if (productoId && cantidad > 0) {
           const docRef = doc(db, `Categoriasid/${categoriaId}/Productosid/${productoId}`);
           const docSnap = await getDoc(docRef);
-  
+
           if (!docSnap.exists()) {
             alert(`Producto no encontrado: ${nombre}`);
             setIsLoading(false);
             return;
           }
-  
+
           const data = docSnap.data();
           const stockActual = data.stock ?? 0;
-  
+
           if (stockActual < cantidad) {
             alert(`No hay suficiente stock para el producto: ${nombre}`);
             setIsLoading(false);
             return;
           }
-  
+
           productosAFinalizar.push({
             ref: docRef,
             stockActual,
@@ -124,13 +124,12 @@ const Carrito = () => {
           console.warn("Faltan datos para verificar stock:", producto);
         }
       }
-  
-      // Crear pedido con datos actualizados y teléfono del input
+
       const pedidoData = {
         cliente: {
           nombre: usuario.nombre,
           email: usuario.email,
-          telefono: telefonoUsuario,  // usar telefonoUsuario directamente para estar seguros
+          telefono: telefonoUsuario,
           direccion: "Calle Ficticia 123",
           entrega: "takeaway",
           totalpedido: totalConDescuentoLocal,
@@ -148,45 +147,42 @@ const Carrito = () => {
         })),
         totalpedido: totalConDescuentoLocal,
       };
-  
+
       await addDoc(collection(db, "Pedidosid"), pedidoData);
-  
-      // Actualizar stock en batch
+
       const batch = writeBatch(db);
-  
+
       productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
         const nuevoStock = Math.max(0, stockActual - cantidad);
         batch.update(ref, { stock: nuevoStock });
       });
-  
+
       await batch.commit();
-  
-      // Sumar puntos
+
       const puntosGanados = totalItems > 1 ? 50 : 25;
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
       const querySnapshot = await getDocs(q);
-  
+
       if (!querySnapshot.empty) {
         const usuarioDoc = querySnapshot.docs[0];
         const puntosPrevios = typeof usuarioDoc.data().puntos === "number"
           ? usuarioDoc.data().puntos
           : 0;
         const nuevosPuntos = puntosPrevios + puntosGanados;
-  
+
         await setDoc(usuarioDoc.ref, { puntos: nuevosPuntos }, { merge: true });
       } else {
         console.warn(`No se encontró ningún documento en "Usuariosid" con email = ${usuario.email}.`);
       }
-  
-      // Limpiar estado
+
       vaciarCarrito();
       setStep(1);
       setMetodoPago("");
       setCuponSeleccionado(null);
       aplicarCupon("");
       setIsLoading(false);
-  
+
       alert(`⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos. Te avisaremos cuando tu pedido esté listo. ¡Acumulá y canjeá descuentos!🎉 `);
     } catch (error) {
       console.error("Error al registrar el pedido y sumar puntos:", error);
@@ -195,10 +191,9 @@ const Carrito = () => {
     }
   };
 
-    // En el cuerpo del componente, antes del return
-    const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
-    const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
-  
+  const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
+  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
+
 
   return (
     <section className="carrito-pagina">
@@ -263,7 +258,6 @@ const Carrito = () => {
               ))}
             </div>
 
-            {/* Indicador de pasos */}
             <div className="steps-indicator mt-4">
               {[1, 2, 3].map((n) => (
                 <React.Fragment key={n}>
@@ -273,7 +267,6 @@ const Carrito = () => {
               ))}
             </div>
 
-            {/* PASO 1: Teléfono */}
             {step === 1 && (
               <div className="telefono-container mt-4">
                 <div className="telefono-inner mx-auto">
@@ -304,7 +297,6 @@ const Carrito = () => {
               </div>
             )}
 
-            {/* PASO 2: Método de pago */}
             {step === 2 && (
               <div className="metodo-pago-container mt-4 d-flex justify-content-center">
                 <div className="metodo-pago-inner">
@@ -339,7 +331,7 @@ const Carrito = () => {
             )}
 
 
-{step === 3 && (
+            {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
                   <h6 className="mb-3 fw-bold border-bottom pb-2 text-dark">Resumen del Pedido:</h6>

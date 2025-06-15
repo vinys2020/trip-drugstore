@@ -1,4 +1,3 @@
-// hooks/useProductosTripCafe.js
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -10,13 +9,13 @@ const useProductosots = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       const productosRef = collection(db, "Categoriasid", "Otrosid", "Productosid");
-      const q = query(productosRef, where("activo", "==", true)); // Filtra solo activos
+      const q = query(productosRef, where("activo", "==", true));
 
       try {
         const snapshot = await getDocs(q);
         const productosData = snapshot.docs.map(doc => ({
           id: doc.id,
-          categoriaId: "Otrosid", // ✅ Forzamos este campo
+          categoriaId: "Otrosid",
           ...doc.data(),
         }));
         setProductos(productosData);

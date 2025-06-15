@@ -7,14 +7,11 @@
   -webkit-overflow-scrolling: touch;
 
   scrollbar-width: none;
-  /* Firefox */
   -ms-overflow-style: none;
-  /* IE 10+ */
 }
 
 .scroll-container::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari y Opera */
 }
 
 .scroll-card {
@@ -39,7 +36,6 @@
   display: block;
 }
 
-/* En PC: mostrar en fila, sin scroll, sin wrap */
 @media (min-width: 768px) {
   .scroll-container {
     overflow-x: hidden;
@@ -49,18 +45,14 @@
 
   .scroll-card {
     flex: 1 1 30%;
-    /* que se ajusten al tamaño del contenedor */
     max-width: 230px;
   }
 }
 
-/* En Móviles: reducir el tamaño de los ítems */
 @media (max-width: 767px) {
   .scroll-card {
     min-width: 290px;
-    /* Reducir el tamaño mínimo */
     max-width: 290px;
-    /* Ajustar el máximo para que sea más pequeño */
     margin-top: 0px;
 
   }

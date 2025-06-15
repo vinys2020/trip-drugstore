@@ -1,4 +1,6 @@
 import { createContext, useEffect, useState } from "react";
+import { useContext } from "react";
+
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase"; // Actualiza esta línea con la ruta correcta
 
@@ -27,4 +29,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };

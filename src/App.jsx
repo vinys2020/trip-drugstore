@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // ← asegurate de importar useEffect
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -9,7 +9,6 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import EmpleadoDashboard from "./pages/EmpleadoDashboard";
-
 import Ayuda from "./pages/Ayuda";
 import Perfil from "./pages/Perfil";
 import InstallModal from "./components/InstallModal";
@@ -18,14 +17,11 @@ import FloatingCart from "./components/FloatingCart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ProductoDetalle from "./components/ProductoDetalle";
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
+import ScrollToTop from "./components/ScrollToTop";
+import "./App.css";
+import { AuthProvider } from "./context/AuthContext";
 
-import ScrollToTop from "./components/ScrollToTop"; // ajustá el path según corresponda
-import "./App.css"; // Asegúrate de tener este import para que cargue los estilos
-
-// Asegúrate de que la ruta del AuthContext sea correcta
-import { AuthProvider } from "./context/AuthContext"; // Ajusta esta ruta según tu estructura
-
-// Componente que maneja Navbar y Footer según la ruta
 const AppContent = () => {
   const [busqueda, setBusqueda] = useState("");
   const location = useLocation();
@@ -50,7 +46,14 @@ const AppContent = () => {
           <Route path="/categorias/:categoriaId" element={<CategoriasPage />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateAdminRoute>
+                <AdminDashboard />
+              </PrivateAdminRoute>
+            }
+          />
           <Route path="/empleado" element={<EmpleadoDashboard />} />
           <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/perfil" element={<Perfil />} />
@@ -76,12 +79,13 @@ const App = () => {
     <AuthProvider>
       <CartProvider>
         <Router>
-          <ScrollToTop /> {/* ← colocá esto aquí, fuera de <Routes> */}
 
+          <ScrollToTop />
 
           <div className="app-root-wrapper">
             <AppContent />
           </div>
+
         </Router>
       </CartProvider>
     </AuthProvider>

@@ -17,7 +17,7 @@ const HorizontalCarousel = () => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
-      const scrollStep = clientWidth * 0.8; // o 1 para ver de a un "pantallazo"
+      const scrollStep = clientWidth * 0.8; 
 
       let targetScroll = direction === "next"
         ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
@@ -51,7 +51,6 @@ const HorizontalCarousel = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Título y enlace "Ver más" */}
       <h3 className="text-start text-white mb-0">
         <span>Snacks y Galletitas 🍪</span>
         <a
@@ -64,7 +63,6 @@ const HorizontalCarousel = () => {
         </a>
       </h3>
 
-      {/* Botón Prev */}
       {isHovered && (
         <button
           className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute start-0 top-50 translate-middle-y z-3 prev-button"
@@ -84,7 +82,6 @@ const HorizontalCarousel = () => {
         </button>
       )}
 
-      {/* Carrusel */}
       <div
         ref={scrollRef}
         className="scroll-producto-contenedor d-flex overflow-auto"
@@ -109,12 +106,11 @@ const HorizontalCarousel = () => {
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-                  {/* Precio anterior */}
+
                   <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }} className="mt-lg-3">
                     ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
                   </span>
 
-                  {/* Precio actual */}
                   <p className="scroll-producto-precio mb-0">
                     ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
                   </p>
@@ -127,20 +123,23 @@ const HorizontalCarousel = () => {
               </div>
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
+
             <button
               className="scroll-producto-boton mt-md-4 mt-0"
+              disabled={producto.stock === 0}
               onClick={(e) => {
                 e.stopPropagation();
-                agregarAlCarrito(producto, "Snacksygalletitasid");
+                if (producto.stock > 0) {
+                  agregarAlCarrito(producto, "Snacksygalletitasid");
+                }
               }}
             >
-              Agregar al carrito
+              {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
             </button>
           </div>
         ))}
       </div>
 
-      {/* Botón Next */}
       {isHovered && (
         <button
           className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute end-0 top-50 translate-middle-y z-3 next-button"

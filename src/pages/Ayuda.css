@@ -1,7 +1,5 @@
-/* Fondo general */
 .help-page {
   background-color: #2c2b2b;
-  /* Gris neutro */
   color: #f5f5f5;
   min-height: 100vh;
   padding: 2rem;
@@ -10,12 +8,10 @@
 
 #root {
   background-color: #2c2b2b;
-  /* Gris neutro */
   margin: 0;
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* Encabezado */
 .help-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -32,7 +28,6 @@
   font-size: 1.1rem;
 }
 
-/* Barra de búsqueda */
 .search-container {
   max-width: 600px;
   margin: 0 auto 3rem auto;
@@ -63,7 +58,6 @@
   color: #999;
 }
 
-/* Secciones de ayuda */
 .faq-section {
   background-color: #272727;
   border-radius: 12px;
@@ -105,7 +99,6 @@
   list-style: disc;
 }
 
-/* Sección de contacto */
 .contact-support {
   text-align: center;
   margin-top: 3rem;
@@ -133,7 +126,6 @@
   background-color: #e6c200;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .help-header h1 {
     font-size: 2rem;

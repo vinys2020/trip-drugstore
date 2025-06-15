@@ -1,7 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
-import { useNavigate } from "react-router-dom"; // Agregar esta línea
-
+import { useNavigate } from "react-router-dom";
 import { db } from "../config/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "./HorizontalCarousel.css";
@@ -117,12 +116,16 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
               className="scroll-producto-boton mt-md-4 mt-2"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log({ ...producto, categoriaId }); // debug
-                agregarAlCarrito(producto, categoriaId);
+                if (producto.stock > 0) {
+                  console.log({ ...producto, categoriaId }); // debug
+                  agregarAlCarrito(producto, categoriaId);
+                }
               }}
+              disabled={producto.stock <= 0}
             >
-              Agregar al carrito
+              {producto.stock > 0 ? "Agregar al carrito" : "Agotado"}
             </button>
+
           </div>
         ))}
 

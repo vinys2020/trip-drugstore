@@ -2,21 +2,16 @@ import React, { useState } from "react";
 import { crearCategoriaYProducto } from "../services/firebaseService";
 
 export default function CrearCategoriaProducto() {
-  // Estados categoría
   const [categoriaNombre, setCategoriaNombre] = useState("");
   const [categoriaImagen, setCategoriaImagen] = useState("");
   const [categoriaOrden, setCategoriaOrden] = useState("");
   const [categoriaActivo, setCategoriaActivo] = useState(true);
-
-  // Estados producto
   const [productoNombre, setProductoNombre] = useState("");
   const [productoMarca, setProductoMarca] = useState("");
   const [productoPrecio, setProductoPrecio] = useState("");
   const [productoStock, setProductoStock] = useState("");
   const [productoImagen, setProductoImagen] = useState("");
   const [productoActivo, setProductoActivo] = useState(true);
-
-  // Campos extra
   const [campoExtraNombre, setCampoExtraNombre] = useState("");
   const [campoExtraValor, setCampoExtraValor] = useState("");
 
@@ -52,19 +47,16 @@ export default function CrearCategoriaProducto() {
       await crearCategoriaYProducto({ categoria, producto });
       alert("Categoría y producto creados correctamente");
 
-      // Limpiar formulario
       setCategoriaNombre("");
       setCategoriaImagen("");
       setCategoriaOrden("");
       setCategoriaActivo(true);
-
       setProductoNombre("");
       setProductoMarca("");
       setProductoPrecio("");
       setProductoStock("");
       setProductoImagen("");
       setProductoActivo(true);
-
       setCampoExtraNombre("");
       setCampoExtraValor("");
     } catch (error) {
@@ -74,11 +66,10 @@ export default function CrearCategoriaProducto() {
   };
 
   return (
-<div className=" bg-white p-4 rounded-4 shadow-sm text-black">
+    <div className=" bg-white p-4 rounded-4 shadow-sm text-black">
       <h2 className="text-dark text-center"><i className="bi bi-plus-circle me-2"></i>Crear Nueva Categoría</h2>
       <form onSubmit={handleSubmit}>
 
-        {/* Categoría */}
         <div className="mb-3">
           <label htmlFor="categoriaNombre" className="form-label">
             Nombre de la Categoría *
@@ -132,11 +123,10 @@ export default function CrearCategoriaProducto() {
           </label>
         </div>
         <div className="alert alert-warning d-flex align-items-center" role="alert">
-  <i className="bi bi-exclamation-triangle-fill me-2"></i>
-  Para crear una categoría, es necesario crear al menos un producto.
-</div>
+          <i className="bi bi-exclamation-triangle-fill me-2"></i>
+          Para crear una categoría, es necesario crear al menos un producto.
+        </div>
 
-        {/* Producto */}
         <div className="mb-3">
           <label htmlFor="productoNombre" className="form-label">
             Nombre del Producto *
@@ -163,9 +153,6 @@ export default function CrearCategoriaProducto() {
             onChange={(e) => setProductoMarca(e.target.value)}
           />
         </div>
-
-
-
 
         <div className="mb-3">
           <label htmlFor="productoPrecio" className="form-label">

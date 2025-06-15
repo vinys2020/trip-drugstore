@@ -180,8 +180,9 @@ export default function ProductoDetalle() {
             <button
               className="btn btn-warning btn-lg w-100 mt-4 shadow-sm"
               onClick={() => agregarAlCarrito(producto, categoriaId)}
+              disabled={producto.stock <= 0}
             >
-              Agregar al carrito
+              {producto.stock > 0 ? "Agregar al carrito" : "Agotado"}
             </button>
           </footer>
         </section>

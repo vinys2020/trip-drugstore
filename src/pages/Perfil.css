@@ -59,7 +59,6 @@
 
 .link-hover-underline {
   color: #ffc107;
-  /* amarillo de Bootstrap 'text-warning' */
   font-weight: bold;
   text-decoration: none;
   transition: text-decoration 0.2s;
@@ -78,16 +77,13 @@
   }
 }
 
-/* Estilo base (desktop) */
 .icono-direccion {
   transition: transform 0.3s ease;
 }
 
-/* En móvil: rotar 90 grados para que apunte hacia arriba */
 @media (max-width: 768px) {
   .icono-direccion {
     transform: rotate(-45deg);
-    /* ajusta el ángulo para que quede bien */
   }
 }
 
@@ -171,7 +167,6 @@
   align-self: flex-start;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .perfil-header {
     padding: 1.5rem 1rem;

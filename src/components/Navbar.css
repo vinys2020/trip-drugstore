@@ -1,104 +1,95 @@
 .navbar-nav .nav-link {
-    color: white !important; /* Asegura que las letras sean blancas */
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: yellow !important; /* Cambia el color a amarillo al hacer hover */
-  }
-  
-  .navbar-brand {
-    color: white !important; /* Asegura que el logo y texto del navbar sean blancos */
-  }
-  
-  .navbar-brand:hover {
-    color: rgb(255, 230, 0) !important; /* Cambia el color a amarillo al hacer hover */
-  }
-  .navbar {
-    z-index: 1030;     /* suficientemente arriba para no quedar debajo de otros elementos */
-    background-color: #212529; /* fondo para evitar transparencia al pegarse */
-    
-    transition: top 0.3s ease-in-out; /* transición suave y natural */
-    will-change: top;                 /* aviso al navegador para optimizar esta propiedad */
-    backface-visibility: hidden;     /* ayuda a suavizar repintados y mejorar rendimiento */
-    /* Opcional para suavizar aún más, pero no siempre necesario */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  
-  .navbar-hidden {
-    top: -110px; /* Asegúrate de que coincida con el valor de la altura de la navbar */
-  }
-  
-  .navbar-visible {
-    top: 0px; /* Cuando la navbar es visible, vuelve a su posición inicial */
-  }
-  
-  
-
-  /* Estilo para el dropdown */
-.nav-item.dropdown {
-  position: relative; /* Necesario para el comportamiento del dropdown */
+  color: white !important;
 }
 
-/* El menú desplegable inicialmente está oculto */
+.navbar-nav .nav-link:hover {
+  color: yellow !important;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar-brand:hover {
+  color: rgb(255, 230, 0) !important;
+}
+
+.navbar {
+  z-index: 1030;
+  background-color: #212529;
+  transition: top 0.3s ease-in-out;
+  will-change: top;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.navbar-hidden {
+  top: -110px;
+}
+
+.navbar-visible {
+  top: 0px;
+}
+
+
+
+.nav-item.dropdown {
+  position: relative;
+}
+
 .nav-item.dropdown .dropdown-menu {
-  display: none; /* Inicialmente oculto */
-  background-color: #333; /* Fondo oscuro */
-  border-color: #444; /* Bordes más claros */
-  position: absolute; /* Posiciona el dropdown debajo del enlace */
-  top: 100%; /* Aparece justo debajo del elemento de la lista */
+  display: none;
+  background-color: #333;
+  border-color: #444;
+  position: absolute;
+  top: 100%;
   left: 0;
   right: 0;
   width: 200px;
 }
 
-/* Mostrar el menú cuando el mouse pasa por encima del item */
 .dropdown-menu.show {
   display: block !important;
 }
 
-/* Estilo para los items dentro del dropdown */
 .nav-item.dropdown .dropdown-menu .dropdown-item {
-  color: #fff; /* Texto blanco */
+  color: #fff;
 }
 
 .navbar-nav .nav-link {
-  white-space: nowrap; /* Evita que los textos se dividan en varias líneas */
+  white-space: nowrap;
 }
 
-/* Estilo al pasar el mouse por los items */
 .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
-  background-color: #f8c300; /* Fondo amarillo al pasar el mouse */
-  color: #333; /* Texto oscuro */
+  background-color: #f8c300;
+  color: #333;
 }
 
-/* Estilo para el enlace "Categorías" */
 .navbar .nav-link.dropdown-toggle {
-  color: #fff; /* Texto blanco para el toggle */
+  color: #fff;
 }
 
 .navbar .nav-link.dropdown-toggle:hover {
-  color: #f8c300; /* Amarillo al pasar el mouse */
+  color: #f8c300;
 }
 
 .list-group-item:hover {
-  background-color: #f8c300; /* Amarillo como el hover del navbar */
-  color: #212529; /* Texto oscuro para contraste */
+  background-color: #f8c300;
+  color: #212529;
   font-weight: 500;
 }
 
-/* Asegúrate de que el FloatingCart esté correctamente posicionado */
 .floating-cart {
   position: absolute;
-  top: 50px;  /* Ajusta según la altura del Navbar */
+  top: 50px;
   right: 10px;
-  z-index: 1000;  /* Asegúrate de que esté por encima del Navbar */
+  z-index: 1000;
 }
 
 
-  
-/* Ajustes para el input y sugerencias en móvil */
+
 @media (max-width: 768px) {
   .navbar .form-control {
     font-size: 16px;
@@ -128,17 +119,17 @@
     padding: 8px;
     width: 100%;
   }
-  
-  
+
+
   .navbar-collapse {
     position: absolute;
     top: 100%;
     right: 0;
     left: 0;
-    background-color: #212529; /* Mismo color que tu navbar */
+    background-color: #212529;
     z-index: 1000;
   }
-  
+
 
   .navbar .position-relative {
     width: 10%;
@@ -151,7 +142,6 @@
   }
 }
 
-/* Alineación mejorada de los íconos y espaciado general */
 .navbar .navbar-toggler {
   margin-left: 10px;
 }
@@ -162,17 +152,14 @@
 }
 
 .navbar-nav .nav-link {
-  white-space: nowrap; /* Evita que los textos se dividan en varias líneas */
+  white-space: nowrap;
 }
 
-/* Barra de búsqueda */
+
 .navbar .form-control {
-  width: 100%; /* Asegura que ocupe el ancho disponible */
-  max-width: 400px; /* Limita el tamaño máximo para evitar que se expanda demasiado */
+  width: 100%;
+  max-width: 400px;
   font-size: 16px;
-  padding: 8px 12px; /* Asegura un padding adecuado */
-  transition: width 0.3s ease-in-out; /* Transición suave para el cambio de tamaño */
+  padding: 8px 12px;
+  transition: width 0.3s ease-in-out;
 }
-
-
-
