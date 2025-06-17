@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, doc, getDoc, runTransaction } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, getDoc, runTransaction, updateDoc } from "firebase/firestore";
 import { getApp } from "firebase/app";
 
 // Creamos el contexto
@@ -11,6 +11,7 @@ export const CartProvider = ({ children, userId }) => {
   const [coupon, setCoupon] = useState(null);
   const [telefonoUsuario, setTelefonoUsuario] = useState("");
   const [cuponesUsuario, setCuponesUsuario] = useState([]);
+
   const [loadingCupones, setLoadingCupones] = useState(true);
 
   // Obtener instancia de Firestore
@@ -58,6 +59,30 @@ export const CartProvider = ({ children, userId }) => {
   
     cargarCupones();
   }, [userId, db]);
+
+
+  const marcarCuponComoUsado = async (codigoCupon) => {
+    if (!userId || !codigoCupon) return;
+  
+    try {
+      const cuponDocRef = doc(db, `Usuariosid/${userId}/Cuponesid/${codigoCupon.toLowerCase()}`);
+      await updateDoc(cuponDocRef, { usado: true });
+  
+      setCuponesUsuario((prevCupones) =>
+        prevCupones.map((c) =>
+          c.codigo === codigoCupon.toUpperCase() ? { ...c, usado: true } : c
+        )
+      );
+  
+      if (coupon && coupon.codigo === codigoCupon.toUpperCase()) {
+        setCoupon({ ...coupon, usado: true });
+        setDiscount(0);
+      }
+    } catch (error) {
+      console.error("Error al marcar cupón como usado:", error);
+    }
+  };
+  
 
   // Función auxiliar para obtener categoriaId consistente
   const obtenerCategoriaId = (producto) => {
@@ -110,25 +135,43 @@ export const CartProvider = ({ children, userId }) => {
     setCart([]);
   };
 
-  // Aplicar cupón
   const aplicarCupon = (cupon) => {
     if (!cupon || cupon.usado) {
       setDiscount(0);
       setCoupon(null);
       return;
     }
-    setDiscount(cupon.descuento);
+    setDiscount(cupon.descuento); // ej: 10 para 10%
     setCoupon(cupon);
   };
 
-  // Calcular total con descuento aplicado
-  const calcularTotal = () => {
-    let total = cart.reduce((acc, p) => acc + p.cantidad * parseFloat(p.precio), 0);
-    if (discount > 0) {
-      total = total - (total * discount) / 100;
-    }
-    return total;
-  };
+// Calcula el subtotal sin descuento (2 decimales)
+const calcularSubtotal = () => {
+  const subtotal = cart.reduce((acc, p) => acc + p.cantidad * Number(p.precio || 0), 0);
+  return parseFloat(subtotal.toFixed(2));
+};
+
+const calcularTotal = () => {
+  const subtotal = calcularSubtotal();
+  if (discount > 0) {
+    const totalConDescuento = subtotal * (1 - discount / 100);
+    return parseFloat(totalConDescuento.toFixed(2));
+  }
+  return subtotal;
+};
+
+
+// Calcula el monto en dinero descontado (2 decimales)
+const calcularDescuentoMonetario = () => {
+  const subtotal = calcularSubtotal();
+  const total = calcularTotal();
+  const descuento = subtotal - total;
+  return parseFloat(descuento.toFixed(2));
+};
+
+
+  
+  
 
   const totalItems = cart.reduce((acc, p) => acc + p.cantidad, 0);
 
@@ -198,6 +241,7 @@ export const CartProvider = ({ children, userId }) => {
         disminuirCantidad,
         totalItems,
         totalPrecio: calcularTotal(),
+        descuentoMonetario: calcularDescuentoMonetario(),
         aplicarCupon,
         coupon,
         setCoupon,
@@ -208,6 +252,7 @@ export const CartProvider = ({ children, userId }) => {
         cuponesUsuario,
         verificarStockDisponible,
         descontarStock,
+        marcarCuponComoUsado,
       }}
     >
       {children}

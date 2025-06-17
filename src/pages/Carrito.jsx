@@ -1,8 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { db, auth } from "../config/firebase";
-import { getDoc, doc, collection, addDoc, Timestamp, query, where, getDocs, setDoc, writeBatch } from "firebase/firestore";
-import { obtenerCuponesUsuario } from "../hooks/useCupones";
+import {
+  getDoc,
+  doc,
+  collection,
+  addDoc,
+  Timestamp,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  updateDoc,
+  writeBatch
+} from "firebase/firestore"; import { obtenerCuponesUsuario } from "../hooks/useCupones";
 import HorizontalCarrito from "../components/HorizontalCarrito";
 
 import "./Carrito.css";
@@ -29,6 +40,7 @@ const Carrito = () => {
   const [cupones, setCupones] = useState([]);
   const [cuponSeleccionado, setCuponSeleccionado] = useState(null);
 
+
   useEffect(() => {
     if (usuario?.uid) {
       obtenerCuponesUsuario(usuario.uid).then(setCupones);
@@ -51,12 +63,37 @@ const Carrito = () => {
 
   const handleSeleccionCupon = (e) => {
     const idCupon = e.target.value;
-    const cupon = cupones.find((c) => c.id === idCupon) || null;
+    const cupon = cupones.find(c => c.id === idCupon) || null;
     setCuponSeleccionado(cupon);
-    aplicarCupon(cupon ? cupon : "");
+    aplicarCupon(cupon);
   };
 
+  const marcarCuponComoUsado = async (codigoCupon) => {
+    if (!usuario?.uid || !codigoCupon) return;
 
+    try {
+      const cuponDocRef = doc(
+        db,
+        `Usuariosid/${usuario.uid}/Cuponesid/${codigoCupon}`
+      );
+      await updateDoc(cuponDocRef, { usado: true });
+
+      setCupones((prev) =>
+        prev.map((c) =>
+          c.id === codigoCupon
+            ? { ...c, usado: true }
+            : c
+        )
+      );
+
+      if (cuponSeleccionado?.id === codigoCupon) {
+        setCuponSeleccionado((c) => ({ ...c, usado: true }));
+        aplicarCupon(null);
+      }
+    } catch (err) {
+      console.error("Error al marcar cupón como usado:", err);
+    }
+  };
 
   const valorSelect = cuponSeleccionado ? cuponSeleccionado.id : "";
 
@@ -132,7 +169,6 @@ const Carrito = () => {
           telefono: telefonoUsuario,
           direccion: "Calle Ficticia 123",
           entrega: "takeaway",
-          totalpedido: totalConDescuentoLocal,
           cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
           descuento: discount,
         },
@@ -159,7 +195,15 @@ const Carrito = () => {
 
       await batch.commit();
 
-      const puntosGanados = totalItems > 1 ? 50 : 25;
+      if (cuponSeleccionado && !cuponSeleccionado.usado) {
+        await marcarCuponComoUsado(cuponSeleccionado.id);
+      }
+
+      const puntosGanados =
+        totalConDescuento > 20000 ? 50 :
+          totalConDescuento >= 10000 ? 25 : 0;
+
+
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
       const querySnapshot = await getDocs(q);
@@ -191,8 +235,9 @@ const Carrito = () => {
     }
   };
 
-  const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
-  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
+  const totalConDescuento = totalPrecio; 
+  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / (100 - discount) : 0; 
+
 
 
   return (
@@ -334,15 +379,15 @@ const Carrito = () => {
             {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
-                  <h6 className="mb-3 fw-bold border-bottom pb-2 text-dark">Resumen del Pedido:</h6>
+                  <h6 className="mb-3 fw-bold border-bottom pb-2 text-black">Resumen del Pedido:</h6>
 
                   {cart.map((producto, i) => (
                     <div
                       key={i}
-                      className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+                      className="order-item d-flex justify-content-between align-items-center py-2 border-bottom text-black"
                     >
                       <div>
-                        <span className="fw-semibold text-dark">{producto.nombre}</span> x <span>{producto.cantidad}</span>
+                        <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
                       </div>
                       <div>
                         <span className="fw-semibold">
@@ -354,59 +399,58 @@ const Carrito = () => {
 
                   <hr className="my-3" />
 
-                  {/* Sección para aplicar cupon */}
                   <div className="coupon-section mb-3">
-                    <label htmlFor="couponSelect" className="form-label text-dark">
+                    <label htmlFor="couponSelect" className="form-label text-black">
                       Selecciona un Cupón
                     </label>
-
                     <select
                       id="couponSelect"
-                      value={valorSelect}
+                      value={cuponSeleccionado?.id || ""}
                       onChange={handleSeleccionCupon}
                       className="form-select"
                     >
+
                       <option value="">-- Elige un cupón --</option>
-                      {cupones?.length > 0 ? (
-                        cupones
-                          .filter((c) => !c.usado)
-                          .map((cupon) => (
-                            <option key={cupon.id} value={cupon.id}>
-                              {cupon.nombre} ({cupon.descuento}%)
-                            </option>
-                          ))
-                      ) : (
-                        <option disabled value="">
-                          No tenés cupones disponibles
-                        </option>
-                      )}
+                      {cupones
+                        .filter(c => !c.usado)
+                        .map(c => (
+                          <option key={c.id} value={c.id}>
+                            {c.nombre} ({c.descuento}%)
+                          </option>
+                        ))
+                      }
                     </select>
-
-
-
-
-
                   </div>
 
-                  <div className="discount-applied d-flex justify-content-between align-items-center text-danger pb-2 border-bottom">
-                    <span>Descuento por Puntos:</span>
-                    <span>${descuentoMonetario.toFixed(2)}</span>
-                  </div>
 
                   {discount > 0 && (
-                    <>
-                      <hr className="my-3" />
-                      <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
-                        <span>Descuento por Cupón:</span>
-                        <span>{discount}%</span>
-                      </div>
-                    </>
+                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 py-2">
+                      <span>Utilizando Cupón de:</span>
+                      <span>{discount}%</span>
+                    </div>
                   )}
 
-                  <hr className="my-3" />
+                  {discount > 0 && (
+                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2">
+                      <span>Descuento aplicado:</span>
+                      <span>${descuentoMonetario.toFixed(2)}</span>
+                    </div>
+                  )}
 
-                  <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-dark">
-                    <span>Total:</span>
+                  {discount > 0 && (
+                    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary border-bottom">
+                      <span>Subtotal:</span>
+                      <span style={{ textDecoration: "line-through", color: "gray" }}>
+                        ${(totalConDescuento + descuentoMonetario).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+
+                  <hr className="my-2" />
+
+                  {/* Total con descuento */}
+                  <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
+                    <span>Total a Pagar:</span>
                     <span>${totalConDescuento.toFixed(2)}</span>
                   </div>
                 </div>
@@ -422,11 +466,7 @@ const Carrito = () => {
                 <button
                   className="btn btn-danger mt-3 w-100"
                   onClick={() => {
-                    if (
-                      window.confirm(
-                        "¿Estás seguro que querés vaciar el carrito? Se eliminarán todos los productos."
-                      )
-                    ) {
+                    if (window.confirm("¿Estás seguro que querés vaciar el carrito?")) {
                       vaciarCarrito();
                       setStep(1);
                       setIsOpen(false);

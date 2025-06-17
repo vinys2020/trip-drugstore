@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./HorizontalScroll2.css";
 
 const items = [
@@ -45,18 +47,16 @@ const HorizontalScroll2 = () => {
   return (
     <div className="scroll-container-two">
       {items.map((item, index) => (
-        <a
+        <Link
           key={index}
-          href={item.link}
+          to={item.link}
           className="scroll-card-two"
-          target=""
-          rel="noopener noreferrer"
         >
           <div className="image-container">
             <img src={item.image} alt={item.alt} />
           </div>
           <div className="card-title">{item.title}</div>
-        </a>
+        </Link>
       ))}
     </div>
   );

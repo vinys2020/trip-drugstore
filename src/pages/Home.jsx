@@ -33,7 +33,7 @@ import bebida2 from "../assets/bebida2.jpg";
 import bebida3 from "../assets/bebida3.jpg";
 import bebida4 from "../assets/bebida4.jpg";
 import almacen1 from "../assets/snakpost.webp";
-import almacen2 from "../assets/congeladospost.webp";
+import almacen2 from "../assets/tripsposts.webp";
 import almacen3 from "../assets/limpieza.webp";
 import almacen4 from "../assets/descartable.webp";
 
@@ -127,17 +127,22 @@ const Home = () => {
                 </Link>
               </div>
 
-
               <div className="col-6 col-md-3">
-                <article
-                  className="bebida-card"
-                  style={{
-                    backgroundImage: `url(${bebida2})`,
-
+                <Link
+                  to={{
+                    pathname: "/categorias/Bebidasid",
+                    search: "?alcohol=con",
                   }}
                 >
-                  <div className="card-body"></div>
-                </article>
+                  <article
+                    className="bebida-card"
+                    style={{
+                      backgroundImage: `url(${bebida2})`,
+                    }}
+                  >
+                    <div className="card-body"></div>
+                  </article>
+                </Link>
               </div>
 
               <div className="col-6 col-md-3">
@@ -275,7 +280,7 @@ const Home = () => {
               </div>
 
               <div className="col-6 col-md-3">
-                <Link to="/categorias/Congeladosid">
+                <Link to="/categorias/Tripcafeysandwichesid">
                   <article
                     className="bebida-card"
                     style={{

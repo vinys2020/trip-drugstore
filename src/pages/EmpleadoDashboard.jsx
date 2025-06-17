@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminPedidos from "../components/AdminPedidos";
+import PedidosEmpleado from "../components/PedidosEmpleado";
+
 import "./admindashboard.css";
 import {
   collection,
@@ -153,6 +155,8 @@ const EmpleadoDashboard = ({ user }) => {
             Gestiona todo desde un solo lugar: Productos y Pedidos.
           </p>
         </header>
+
+        <PedidosEmpleado />
 
         <section className="row mt-5">
           <article className="col-12 mt-lg-5">

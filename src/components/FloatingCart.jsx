@@ -2,8 +2,19 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { db, auth } from "../config/firebase";
-import { getDoc, doc, collection, addDoc, Timestamp, query, where, getDocs, setDoc } from "firebase/firestore";
-import { writeBatch } from "firebase/firestore";
+import { 
+  getDoc, 
+  doc, 
+  collection, 
+  addDoc, 
+  Timestamp, 
+  query, 
+  where, 
+  getDocs, 
+  setDoc, 
+  updateDoc, 
+  writeBatch 
+} from "firebase/firestore";
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
 
 import "./FloatingCart.css";
@@ -30,9 +41,7 @@ const FloatingCart = () => {
   const [metodoPago, setMetodoPago] = useState("");
   const [cupones, setCupones] = useState([]);
   const [cuponSeleccionado, setCuponSeleccionado] = useState(null);
-
-
-
+  
 
   useEffect(() => {
     if (usuario?.uid) {
@@ -55,12 +64,37 @@ const FloatingCart = () => {
 
   const handleSeleccionCupon = (e) => {
     const idCupon = e.target.value;
-    const cupon = cupones.find((c) => c.id === idCupon) || null;
+    const cupon = cupones.find(c => c.id === idCupon) || null;
     setCuponSeleccionado(cupon);
-    aplicarCupon(cupon ? cupon : "");
+    aplicarCupon(cupon);
   };
 
-
+  const marcarCuponComoUsado = async (codigoCupon) => {
+    if (!usuario?.uid || !codigoCupon) return;
+  
+    try {
+      const cuponDocRef = doc(
+        db,
+        `Usuariosid/${usuario.uid}/Cuponesid/${codigoCupon}`
+      );
+      await updateDoc(cuponDocRef, { usado: true });
+  
+      setCupones((prev) =>
+        prev.map((c) =>
+          c.id === codigoCupon
+            ? { ...c, usado: true }
+            : c
+        )
+      );
+  
+      if (cuponSeleccionado?.id === codigoCupon) {
+        setCuponSeleccionado((c) => ({ ...c, usado: true }));
+        aplicarCupon(null);
+      }
+    } catch (err) {
+      console.error("Error al marcar cupón como usado:", err);
+    }
+  };
 
   const valorSelect = cuponSeleccionado ? cuponSeleccionado.id : "";
 
@@ -126,7 +160,6 @@ const FloatingCart = () => {
           telefono: usuario.telefono,
           direccion: "Calle Ficticia 123",
           entrega: "takeaway",
-          totalpedido: totalConDescuento,
           cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
           descuento: discount,
         },
@@ -163,7 +196,13 @@ const FloatingCart = () => {
         console.error("Error en batch commit:", error);
       }
 
-      const puntosGanados = totalItems > 1 ? 50 : 25;
+      if (cuponSeleccionado && !cuponSeleccionado.usado) {
+        await marcarCuponComoUsado(cuponSeleccionado.id);
+      }
+
+      const puntosGanados =
+      totalConDescuento > 20000 ? 50 :
+      totalConDescuento >= 10000 ? 25 : 0;
 
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
@@ -221,8 +260,10 @@ const FloatingCart = () => {
     }
   };
 
-  const totalConDescuento = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
-  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
+  const totalConDescuento = totalPrecio; // si totalPrecio ya incluye descuento
+  const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / (100 - discount) : 0; // o ajustar según corresponda
+  
+
 
   return (
     <>
@@ -280,6 +321,7 @@ const FloatingCart = () => {
                       >
                         +
                       </button>
+                      
                     </div>
                     <button
                       className="remove-item"
@@ -352,107 +394,112 @@ const FloatingCart = () => {
             )}
 
 
-            {step === 3 && (
-              <>
-                <div className="order-summary p-3 border rounded bg-light">
-                  <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
+{step === 3 && (
+  <>
+    <div className="order-summary p-3 border rounded bg-light">
+      <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
 
-                  {cart.map((producto, i) => (
-                    <div
-                      key={i}
-                      className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
-                    >
-                      <div>
-                        <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
-                      </div>
-                      <div>
-                        <span className="fw-semibold">
-                          ${(producto.precio * producto.cantidad).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+      {cart.map((producto, i) => (
+        <div
+          key={i}
+          className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+        >
+          <div>
+            <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
+          </div>
+          <div>
+            <span className="fw-semibold">
+              ${(producto.precio * producto.cantidad).toFixed(2)}
+            </span>
+          </div>
+        </div>
+      ))}
 
-                  <hr className="my-3" />
+      <hr className="my-3" />
 
-                  <div className="coupon-section mb-3">
-                    <label htmlFor="couponSelect" className="form-label">
-                      Selecciona un Cupón
-                    </label>
+      {/* Selección de cupón */}
+      <div className="coupon-section mb-3">
+        <label htmlFor="couponSelect" className="form-label">
+          Selecciona un Cupón
+        </label>
+        <select
+          id="couponSelect"
+          value={valorSelect}
+          onChange={handleSeleccionCupon}
+          className="form-select"
+        >
+          <option value="">-- Elige un cupón --</option>
+          {cupones
+            .filter(c => !c.usado)
+            .map(c => (
+              <option key={c.id} value={c.id}>
+                {c.nombre} ({c.descuento}%)
+              </option>
+            ))
+          }
+        </select>
+      </div>
 
-                    <select
-                      id="couponSelect"
-                      value={valorSelect}
-                      onChange={handleSeleccionCupon}
-                      className="form-select"
-                    >
-                      <option value="">-- Elige un cupón --</option>
-                      {cupones?.length > 0 ? (
-                        cupones
-                          .filter((c) => !c.usado)
-                          .map((cupon) => (
-                            <option key={cupon.id} value={cupon.id}>
-                              {cupon.nombre} ({cupon.descuento}%)
-                            </option>
-                          ))
-                      ) : (
-                        <option disabled value="">
-                          No tenés cupones disponibles
-                        </option>
-                      )}
-                    </select>
 
-                  </div>
 
-                  <div className="discount-applied d-flex justify-content-between align-items-center text-danger pb-2 border-bottom">
-                    <span>Descuento por Puntos:</span>
-                    <span>${descuentoMonetario.toFixed(2)}</span>
-                  </div>
+      {/* Descuento porcentaje */}
+      {discount > 0 && (
+        <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 py-2">
+          <span>Utilizando Cupón de:</span>
+          <span>{discount}%</span>
+        </div>
+      )}
 
-                  {discount > 0 && (
-                    <>
-                      <hr className="my-3" />
-                      <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
-                        <span>Descuento por Cupón:</span>
-                        <span>{discount}%</span>
-                      </div>
-                    </>
-                  )}
+            {/* Descuento monetario (resumen) */}
+            {discount > 0 && (
+  <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2">
+    <span>Descuento aplicado:</span>
+    <span>${descuentoMonetario.toFixed(2)}</span>
+  </div>
+)}
 
-                  <hr className="my-3" />
+{/* Total original (tachado) */}
+{discount > 0 && (
+  <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary border-bottom">
+    <span>Subtotal:</span>
+    <span style={{ textDecoration: "line-through", color: "gray" }}>
+      ${(totalConDescuento + descuentoMonetario).toFixed(2)}
+    </span>
+  </div>
+)}
 
-                  <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold">
-                    <span>Total:</span>
-                    <span>${totalConDescuento.toFixed(2)}</span>
-                  </div>
-                </div>
+<hr className="my-2"/>
 
-                <button
-                  className="btn btn-primary mt-3 w-100"
-                  onClick={registrarPedido}
-                  disabled={isLoading || totalPrecio <= 0}
-                >
-                  {isLoading ? "Procesando..." : "Ir a Pagar"}
-                </button>
+      {/* Total con descuento */}
+      <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
+        <span>Total a Pagar:</span>
+        <span>${totalConDescuento.toFixed(2)}</span>
+      </div>
+    </div>
 
-                <button
-                  className="btn btn-danger mt-3 w-100"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "¿Estás seguro que querés vaciar el carrito? Se eliminarán todos los productos."
-                      )
-                    ) {
-                      vaciarCarrito();
-                      setStep(1);
-                      setIsOpen(false);
-                    }
-                  }}
-                >
-                  Vaciar carrito
-                </button>
-              </>
-            )}
+    <button
+      className="btn btn-primary mt-3 w-100"
+      onClick={registrarPedido}
+      disabled={isLoading || totalPrecio <= 0}
+    >
+      {isLoading ? "Procesando..." : "Ir a Pagar"}
+    </button>
+
+    <button
+      className="btn btn-danger mt-3 w-100"
+      onClick={() => {
+        if (window.confirm("¿Estás seguro que querés vaciar el carrito?")) {
+          vaciarCarrito();
+          setStep(1);
+          setIsOpen(false);
+        }
+      }}
+    >
+      Vaciar carrito
+    </button>
+  </>
+)}
+
 
 
           </div>

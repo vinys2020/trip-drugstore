@@ -35,6 +35,7 @@ const guardarUsuarioEnFirestore = async (user) => {
       esAdmin: false,
       esEmpleado: false,
     });
+    
   }
 };
 
