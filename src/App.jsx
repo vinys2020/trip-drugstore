@@ -18,6 +18,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ProductoDetalle from "./components/ProductoDetalle";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
+import PrivateEmpleadoRoute from "./components/PrivateEmpleadoRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
@@ -54,14 +55,20 @@ const AppContent = () => {
               </PrivateAdminRoute>
             }
           />
-          <Route path="/empleado" element={<EmpleadoDashboard />} />
+          <Route
+            path="/empleado"
+            element={
+              <PrivateEmpleadoRoute>
+                <EmpleadoDashboard />
+              </PrivateEmpleadoRoute>
+            }
+          />          
           <Route path="/ayuda" element={<Ayuda />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route
             path="/categorias/:categoriaId/producto/:productoId"
             element={<ProductoDetalle />}
           />
-
         </Routes>
         <FloatingCart />
 
