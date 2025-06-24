@@ -38,7 +38,7 @@ const items = [
   {
     image: "https://res.cloudinary.com/dcggcw8df/image/upload/v1749004549/joaleykybhc9rry0hlu2.png",
     alt: "JUGOS",
-    link: "/categorias/Bebidasid?search=jugos",
+    link: "/categorias/Bebidasid?search=jugo",
     title: "JUGOS"
   }
 ];

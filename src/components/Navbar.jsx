@@ -253,6 +253,8 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 Mis Compras
               </Link>
             </li>
+
+
             <li className="nav-item">
               <Link className="nav-link" to="/ayuda" onClick={() => {
                 document.getElementById("navbarNav").classList.remove("show");
@@ -260,6 +262,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                 Ayuda
               </Link>
             </li>
+
 
             {user && adminEmail.includes(user.email) && (
               <li className="nav-item">
