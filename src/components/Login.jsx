@@ -17,7 +17,14 @@ import celuchicaweb from "../assets/celuchica.webp";
 import comprando from "../assets/comprando.webp";
 import PreguntasFrecuentes from "../components/PreguntasFrecuentes";
 import logo from "../assets/logotrippc.png";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { 
+  doc, 
+  getDoc, 
+  setDoc, 
+  collection, 
+  addDoc,
+  getDocs
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 const guardarUsuarioEnFirestore = async (user) => {
@@ -25,6 +32,7 @@ const guardarUsuarioEnFirestore = async (user) => {
   const snapshot = await getDoc(ref);
 
   if (!snapshot.exists()) {
+    // Crear usuario
     await setDoc(ref, {
       uid: user.uid,
       nombre: user.displayName || "",
@@ -35,9 +43,25 @@ const guardarUsuarioEnFirestore = async (user) => {
       esAdmin: false,
       esEmpleado: false,
     });
+  }
 
+  // Verificar si ya tiene algún cupón
+  const cuponesRef = collection(db, "Usuariosid", user.uid, "Cuponesid");
+  const cuponesSnapshot = await getDocs(cuponesRef);
+
+  if (cuponesSnapshot.empty) {
+    // Solo si no tiene cupones, agregar uno nuevo
+    await addDoc(cuponesRef, {
+      nombre: "10% de Descuento",
+      descuento: 10,
+      fechaCompra: new Date(),
+      usado: false,
+    });
   }
 };
+
+
+
 
 const pasos = [
   {
@@ -114,19 +138,34 @@ const Login = () => {
     };
   }, [navigate]);
 
+  const redirigirSegunRol = async (currentUser) => {
+    const ref = doc(db, "Usuariosid", currentUser.uid);
+    const snapshot = await getDoc(ref);
+    const userData = snapshot.exists() ? snapshot.data() : null;
+  
+    if (userData?.esAdmin || correosAdmin.includes(currentUser.email)) {
+      navigate("/admin");
+    } else if (userData?.esEmpleado || correosEmpleado.includes(currentUser.email)) {
+      navigate("/empleado");
+    } else {
+      navigate("/");
+    }
+  };
+
   const loginConGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       await guardarUsuarioEnFirestore(result.user);
-      window.location.reload();
+      await redirigirSegunRol(result.user);
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const loginConEmail = async (e) => {
     e.preventDefault();
     try {
+      let userCred;
       if (esRegistro) {
         if (!nombre.trim()) {
           return alert("Por favor, ingresá tu nombre.");
@@ -134,21 +173,20 @@ const Login = () => {
         if (password !== confirmarPassword) {
           return alert("Las contraseñas no coinciden.");
         }
-
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-
+    
+        userCred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCred.user, { displayName: nombre, photoURL: userimgdef });
-
         await guardarUsuarioEnFirestore(userCred.user);
       } else {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
-        await guardarUsuarioEnFirestore(userCred.user);
+        userCred = await signInWithEmailAndPassword(auth, email, password);
       }
-      window.location.reload();
+      await redirigirSegunRol(userCred.user);
     } catch (error) {
       alert("Ocurrió un error al iniciar sesión. Verificá tu email y contraseña.");
     }
   };
+  
+  
 
 
   const cerrarSesion = () => {

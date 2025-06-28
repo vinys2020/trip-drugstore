@@ -22,6 +22,10 @@ import PrivateEmpleadoRoute from "./components/PrivateEmpleadoRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
+import "react-toastify/dist/ReactToastify.css";
+import ToastWithSound from "./components/ToastWithSound";
+
+
 
 const AppContent = () => {
   const [busqueda, setBusqueda] = useState("");
@@ -92,6 +96,8 @@ const App = () => {
           <div className="app-root-wrapper">
             <AppContent />
           </div>
+          <ToastWithSound />
+
 
         </Router>
       </CartProvider>

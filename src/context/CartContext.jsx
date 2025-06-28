@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 import { getFirestore, collection, getDocs, doc, getDoc, runTransaction, updateDoc } from "firebase/firestore";
 import { getApp } from "firebase/app";
 
-// Creamos el contexto
 export const CartContext = createContext();
 
 export const CartProvider = ({ children, userId }) => {
@@ -14,11 +13,9 @@ export const CartProvider = ({ children, userId }) => {
 
   const [loadingCupones, setLoadingCupones] = useState(true);
 
-  // Obtener instancia de Firestore
   const app = getApp();
   const db = getFirestore(app);
 
-    // **Carga carrito almacenado en localStorage al iniciar**
     useEffect(() => {
       const storedCart = localStorage.getItem("cart");
       if (storedCart) {
@@ -26,12 +23,10 @@ export const CartProvider = ({ children, userId }) => {
       }
     }, []);
   
-    // **Guarda carrito en localStorage cada vez que cambia**
     useEffect(() => {
       localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
-  // Cargar cupones del usuario
   useEffect(() => {
     if (!userId) return;
   
@@ -84,7 +79,6 @@ export const CartProvider = ({ children, userId }) => {
   };
   
 
-  // Función auxiliar para obtener categoriaId consistente
   const obtenerCategoriaId = (producto) => {
     if (producto.categoriaId) return producto.categoriaId;
     if (producto.Categoriasid) return producto.Categoriasid;
@@ -92,7 +86,7 @@ export const CartProvider = ({ children, userId }) => {
     if (producto.Categorias) return producto.Categorias;
   
     console.warn(`Producto con id ${producto.id} no tiene categoriaId definido.`);
-    return "sin-categoria"; // o null si prefieres
+    return "sin-categoria"; 
   };
 
   const agregarAlCarrito = (producto, categoriaId) => {
@@ -109,17 +103,11 @@ export const CartProvider = ({ children, userId }) => {
       }
     });
   };
-  
-  
-  
-  
 
-  // Eliminar producto del carrito
   const eliminarDelCarrito = (productoId) => {
     setCart((prevCart) => prevCart.filter((p) => p.id !== productoId));
   };
 
-  // Disminuir cantidad del producto
   const disminuirCantidad = (productoId) => {
     setCart((prevCart) =>
       prevCart
@@ -130,7 +118,6 @@ export const CartProvider = ({ children, userId }) => {
     );
   };
 
-  // Vaciar carrito
   const vaciarCarrito = () => {
     setCart([]);
   };
@@ -141,11 +128,10 @@ export const CartProvider = ({ children, userId }) => {
       setCoupon(null);
       return;
     }
-    setDiscount(cupon.descuento); // ej: 10 para 10%
+    setDiscount(cupon.descuento); 
     setCoupon(cupon);
   };
 
-// Calcula el subtotal sin descuento (2 decimales)
 const calcularSubtotal = () => {
   const subtotal = cart.reduce((acc, p) => acc + p.cantidad * Number(p.precio || 0), 0);
   return parseFloat(subtotal.toFixed(2));
@@ -161,7 +147,6 @@ const calcularTotal = () => {
 };
 
 
-// Calcula el monto en dinero descontado (2 decimales)
 const calcularDescuentoMonetario = () => {
   const subtotal = calcularSubtotal();
   const total = calcularTotal();
@@ -170,12 +155,9 @@ const calcularDescuentoMonetario = () => {
 };
 
 
-  
-  
 
   const totalItems = cart.reduce((acc, p) => acc + p.cantidad, 0);
 
-  // Verificar stock disponible en Firebase antes de comprar
   const verificarStockDisponible = async () => {
     try {
       const checks = await Promise.all(cart.map(async (item) => {
@@ -200,8 +182,6 @@ const calcularDescuentoMonetario = () => {
   };
   
   
-
-  // Descontar stock en Firebase con transacción
   const descontarStock = async () => {
     try {
       await runTransaction(db, async (transaction) => {

@@ -448,7 +448,6 @@ const Carrito = () => {
 
                   <hr className="my-2" />
 
-                  {/* Total con descuento */}
                   <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
                     <span>Total a Pagar:</span>
                     <span>${totalConDescuento.toFixed(2)}</span>

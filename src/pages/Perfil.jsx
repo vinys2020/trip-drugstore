@@ -274,20 +274,23 @@ const Perfil = () => {
 
           <section className="puntos-beneficios border-top pt-4 mt-5">
             <h4 className="mb-3">🎁 Canjea tus puntos</h4>
-            <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <p className="text-muted">
+    🎯 Por cada compra mayor a $10.000 obtendrás <strong>25 puntos</strong>, y por compras mayores a $20.000 sumarás <strong>50 puntos</strong>. 
+    Acumulá puntos en tus compras y canjealos por increíbles cupones de descuento.
+  </p>            <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
               <div className="col">
                 <div className="card h-100 shadow-sm">
                   <div className="card-body">
                     <h5 className="card-title text-black"><i className="bi bi-tag me-1"></i>10% de descuento</h5>
                     <hr className="bg-dark" />
 
-                    <p className="card-text text-center">Canjea 50 puntos para obtener un 10% de descuento en tu próxima compra.</p>
+                    <p className="card-text text-center">Canjea 150 puntos para obtener un 10% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("10% de Descuento", 10, 50)}
-                      disabled={datosUsuario?.puntos < 50}
+                      onClick={() => comprarCupon("10% de Descuento", 10, 150)}
+                      disabled={datosUsuario?.puntos < 150}
                     >
                       Canjear
                     </button>
@@ -302,13 +305,13 @@ const Perfil = () => {
                     <h5 className="card-title text-black" ><i className="bi bi-star-fill me-1"></i>20% de descuento</h5>
                     <hr className="bg-dark" />
 
-                    <p className="card-text text-center">Canjea 100 puntos para obtener un 20% de descuento en tu próxima compra.</p>
+                    <p className="card-text text-center">Canjea 250 puntos para obtener un 20% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("20% de Descuento", 20, 100)}
-                      disabled={datosUsuario?.puntos < 100}
+                      onClick={() => comprarCupon("20% de Descuento", 20, 250)}
+                      disabled={datosUsuario?.puntos < 250}
                     >
                       Canjear
                     </button>
@@ -322,13 +325,13 @@ const Perfil = () => {
                     <h5 className="card-title text-black"><i className="bi bi-gift me-1"></i>30% de descuento</h5>
                     <hr className="bg-dark" />
 
-                    <p className="card-text text-center">Canjea 150 puntos para obtener un 30% de descuento en tu próxima compra.</p>
+                    <p className="card-text text-center">Canjea 350 puntos para obtener un 30% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("30% de Descuento", 30, 150)}
-                      disabled={datosUsuario?.puntos < 150}
+                      onClick={() => comprarCupon("30% de Descuento", 30, 350)}
+                      disabled={datosUsuario?.puntos < 350}
                     >
                       Canjear
                     </button>
