@@ -15,6 +15,8 @@ import {
   writeBatch
 } from "firebase/firestore"; import { obtenerCuponesUsuario } from "../hooks/useCupones";
 import HorizontalCarrito from "../components/HorizontalCarrito";
+import { toast } from 'react-toastify';
+
 
 import "./Carrito.css";
 
@@ -103,7 +105,11 @@ const Carrito = () => {
       return;
     }
     if (!usuario) {
-      alert("Por favor, inicia sesión para realizar un pedido.");
+      toast.info("Por favor, inicia sesión para realizar un pedido.", {
+        onClose: () => {
+          window.location.href = "/login";
+        },
+      });
       return;
     }
     if (!telefonoUsuario) {
@@ -203,6 +209,12 @@ const Carrito = () => {
         totalConDescuento > 20000 ? 50 :
           totalConDescuento >= 10000 ? 25 : 0;
 
+      
+          const mensajePuntos =
+          puntosGanados > 0
+            ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos!! En breve te avisaremos cuando tu pedido esté listo. ¡Sumá más puntos y canjealos por descuentos de hasta el 30%! 🎁🔥`
+            : `⭐ ¡Gracias por tu compra! Te avisaremos cuando tu pedido esté listo. Recorda que en compras mayores a $10.000 sumás puntos para canjear por descuentos de hasta el 30%. 🎁 ¡Aprovechá y empezá a ahorrar! 🎉`
+  
 
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
@@ -226,8 +238,9 @@ const Carrito = () => {
       setCuponSeleccionado(null);
       aplicarCupon("");
       setIsLoading(false);
+      toast.success("Pedido confirmado" + mensajePuntos);
 
-      alert(`⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos. Te avisaremos cuando tu pedido esté listo. ¡Acumulá y canjeá descuentos!🎉 `);
+
     } catch (error) {
       console.error("Error al registrar el pedido y sumar puntos:", error);
       alert("Hubo un problema al procesar tu pedido. Intenta nuevamente.");
@@ -379,7 +392,7 @@ const Carrito = () => {
             {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
-                  <h6 className="mb-3 fw-bold border-bottom pb-2 text-black">Resumen del Pedido:</h6>
+                  <h6 className="mb-3 fw-bold  pb-2 text-black">Resumen:</h6>
 
                   {cart.map((producto, i) => (
                     <div
@@ -420,6 +433,11 @@ const Carrito = () => {
                         ))
                       }
                     </select>
+                    {cupones.filter(c => !c.usado).length === 0 && (
+    <small className="text-muted mt-1 d-block">
+      Actualmente no cuentas con cupones disponibles.
+    </small>
+  )}
                   </div>
 
 

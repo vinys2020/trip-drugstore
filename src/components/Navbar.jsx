@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import logo from "../assets/logotrippc.png";
-import logito from "../assets/logopostmovil.png";
+import logito from "../assets/loguis.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
@@ -126,12 +126,20 @@ const Navbar = ({ busqueda, setBusqueda }) => {
       style={{ top: scrollingDown ? `-${navbarHeight}px` : "0px" }}
     >
       <div className="container d-flex align-items-center justify-content-between">
-        <Link className="navbar-brand d-none d-md-block" to="/">
-          <img src={logo} alt="Trip Drugstore" height="60" />
+        <Link
+          className="navbar-brand d-none d-md-block"
+          to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <img src={logo} alt="Trip Drugstore" height="63" />
         </Link>
 
-        <Link className="navbar-brand d-md-none" to="/">
-          <img src={logito} alt="Trip Drugstore" width="60" height="60" />
+        <Link
+          className="navbar-brand d-md-none"
+          to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <img src={logito} alt="Trip Drugstore" width="60" height="65" />
         </Link>
 
         <div className="position-relative flex-grow-1">
@@ -155,20 +163,20 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           {busqueda && (
             loading ? (
               <div
-                className="position-absolute start-0 mt-1 shadow bg-light text-center py-2"
+                className="position-absolute start-0 mt-1 shadow bg-dark text-center py-2"
                 style={{ width: "92%", zIndex: 10 }}
               >
                 Cargando productos...
               </div>
             ) : sugerencias.length > 0 ? (
               <ul
-                className="list-group position-absolute start-0 shadow bg-dark px-0 border border-light px-1 py-1"
+                className="list-group position-absolute start-0 shadow bg-dark px-2 py-2 border"
                 style={{ width: "92%", zIndex: 10 }}
               >
                 {sugerencias.slice(0, 7).map((producto) => (
                   <li
                     key={producto.id}
-                    className="list-group-item text-white bg-dark border-0 px-1 py-1 mb-0 mb-lg-1 "
+                    className="list-group-item bg-dark border-0 px-0 py-0 mb-0 mb-lg-1 mt-0"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setBusqueda("");
@@ -177,10 +185,10 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                     }}
                   >
                     <div className="d-flex align-items-center">
-                      <div className="d-flex justify-content-center align-self-center me-2" style={{ width: "18px" }}>
-                        <FaSearch size={23} />
+                      <div className="d-flex justify-content-center align-self-center  m-1" style={{ width: "15px" }}>
+                        <FaSearch size={20} />
                       </div>
-                      <div className="flex-grow-1">
+                      <div className="flex-grow-1 p-1">
                         {producto.nombre}
                       </div>
                     </div>

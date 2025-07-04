@@ -4,38 +4,46 @@ import FaqCuentaAcceso from '../components/FaqCuentaAcceso';
 import FaqFuncionalidades from '../components/FaqFuncionalidades';
 import FaqSeguridad from '../components/FaqSeguridad';
 
-import "./ayuda.css";
+import './ayuda.css';
 
 const PaginaAyuda = () => {
   const whatsappNumber = "5493814685931";
   const defaultMessage = encodeURIComponent("Hola, necesito ayuda con mi pedido.");
 
-
   return (
-    <div className="help-page mt-md-4">
+    <div className="help-page-wrapper d-flex justify-content-center mt-md-4 px-3 px-md-4">
+      <div className="help-page-content w-100" style={{ maxWidth: '900px' }}>
 
-      <header className="help-header">
-        <h1>Centro de Ayuda</h1>
-        <p>Encuentra respuestas rápidas a tus preguntas o contáctanos si necesitas asistencia adicional.</p>
-      </header>
+        <header className="help-header text-center mb-5 mt-5">
+          <h1 className="fw-bold text-white">Centro de Ayuda</h1>
 
-      <FaqCuentaAcceso />
+        </header>
 
-      <FaqFuncionalidades />
+        <section className="mb-4">
+          <FaqCuentaAcceso />
+        </section>
 
-      <FaqSeguridad />
+        <section className="mb-4">
+          <FaqFuncionalidades />
+        </section>
 
-      <div className="contact-support">
-        <p>¿No encontraste lo que buscabas?</p>
-        <a
-          href={`https://wa.me/${whatsappNumber}?text=${defaultMessage}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-whatsapp"
-        >
-          <FaWhatsapp style={{ marginRight: '8px' }} />
-          Contactanos
-        </a>
+        <section className="mb-4">
+          <FaqSeguridad />
+        </section>
+
+        <div className="contact-support text-center mt-5 mb-5">
+          <p className="mb-3 fs-6">¿No encontraste lo que buscabas?</p>
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${defaultMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-success d-inline-flex align-items-center gap-2 px-4 py-2 rounded-3 shadow-sm"
+          >
+            <FaWhatsapp size={20} />
+            Contactanos
+          </a>
+        </div>
+
       </div>
     </div>
   );

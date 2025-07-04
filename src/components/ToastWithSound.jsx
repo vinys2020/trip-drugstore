@@ -4,6 +4,22 @@ import "react-toastify/dist/ReactToastify.css";
 import "./toastStyles.css";
 import dingSound from "../assets/ding.mp3";
 
+// Botón de cierre personalizado
+const CustomCloseButton = ({ closeToast, data }) => {
+  const mensaje =
+    typeof data?.content === "string"
+      ? data.content.toLowerCase()
+      : data?.content?.props?.children?.toLowerCase?.() || "";
+
+  const esConfirmacion = mensaje.includes("pedido confirmado");
+
+  return (
+    <button className="toast-close-btn" onClick={closeToast}>
+      {esConfirmacion ? "¡Gracias!" : "Aceptar"}
+    </button>
+  );
+};
+
 const ToastWithSound = () => {
   const audioRef = useRef(null);
 
@@ -15,9 +31,22 @@ const ToastWithSound = () => {
       }
     };
 
-    toast.onChange(({ status }) => {
-      if (status === "added") playSound();
+    const unsubscribe = toast.onChange(({ status, content }) => {
+      if (status === "added") {
+        const mensaje =
+          typeof content === "string"
+            ? content.toLowerCase()
+            : content?.props?.children?.toLowerCase?.() || "";
+
+        if (mensaje.includes("pedido confirmado")) {
+          playSound();
+        }
+      }
     });
+
+    return () => {
+      unsubscribe(); // Limpieza del listener
+    };
   }, []);
 
   return (
@@ -25,10 +54,10 @@ const ToastWithSound = () => {
       <audio ref={audioRef} src={dingSound} preload="auto" />
       <ToastContainer
         position="top-right"
-        autoClose={7000}
+        autoClose={false} // ❌ No se cierra automáticamente
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick
+        closeOnClick={false}
         rtl={false}
         pauseOnFocusLoss
         draggable
@@ -37,7 +66,7 @@ const ToastWithSound = () => {
         transition={Slide}
         toastClassName="custom-toast"
         bodyClassName="custom-toast-body"
-        closeButton={false}
+        closeButton={(props) => <CustomCloseButton {...props} />}
       />
     </>
   );

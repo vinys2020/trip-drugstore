@@ -196,7 +196,7 @@ const Login = () => {
   };
 
   return (
-    <section className="login-page">
+    <section className="login-page bg-white">
       <div className="container-main">
         <div className="row col-12">
 
@@ -236,7 +236,7 @@ const Login = () => {
               </button>
             </div>
 
-            <div className="login-extra-info mt-0">
+            <div className="login-extra-info mt-0 ">
               <div className="info-item mb-3 mt-lg-2 mt-2">
                 <h4 className="text-white">Pedidos por App</h4>
                 <p>Realizá pedidos fácil y rápido desde nuestra app.</p>
@@ -264,7 +264,7 @@ const Login = () => {
               <h1 className="comofunciona como-funciona-titulo">¿Cómo funciona?</h1>
             </article>
 
-            <div className="container">
+            <div className="container bg-white">
               <div className="row g-4 justify-content-center align-items-stech p-2 p-md-5 p-lg-4 sin-margen">
                 {pasos.map((paso, index) => (
                   <div key={index} className="col-12 col-md-4">
@@ -283,7 +283,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="justify-content-center p-4 mb-0 mt-5 mt-lg-5">
+            <div className="justify-content-center p-4 mb-0 mt-5 mt-lg-5 bg-white">
               <div className="col-12 container">
                 <div className="info-card text-white bg-primary p-5 rounded-4 shadow-sm text-center">
                   <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>

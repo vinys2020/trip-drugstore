@@ -3,7 +3,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   margin-bottom: 20px;
-  gap: 25px;
+  gap: 20px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -23,7 +23,6 @@
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   width: 150px;
   height: 200px;
   touch-action: pan-x;

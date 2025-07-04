@@ -18,6 +18,19 @@ html {
 }
 
 
+.slide-up {
+  opacity: 0;
+  transform: translateY(40px); /* menos distancia para que sea menos exagerado */
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-up.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 .hero {
   width: 100vw;
   height: 100vh;
@@ -75,7 +88,6 @@ html {
 
 
 }
-
 
 
 .card-body {

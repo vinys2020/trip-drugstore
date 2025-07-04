@@ -107,9 +107,14 @@ const FloatingCart = () => {
       return;
     }
     if (!usuario) {
-      alert("Por favor, inicia sesión para realizar un pedido.");
+      toast.info("Por favor, inicia sesión para realizar un pedido.", {
+        onClose: () => {
+          window.location.href = "/login";
+        },
+      });
       return;
     }
+
 
     try {
       setIsLoading(true);
@@ -209,8 +214,8 @@ const FloatingCart = () => {
 
       const mensajePuntos =
         puntosGanados > 0
-          ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos. En breve te avisaremos cuando tu pedido esté listo. ¡Sumá más puntos y canjealos por descuentos de hasta el 30%! 🎁🔥`
-          : `⭐ ¡Gracias por tu compra! Te avisaremos cuando tu pedido esté listo. Comprando por más de $10.000 sumás puntos para canjear por descuentos de hasta el 30%. 🎁 ¡Aprovechá y empezá a ahorrar! 🎉`
+          ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos!! En breve te avisaremos cuando tu pedido esté listo. ¡Sumá más puntos y canjealos por descuentos de hasta el 30%! 🎁🔥`
+          : `⭐ ¡Gracias por tu compra! Te avisaremos cuando tu pedido esté listo. Recorda que en compras mayores a $10.000 sumás puntos para canjear por descuentos de hasta el 30%. 🎁 ¡Aprovechá y empezá a ahorrar! 🎉`
 
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
@@ -235,8 +240,9 @@ const FloatingCart = () => {
       setCuponSeleccionado(null);
       aplicarCupon("");
       setIsLoading(false);
+      toast.success("Pedido confirmado" + mensajePuntos);
 
-      toast.success(mensajePuntos);
+
     } catch (error) {
       console.error("Error al registrar el pedido y sumar puntos:", error);
       alert("Hubo un problema al procesar tu pedido. Intenta nuevamente.");
@@ -254,7 +260,11 @@ const FloatingCart = () => {
 
   const handleConfirmarTelefono = () => {
     if (!telefonoUsuario) {
-      alert("El número de teléfono es obligatorio.");
+      toast.error("Por favor ingresá tu número de teléfono para poder continuar con el pedido.", {
+        autoClose: 3000,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } else {
       setStep(2);
     }
@@ -262,7 +272,11 @@ const FloatingCart = () => {
 
   const handleConfirmarPago = () => {
     if (!metodoPago) {
-      alert("Debes seleccionar un método de pago.");
+      toast.error("Por favor seleccioná un método de pago para continuar con el pedido.", {
+        autoClose: 3000,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } else {
       setStep(3);
     }
@@ -405,30 +419,53 @@ const FloatingCart = () => {
             {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
-                  <h6 className="mb-3 fw-bold border-bottom pb-2">Resumen del Pedido:</h6>
+
+
+                  <h3 className="mb-3 fw-bold">Resumen:</h3>
+
+                  <div className="user-info-summary mb-0">
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span>Método de pago:</span>
+                      <span className="text-primary text-capitalize">{metodoPago || "No seleccionado"}</span>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span className="fw-small">Teléfono:</span>
+
+                      <span className="text-primary">{usuario.telefono || "No proporcionado"}</span>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span className="fw-small">Entrega:</span>
+                      <span className="text-primary fw-small">
+                        Retiro en local <i className="bi bi-bag-check"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <hr className="bg-dark" />
+
+
+                  <h5 className="mb-1 mt-3 fw-bold">Productos:</h5>
 
                   {cart.map((producto, i) => (
                     <div
                       key={i}
-                      className="order-item d-flex justify-content-between align-items-center py-2 border-bottom"
+                      className="order-item d-flex justify-content-between align-items-center border-bottom py-2"
                     >
                       <div>
-                        <span className="fw-semibold">{producto.nombre}</span> x <span>{producto.cantidad}</span>
+                        <span className="fw-small">{producto.nombre}</span> x <span>{producto.cantidad}</span>
                       </div>
                       <div>
-                        <span className="fw-semibold">
+                        <span className="fw-semibold text-end" style={{ display: "inline-block", width: "80px" }}>
                           ${(producto.precio * producto.cantidad).toFixed(2)}
                         </span>
                       </div>
                     </div>
                   ))}
 
-                  <hr className="my-3" />
 
-                  {/* Selección de cupón */}
-                  <div className="coupon-section mb-3">
+                  <div className="coupon-section mb-3 mt-3">
                     <label htmlFor="couponSelect" className="form-label">
-                      Selecciona un Cupón
+                      Cupón aplicado
                     </label>
                     <select
                       id="couponSelect"
@@ -436,7 +473,7 @@ const FloatingCart = () => {
                       onChange={handleSeleccionCupon}
                       className="form-select"
                     >
-                      <option value="">-- Elige un cupón --</option>
+                      <option value="">Elige un Cupón</option>
                       {cupones
                         .filter(c => !c.usado)
                         .map(c => (
@@ -446,29 +483,19 @@ const FloatingCart = () => {
                         ))
                       }
                     </select>
+
+                    {cupones.filter(c => !c.usado).length === 0 && (
+                      <small className="text-muted mt-1 d-block">
+                        Actualmente no cuentas con cupones disponibles.
+                      </small>
+                    )}
                   </div>
 
 
 
-                  {/* Descuento porcentaje */}
-                  {discount > 0 && (
-                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 py-2">
-                      <span>Utilizando Cupón de:</span>
-                      <span>{discount}%</span>
-                    </div>
-                  )}
 
-                  {/* Descuento monetario (resumen) */}
                   {discount > 0 && (
-                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2">
-                      <span>Descuento aplicado:</span>
-                      <span>${descuentoMonetario.toFixed(2)}</span>
-                    </div>
-                  )}
-
-                  {/* Total original (tachado) */}
-                  {discount > 0 && (
-                    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary border-bottom">
+                    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary  mb-2">
                       <span>Subtotal:</span>
                       <span style={{ textDecoration: "line-through", color: "gray" }}>
                         ${(totalConDescuento + descuentoMonetario).toFixed(2)}
@@ -476,35 +503,72 @@ const FloatingCart = () => {
                     </div>
                   )}
 
+                  {discount > 0 && (
+                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+                      <span>Descuento aplicado:</span>
+                      <span>-${descuentoMonetario.toFixed(2)}</span>
+                    </div>
+                  )}
+
+
+
                   <hr className="my-2" />
 
-                  {/* Total con descuento */}
                   <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
                     <span>Total a Pagar:</span>
                     <span>${totalConDescuento.toFixed(2)}</span>
                   </div>
                 </div>
+                <small>Revisa que tus datos sean correctos antes de confirmar</small>
 
                 <button
                   className="btn btn-primary mt-3 w-100"
                   onClick={registrarPedido}
                   disabled={isLoading || totalPrecio <= 0}
                 >
-                  {isLoading ? "Procesando..." : "Ir a Pagar"}
+                  {isLoading ? "Procesando..." : "Realizar Pedido"}
                 </button>
 
                 <button
                   className="btn btn-danger mt-3 w-100"
                   onClick={() => {
-                    if (window.confirm("¿Estás seguro que querés vaciar el carrito?")) {
-                      vaciarCarrito();
-                      setStep(1);
-                      setIsOpen(false);
-                    }
+                    toast(
+                      ({ closeToast }) => (
+                        <div>
+                          <p className="mb-2 text-black">¿Estás seguro que querés vaciar el carrito?</p>
+                          <div className="d-flex justify-content-center gap-2">
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={() => {
+                                vaciarCarrito();
+                                setStep(1);
+                                setIsOpen(false);
+                                closeToast();
+                              }}
+                            >
+                              Sí, vaciar
+                            </button>
+                            <button
+                              className="btn btn-secondary btn-sm"
+                              onClick={closeToast}
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        </div>
+                      ),
+                      {
+                        autoClose: false,
+                        closeOnClick: false,
+                        closeButton: false,
+                        position: "top-center",
+                      }
+                    );
                   }}
                 >
                   Vaciar carrito
                 </button>
+
               </>
             )}
 

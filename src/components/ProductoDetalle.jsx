@@ -112,7 +112,7 @@ export default function ProductoDetalle() {
         {/* Información del producto */}
         <section className="col-lg-5 col-md-8 col-sm-10 d-flex flex-column mt-3">
           <header className="d-flex justify-content-between align-items-start mb-3 mb-lg-0 mt-lg-3">
-            <h1 className="producto-titulo fw-bold mb-lg-3 mt-lg-5">{producto.nombre}</h1>
+            <h1 className="producto-titulo fw-bold mb-lg-3 mt-lg-5 text-black">{producto.nombre}</h1>
             <button
               className="btn btn-link p-0 ms-2 mt-1 mt-lg-2"
               onClick={() => setFavorito(!favorito)}
@@ -149,22 +149,23 @@ export default function ProductoDetalle() {
             </h2>
 
 
-            <p className="mb-2">
+            <p className="mb-2 text-black">
               <strong>Marca:</strong> {producto.marca}
             </p>
-            <p className="mb-3">
+            <p className="mb-3 text-black">
               <strong>Stock disponible:</strong>{" "}
               {producto.stock > 0 ? producto.stock : "Agotado"}
             </p>
 
             {/* Info adicional */}
             <div className="mb-4 info-adicional">
-              <p className="text-success mb-1 fw-semibold d-flex align-items-center gap-1">
-                Trip <i className="bi bi-lightning-fill text-warning"></i>
+              <p className="text-success mb-1 fw-semibold d-flex align-items-center gap-0">
+                Trip<i className="bi bi-lightning-fill text-warning"></i>
               </p>
               <p className="text-primary mb-0 fw-semibold">
-                Devolución gratis <i className="bi bi-arrow-counterclockwise"></i>
-              </p>
+  Retiro en local <i className="bi bi-bag-check"></i>
+</p>
+
             </div>
 
             {/* Descripción del producto */}
