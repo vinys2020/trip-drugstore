@@ -35,7 +35,7 @@ const VerticalCarousel = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <div
         className="container"
         style={{
@@ -45,8 +45,8 @@ const VerticalCarousel = () => {
           padding: "10px",
         }}
       >
-        <h3
-          className="text-start text-black mb-0"
+        <h4
+          className="text-center text-black mb-0"
           style={{
             color: "#3483fa",
             backgroundColor: "white",
@@ -55,7 +55,7 @@ const VerticalCarousel = () => {
           }}
         >
           Cuidado Personal
-        </h3>
+        </h4>
       </div>
 
       <div className="vc-carousel-wrapper">

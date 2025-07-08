@@ -11,6 +11,31 @@
 
 }
 
+.google-btn {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #161515;
+  font-weight: 400;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+
+.google-btn:hover {
+  background: rgb(245, 241, 241);
+}
+
+.google-btn-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.google-btn-text {
+  flex-grow: 1;
+  text-align: left;
+}
+
+
 .container-main {
   width: 100vw;
   overflow-x: hidden;

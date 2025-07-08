@@ -45,7 +45,7 @@ const items = [
 
 const HorizontalScroll2 = () => {
   return (
-    <div className="scroll-container-two">
+    <div className="scroll-container-two mb-0 mb-lg-3">
       {items.map((item, index) => (
         <Link
           key={index}

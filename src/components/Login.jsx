@@ -17,6 +17,8 @@ import celuchicaweb from "../assets/celuchica.webp";
 import comprando from "../assets/comprando.webp";
 import PreguntasFrecuentes from "../components/PreguntasFrecuentes";
 import logo from "../assets/logotrippc.png";
+import googleLogo from '../assets/google-logo-NePEveMl.webp';
+
 import { 
   doc, 
   getDoc, 
@@ -65,21 +67,23 @@ const guardarUsuarioEnFirestore = async (user) => {
 
 const pasos = [
   {
-    titulo: "Ingresá con tu mail y contraseña",
-    descripcion: "Identificate para poder acceder a las mejores ofertas",
+    titulo: "Accede a beneficios exclusivos",
+    descripcion: "Con tus compras sumas putos que luego podes canjealos por increíbles descuentos",
     imagen: confirmado,
   },
   {
-    titulo: "Autogestioná tu pedido",
-    descripcion: "Elegí los productos y las cantidades desde la comodidad de tu casa",
+    titulo: "Pedí fácil, rápido y sin complicaciones",
+    descripcion: "100% online y sin tiempos de espera. Elegí los productos y cantidades que necesitás",
     imagen: comprando,
   },
   {
-    titulo: "Verificá tu pedido y listo!",
-    descripcion: "Asegurate que los datos estén correctos antes de confirmár el pedido",
+    titulo: "Continua los 3 simples pasos y ¡listo!",
+    descripcion: "Verificá siempre que tus datos ingresados sean los correctos antes de realizar el pedido",
     imagen: celuchicaweb,
   },
 ];
+
+
 
 const Login = () => {
   const [user, setUser] = useState(null);
@@ -194,6 +198,11 @@ const Login = () => {
     setUser(null);
     navigate("/");
   };
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+  
+  const [showConfirmarPassword, setShowConfirmarPassword] = useState(false);
+  const toggleConfirmarPasswordVisibility = () => setShowConfirmarPassword(prev => !prev);
 
   return (
     <section className="login-page bg-white">
@@ -337,13 +346,13 @@ const Login = () => {
         <div className="offcanvas-body">
           <form onSubmit={loginConEmail}>
             {esRegistro && (
-              <div className="mb-3">
+              <div className="mb-2 mb-lg-3">
                 <label htmlFor="nombre" className="form-label">Nombre:</label>
                 <input
                   className="form-control"
                   type="text"
                   id="nombre"
-                  placeholder="Juan Pérez"
+                  placeholder="Ingresa tu nombre"
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   required
@@ -351,57 +360,110 @@ const Login = () => {
               </div>
             )}
 
-            <div className="mb-3">
+            <div className="mb-2 mb-lg-3">
               <label htmlFor="email" className="form-label">Email:</label>
               <input
                 className="form-control"
                 type="email"
                 id="email"
-                placeholder="ejemplo@correo.com"
+                placeholder="usuario@correo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Contraseña:</label>
-              <input
-                className="form-control"
-                type="password"
-                id="password"
-                placeholder="********"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            <div className="mb-2 mb-lg-3">
+  <label htmlFor="password" className="form-label text-white">Contraseña:</label>
+  <div className="input-group">
+    <input
+          placeholder="Ingresa tu contraseña"
 
-            {esRegistro && (
-              <div className="mb-3">
-                <label htmlFor="confirmarPassword" className="form-label">Confirmar Contraseña:</label>
-                <input
-                  className="form-control"
-                  type="password"
-                  id="confirmarPassword"
-                  placeholder="********"
-                  value={confirmarPassword}
-                  onChange={(e) => setConfirmarPassword(e.target.value)}
-                  required
-                />
-              </div>
-            )}
+      type={showPassword ? 'text' : 'password'}
+      className="form-control"
+      id="password"
+      required
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      style={{ zIndex: 0 }}
+    />
+    <div className="input-group-append">
+      <button
+        className="btn btn-light"
+        type="button"
+        onClick={togglePasswordVisibility}
+        aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+        style={{
+          borderColor: 'rgba(255, 255, 255, 0.95)',
+          width: '40px',
+          height: '45px',
+          borderTopLeftRadius: '0px',
+          borderBottomLeftRadius: '0px',
+          zIndex: 0
+        }}
+      >
+        <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+{esRegistro && (
+  <div className="mb-4">
+    <label htmlFor="confirmarPassword" className="form-label text-white">Confirmar Contraseña:</label>
+    <div className="input-group mb-3">
+      <input
+        placeholder="Repite tu contraseña"
+        type={showConfirmarPassword ? 'text' : 'password'}
+        className="form-control"
+        id="confirmarPassword"
+        required
+        value={confirmarPassword}
+        onChange={(e) => setConfirmarPassword(e.target.value)}
+        style={{ zIndex: 0 }}
+      />
+      <div className="input-group-append">
+        <button
+          className="btn btn-light"
+          type="button"
+          onClick={toggleConfirmarPasswordVisibility}
+          aria-label={showConfirmarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          style={{
+            borderColor: 'rgba(255, 255, 255, 0.95)',
+            width: '40px',
+            height: '45px',
+            borderTopLeftRadius: '0px',
+            borderBottomLeftRadius: '0px',
+            zIndex: 0
+          }}
+        >
+          <i className={`bi ${showConfirmarPassword ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
             <button type="submit" className="btn btn-warning w-100">
               {esRegistro ? "Registrarse" : "Ingresar"}
             </button>
           </form>
 
-          <hr className="my-4" />
+          <hr className="mt-3 mb-3 bg-white" />
 
-          <button className="btn btn-outline-light w-100" onClick={loginConGoogle}>
-            <i className="bi bi-google me-2"></i> Ingresar con Google
-          </button>
+          <button
+  onClick={loginConGoogle}
+  className="google-btn d-flex align-items-center px-2 py-1 w-100"
+>
+  <div className="google-btn-logo me-2 d-flex align-items-center justify-content-center">
+  <img src={googleLogo} width="20" height="20" alt="Logo de Google" />
+
+  </div>
+  <span className="google-btn-text">Continuar con Google</span>
+</button>
+
         </div>
       </div>
     </section>

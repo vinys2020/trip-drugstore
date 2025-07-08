@@ -1,11 +1,11 @@
 .carrito-pagina {
+  position: relative;
+  overflow: hidden;
   max-width: 1500px;
   margin: auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 100px 20px;
   color: #eee;
-  background-color: #121212;
-  border-radius: 12px;
+  background: linear-gradient(135deg, #1c1c1c, #2a2a2a); /* Fondo con profundidad */
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
 }
 

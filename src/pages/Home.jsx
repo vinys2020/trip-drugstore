@@ -75,14 +75,14 @@ const Home = () => {
 
       <div className="swiper-container">
         <div className="swiper-section  mt-0">
-          <SwiperComponent/>
+          <SwiperComponent />
         </div>
       </div>
 
       <div className="container-fluid w-100 p-0 app-scroll-container" >
 
 
-        <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 mt-lg-3">
+        <section className=" d-flex justify-content-center align-items-center text-center mt-0 mb-4 mb-lg-4 p-lg-4">
           <div className="container ">
             <div className="row justify-content-center">
               <article className="col-12 col-lg-12 mt-lg-4 mt-4">
@@ -93,7 +93,7 @@ const Home = () => {
                   Ganá tiempo comprando online, Hacé tu pedido y retiralo listo al instante.</p>
                 <Link
                   to="/categorias/Snacksygalletitasid"
-                  className="btn custom-btn btn-lg mt-3 mb-lg-5 mb-2"
+                  className="btn custom-btn btn-lg mt-3 mb-lg-2 mb-2"
                 >
                   Ver Productos 🛒
                 </Link>
@@ -115,18 +115,24 @@ const Home = () => {
         </section>
 
         <div
-          className="mt-4 mb-5 mx-lg-5"
-        >          <BannerCard4
-            altText="Promo banner grande"
-            large={true}
-          />
+          ref={refPuntosBanner}
+          className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${puntosBannerInView ? "loaded" : ""}`}
+        >          <div className="col-12 container">
+            <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+              <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+              <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
+              <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
+            </div>
+          </div>
         </div>
+
+
 
         <section
           ref={refRecomendados}
           className={`py-lg-0 mb-5 mb-lg-5 slide-up ${recomendadosInView ? "loaded" : ""}`}
         >          <div className="container">
-            <h3 className="text-center mt-md-4 mt-3 text-white mb-lg-4 mb-3">Recomendados para vos 🛍️</h3>
+            <h3 className="text-center mt-md-4 mt-3 text-white mb-lg-4 mb-3">Recomendados para vos</h3>
             <article className="row">
               <div className="container">
                 <div className="col-12 mb-3">
@@ -192,14 +198,16 @@ const Home = () => {
           </div>
         </section>
 
+
+
         <div
-          ref={refPuntosBanner}
-          className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${puntosBannerInView ? "loaded" : ""}`}
-        >          <div className="col-12 container">
+          ref={refBannerRegalo}
+          className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${bannerRegaloInView ? "loaded" : ""}`}
+        ><div className="col-12 container">
             <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-              <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
-              <h4 className="text-center">¡Gana puntos por cada pedido!</h4>
-              <p className="fs-6 text-center">Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.</p>
+              <i className="bi bi-gift" style={{ fontSize: "3rem", color: "lightgreen" }}></i>
+              <h4 className="text-center">¡Canjea tus puntos por increíbles descuentos!</h4>
+              <p className="fs-6 text-center">No dejes pasar las oportunidad de obtener descuentos especiales solo para usuarios fieles. Revisa tu perfil y comienza a canjear tus cupones.</p>
             </div>
           </div>
         </div>
@@ -221,6 +229,15 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <div
+          ref={refBannerGalletas}
+          className={`mt-0 mb-4 slide-up ${bannerGalletasInView ? "loaded" : ""}`}
+        >
+          <BannerCard5
+            altText="Promo banner grande"
+            large={true}
+          />
+        </div>
 
 
         <section
@@ -235,22 +252,13 @@ const Home = () => {
 
         </section>
 
-        <div
-          ref={refBannerGalletas}
-          className={`mt-0 mb-4 slide-up ${bannerGalletasInView ? "loaded" : ""}`}
-        >
-          <BannerCard5
-            altText="Promo banner grande"
-            large={true}
-          />
-        </div>
 
         <section
           id="bebidas"
           ref={refBebidas}
           className={`mt-5 slide-up ${bebidasInView ? "loaded" : ""}`}
         ><div className="container mt-md-4">
-            <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas! 🥂</h3>
+            <h3 className="text-center mb-4 mb-lg-4 text-white">¡Especial Bebidas!</h3>
             <div className="row g-3 justify-content-center">
               <div className="col-6 col-md-3">
                 <Link to="/categorias/Bebidasid?search=cerveza">
@@ -335,7 +343,7 @@ const Home = () => {
 
         <div
           ref={refBannerPowerade}
-          className={`mt-2 mx-lg-5 slide-up ${bannerPoweradeInView ? "loaded" : ""}`}
+          className={`mt-2 mx-lg-5 slide-up mb- ${bannerPoweradeInView ? "loaded" : ""}`}
         >
           <BannerCard8
             altText="Promo banner grande"
@@ -380,6 +388,14 @@ const Home = () => {
           </div>
         </section>
 
+        <div
+          className="mt-4 mb-5 mx-lg-5"
+        ><BannerCard4
+            altText="Promo banner grande"
+            large={true}
+          />
+        </div>
+
 
         <div
           ref={refBannerCard3}
@@ -411,17 +427,7 @@ const Home = () => {
           </div>
         </section>
 
-        <div
-          ref={refBannerRegalo}
-          className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${bannerRegaloInView ? "loaded" : ""}`}
-        >  <div className="col-12 container">
-            <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-              <i className="bi bi-gift" style={{ fontSize: "3rem", color: "lightgreen" }}></i>
-              <h4 className="text-center">¡Canjea tus puntos y descubre sorpresas!</h4>
-              <p className="fs-6 text-center">No dejes pasar la oportunidad de obtener descuentos exclusivos y regalos especiales solo para usuarios fieles. Revisa tu perfil y comienza a canjear.</p>
-            </div>
-          </div>
-        </div>
+
 
 
         <section

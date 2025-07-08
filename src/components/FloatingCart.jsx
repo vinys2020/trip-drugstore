@@ -214,8 +214,8 @@ const FloatingCart = () => {
 
       const mensajePuntos =
         puntosGanados > 0
-          ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos!! En breve te avisaremos cuando tu pedido esté listo. ¡Sumá más puntos y canjealos por descuentos de hasta el 30%! 🎁🔥`
-          : `⭐ ¡Gracias por tu compra! Te avisaremos cuando tu pedido esté listo. Recorda que en compras mayores a $10.000 sumás puntos para canjear por descuentos de hasta el 30%. 🎁 ¡Aprovechá y empezá a ahorrar! 🎉`
+          ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos!! En breve te avisaremos cuando tu pedido esté listo. ¡Sumá más puntos y canjealos por descuentos de hasta el 30%! 🎁`
+          : `⭐ ¡Gracias por tu compra! Te avisaremos cuando tu pedido esté listo. Recorda que en compras mayores a $10.000 sumás puntos para canjear por descuentos de hasta el 30% 🎁 ¡Aprovechá y empezá a ahorrar! 🎉`
 
       const usuariosCollection = collection(db, "Usuariosid");
       const q = query(usuariosCollection, where("email", "==", usuario.email));
@@ -265,10 +265,17 @@ const FloatingCart = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } else if (telefonoUsuario.length < 6) {
+      toast.error("El número de teléfono debe tener al menos 6 caracteres.", {
+        autoClose: 3000,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } else {
       setStep(2);
     }
   };
+  
 
   const handleConfirmarPago = () => {
     if (!metodoPago) {
@@ -421,30 +428,32 @@ const FloatingCart = () => {
                 <div className="order-summary p-3 border rounded bg-light">
 
 
-                  <h3 className="mb-3 fw-bold">Resumen:</h3>
+                  <h3 className="mb-3 fw-bold">Resumen</h3>
 
                   <div className="user-info-summary mb-0">
                     <div className="d-flex justify-content-between align-items-center mb-1">
-                      <span>Método de pago:</span>
+                      <span>Método de pago</span>
                       <span className="text-primary text-capitalize">{metodoPago || "No seleccionado"}</span>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center mb-1">
-                      <span className="fw-small">Teléfono:</span>
+                    {usuario?.telefono && (
+  <div className="d-flex justify-content-between align-items-center mb-1">
+    <span className="fw-small">Teléfono</span>
+    <span className="text-primary">{usuario.telefono}</span>
+  </div>
+)}
 
-                      <span className="text-primary">{usuario.telefono || "No proporcionado"}</span>
-                    </div>
                     <div className="d-flex justify-content-between align-items-center">
-                      <span className="fw-small">Entrega:</span>
+                      <span className="fw-small">Entrega</span>
                       <span className="text-primary fw-small">
                         Retiro en local <i className="bi bi-bag-check"></i>
                       </span>
                     </div>
                   </div>
 
-                  <hr className="bg-dark" />
+                  <hr className="bg-secondary" />
 
 
-                  <h5 className="mb-1 mt-3 fw-bold">Productos:</h5>
+                  <h5 className="mb-1 mt-3 fw-bold">Productos</h5>
 
                   {cart.map((producto, i) => (
                     <div
@@ -496,7 +505,7 @@ const FloatingCart = () => {
 
                   {discount > 0 && (
                     <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary  mb-2">
-                      <span>Subtotal:</span>
+                      <span>Subtotal</span>
                       <span style={{ textDecoration: "line-through", color: "gray" }}>
                         ${(totalConDescuento + descuentoMonetario).toFixed(2)}
                       </span>
@@ -505,7 +514,7 @@ const FloatingCart = () => {
 
                   {discount > 0 && (
                     <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
-                      <span>Descuento aplicado:</span>
+                      <span>Descuento aplicado</span>
                       <span>-${descuentoMonetario.toFixed(2)}</span>
                     </div>
                   )}
@@ -515,7 +524,7 @@ const FloatingCart = () => {
                   <hr className="my-2" />
 
                   <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
-                    <span>Total a Pagar:</span>
+                    <span>Total a Pagar</span>
                     <span>${totalConDescuento.toFixed(2)}</span>
                   </div>
                 </div>

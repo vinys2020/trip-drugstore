@@ -45,8 +45,8 @@ const VerticalCarousel = () => {
           padding: "10px",
         }}
       >
-        <h3
-          className="text-start text-black mb-0"
+        <h4
+          className="text-center text-black mb-0"
           style={{
             color: "#3483fa",
             backgroundColor: "white",
@@ -54,8 +54,8 @@ const VerticalCarousel = () => {
             borderTopRightRadius: "10px",
           }}
         >
-          Trip Café y Sandwiches ☕
-        </h3>
+          Trip Café y Sandwiches
+        </h4>
       </div>
 
       <div className="vc-carousel-wrapper">

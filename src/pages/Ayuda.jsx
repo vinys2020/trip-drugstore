@@ -11,7 +11,7 @@ const PaginaAyuda = () => {
   const defaultMessage = encodeURIComponent("Hola, necesito ayuda con mi pedido.");
 
   return (
-    <div className="help-page-wrapper d-flex justify-content-center mt-md-4 px-3 px-md-4">
+    <div className="help-page-wrapper d-flex justify-content-center px-3 px-md-4">
       <div className="help-page-content w-100" style={{ maxWidth: '900px' }}>
 
         <header className="help-header text-center mb-5 mt-5">

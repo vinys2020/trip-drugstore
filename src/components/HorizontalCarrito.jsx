@@ -46,21 +46,23 @@ const HorizontalCarousel = () => {
 
   return (
     <div
-      className="position-relative"
+      className="position-relative "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <h3 className="text-start text-white mb-0">
-        Puede interesarte ⭐
-        <a
-          className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-5 ms-2"
-          href="/categorias/golosinasychocolatesid"
-          target="_self"
-          style={{ color: "#3483fa" }}
-        >
-          Ver más
-        </a>
-      </h3>
+<div className="d-flex justify-content-between align-items-center mb-lg-1">
+  <h4 className="text-white mb-0">
+    Podria interesarte
+  </h4>
+  <a
+    className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-6"
+    href="/categorias/golosinasychocolatesid"
+    style={{ color: "#3483fa" }}
+  >
+    Mostrar todos
+  </a>
+</div>
+
 
       {isHovered && (
         <button
@@ -83,11 +85,11 @@ const HorizontalCarousel = () => {
 
       <div
         ref={scrollRef}
-        className="scroll-producto-contenedor d-flex overflow-auto"
+        className="scroll-producto-contenedor d-flex overflow-auto p-0"
         style={{
           scrollSnapType: "x mandatory",
           gap: "12px",
-          paddingBottom: "8px",
+          paddingBottom: "9px",
         }}
       >
         {productos.map((producto, index) => (

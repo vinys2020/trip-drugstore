@@ -99,6 +99,29 @@ const Carrito = () => {
 
   const valorSelect = cuponSeleccionado ? cuponSeleccionado.id : "";
 
+  const handleTelefonoChange = (e) => {
+    setTelefonoUsuario(e.target.value);
+  };
+
+
+  const handleConfirmarTelefono = () => {
+    if (!telefonoUsuario) {
+      toast.error("Por favor ingresá tu número de teléfono para poder continuar con el pedido.", {
+        autoClose: 3000,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else if (telefonoUsuario.length < 6) {
+      toast.error("El número de teléfono debe tener al menos 6 caracteres.", {
+        autoClose: 3000,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      setStep(2);
+    }
+  };
+
   const registrarPedido = async () => {
     if (totalPrecio <= 0) {
       alert("El total del pedido debe ser mayor a $0 para confirmar.");
@@ -326,34 +349,30 @@ const Carrito = () => {
             </div>
 
             {step === 1 && (
-              <div className="telefono-container mt-4">
-                <div className="telefono-inner mx-auto">
-                  <label htmlFor="telefono" className="form-label text-center d-block">
-                    Número de Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    id="telefono"
-                    placeholder="Tu número de teléfono"
-                    value={telefonoUsuario}
-                    onChange={(e) => setTelefonoUsuario(e.target.value)}
-                    className="form-control form-control-md mx-auto mb-3"
-                  />
-                  <button
-                    onClick={() => {
-                      if (!telefonoUsuario.trim()) {
-                        alert("El número de teléfono es obligatorio.");
-                        return;
-                      }
-                      setStep(2);
-                    }}
-                    className="btn btn-primary d-flex justify-content-center align-items-center w-100 mx-auto"
-                  >
-                    Confirmar Teléfono
-                  </button>
-                </div>
-              </div>
+              <div className="telefono-container mt-4 d-flex justify-content-center">
+  <div className="telefono-inner" style={{ width: "100%", maxWidth: "500px" }}>
+    <label htmlFor="telefono" className="form-label text-center d-block">
+      Número de Teléfono
+    </label>
+    <input
+      type="tel"
+      id="telefono"
+      placeholder="Tu número de teléfono"
+      value={telefonoUsuario}
+      onChange={handleTelefonoChange}
+      className="form-control form-control-md"
+    />
+    <button
+      onClick={handleConfirmarTelefono}
+      className="btn btn-primary mt-3 w-100"
+    >
+      Confirmar Teléfono
+    </button>
+  </div>
+</div>
+
             )}
+            
 
             {step === 2 && (
               <div className="metodo-pago-container mt-4 d-flex justify-content-center">
@@ -392,7 +411,31 @@ const Carrito = () => {
             {step === 3 && (
               <>
                 <div className="order-summary p-3 border rounded bg-light">
-                  <h6 className="mb-3 fw-bold  pb-2 text-black">Resumen:</h6>
+                <h3 className="mb-3 fw-bold text-black">Resumen</h3>
+
+<div className="user-info-summary mb-0">
+  <div className="d-flex justify-content-between align-items-center mb-1">
+    <span className="text-dark">Método de pago</span>
+    <span className="text-primary text-capitalize">{metodoPago || "No seleccionado"}</span>
+  </div>
+  {usuario?.telefono && (
+<div className="d-flex justify-content-between align-items-center mb-1">
+<span className="fw-small">Teléfono</span>
+<span className="text-primary">{usuario.telefono}</span>
+</div>
+)}
+
+  <div className="d-flex justify-content-between align-items-center">
+    <span className="fw-small text-dark">Entrega</span>
+    <span className="text-primary fw-small">
+      Retiro en local <i className="bi bi-bag-check"></i>
+    </span>
+  </div>
+</div>
+
+<hr className="bg-secondary" />
+
+<h5 className="mb-1 mt-3 fw-bold text-black">Productos</h5>
 
                   {cart.map((producto, i) => (
                     <div
@@ -414,7 +457,7 @@ const Carrito = () => {
 
                   <div className="coupon-section mb-3">
                     <label htmlFor="couponSelect" className="form-label text-black">
-                      Selecciona un Cupón
+                    Cupón aplicado
                     </label>
                     <select
                       id="couponSelect"
@@ -423,7 +466,7 @@ const Carrito = () => {
                       className="form-select"
                     >
 
-                      <option value="">-- Elige un cupón --</option>
+                      <option value="">Elige un Cupón</option>
                       {cupones
                         .filter(c => !c.usado)
                         .map(c => (
@@ -442,42 +485,38 @@ const Carrito = () => {
 
 
                   {discount > 0 && (
-                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 py-2">
-                      <span>Utilizando Cupón de:</span>
-                      <span>{discount}%</span>
-                    </div>
-                  )}
-
-                  {discount > 0 && (
-                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2">
-                      <span>Descuento aplicado:</span>
-                      <span>${descuentoMonetario.toFixed(2)}</span>
-                    </div>
-                  )}
-
-                  {discount > 0 && (
-                    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary border-bottom">
-                      <span>Subtotal:</span>
+                    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary  mb-2">
+                      <span>Subtotal</span>
                       <span style={{ textDecoration: "line-through", color: "gray" }}>
                         ${(totalConDescuento + descuentoMonetario).toFixed(2)}
                       </span>
                     </div>
                   )}
 
+                  {discount > 0 && (
+                    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+                      <span>Descuento aplicado</span>
+                      <span>-${descuentoMonetario.toFixed(2)}</span>
+                    </div>
+                  )}
+
+
+
                   <hr className="my-2" />
 
                   <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
-                    <span>Total a Pagar:</span>
+                    <span>Total a Pagar</span>
                     <span>${totalConDescuento.toFixed(2)}</span>
                   </div>
                 </div>
+                <small>Revisa que tus datos sean correctos antes de confirmar</small>
 
                 <button
                   className="btn btn-primary mt-3 w-100"
                   onClick={registrarPedido}
                   disabled={isLoading || totalPrecio <= 0}
                 >
-                  {isLoading ? "Procesando..." : "Ir a Pagar"}
+                  {isLoading ? "Procesando..." : "Realizar Pedido"}
                 </button>
 
                 <button
