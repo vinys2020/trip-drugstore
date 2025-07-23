@@ -25,7 +25,7 @@ const FaqFuncionalidades = () => {
 
   return (
     <section className="faq-section ">
-      <h2 className="faq-title text-white"><FaQuestionCircle /> Funcionalidades</h2>
+      <h2 className="faq-title text-warning"><FaQuestionCircle /> Funcionalidades</h2>
       <div className="accordion" id="funcionalidadesAccordion">
         {faqs.map((faq, index) => (
           <div className="custom-accordion-item" key={index}>

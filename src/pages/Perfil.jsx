@@ -11,6 +11,7 @@ import {
   updateDoc
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+
 import "./perfil.css";
 
 const pedidosPorPagina = 5;
@@ -154,7 +155,7 @@ const Perfil = () => {
   const obtenerIconoEstado = (estado) => {
     if (estado === "pendiente") return "⏳";
     if (estado === "En preparación") return "🍳";
-    return "✅"; 
+    return "✅";
   };
 
   const obtenerIconoPago = (metodo) => {
@@ -272,12 +273,15 @@ const Perfil = () => {
             )}
           </section>
 
+          
+
           <section className="puntos-beneficios border-top pt-4 mt-5">
+
             <h4 className="mb-3">🎁 Canjea tus puntos</h4>
             <p className="text-muted">
-    🎯 Por cada compra mayor a $10.000 obtendrás <strong>25 puntos</strong>, y por compras mayores a $20.000 sumarás <strong>50 puntos</strong>. 
-    Acumulá puntos en tus compras y canjealos por increíbles cupones de descuento.
-  </p>            <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+              🎯 Por cada compra mayor a $10.000 obtendrás <strong>25 puntos</strong>, y por compras mayores a $20.000 sumarás <strong>50 puntos</strong>.
+              Acumulá puntos en tus compras y canjealos por increíbles cupones de descuento.
+            </p>            <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
               <div className="col">
                 <div className="card h-100 shadow-sm">
                   <div className="card-body">

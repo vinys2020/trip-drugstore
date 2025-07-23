@@ -223,7 +223,7 @@ const Login = () => {
                 />
               </Link>
             </div>
-            <h2 className="text-center mb-2 text-white">¡Bienvenido a Trip Platform!</h2>
+            <h2 className="text-center mb-2 text-white">¡Bienvenido a Trip Drugstore!</h2>
 
             {user && (
               <p className="text-center text-white mb-3">
@@ -247,12 +247,12 @@ const Login = () => {
 
             <div className="login-extra-info mt-0 ">
               <div className="info-item mb-3 mt-lg-2 mt-2">
-                <h4 className="text-white">Pedidos por App</h4>
-                <p>Realizá pedidos fácil y rápido desde nuestra app.</p>
+                <h4 className="text-white">Pedidos por la App</h4>
+                <p>Realizá pedidos fácil y rápido.</p>
               </div>
               <div className="info-item mb-3">
                 <h4 className="text-white">Take Away</h4>
-                <p>Llevá tu comida favorita donde quieras.</p>
+                <p>Terminal de Ómnibus Concepción - Local N*1</p>
               </div>
               <div className="contact-info">
                 <h5 className="fw-bold text-white">Contáctanos</h5>

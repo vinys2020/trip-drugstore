@@ -8,14 +8,12 @@ import "./SwiperComponent.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 const promocionUrlsDesktop = [
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517647/pmwkxovqwqfplw86z3pv.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517729/awt4b3kruauwgra2nuij.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517745/ggrylhcqqd5yr8nsspkr.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517763/rm9uuf1wzc8hxwhxvlwk.webp",
 ];
 
 const promocionUrlsMobile = [
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517783/czmjbww4qddmtb8tz7rz.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517799/tjdbhu9ede103or7fejk.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517811/xmq8qvm8t6qazifrseys.webp",
   "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517835/fzyksm5gk2mggvlme2mz.webp",
