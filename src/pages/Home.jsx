@@ -115,21 +115,21 @@ const Home = () => {
         </section>
 
         <Link to="/Perfil" style={{ textDecoration: 'none' }}>
-  <div
-    ref={refPuntosBanner}
-    className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${puntosBannerInView ? "loaded" : ""}`}
-  >
-    <div className="col-12 container">
-      <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-        <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
-        <h4 className="text-center">¡Ganá puntos por cada pedido!</h4>
-        <p className="fs-6 text-center">
-          Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.
-        </p>
-      </div>
-    </div>
-  </div>
-</Link>
+          <div
+            ref={refPuntosBanner}
+            className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${puntosBannerInView ? "loaded" : ""}`}
+          >
+            <div className="col-12 container">
+              <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+                <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+                <h4 className="text-center">¡Ganá puntos por cada pedido!</h4>
+                <p className="fs-6 text-center">
+                  Sumá puntos con cada compra y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Link>
 
 
 
@@ -206,20 +206,20 @@ const Home = () => {
 
 
         <Link to="/perfil" style={{ textDecoration: 'none' }}>
-  <div
-    ref={refBannerRegalo}
-    className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${bannerRegaloInView ? "loaded" : ""}`}
-    style={{ cursor: 'pointer' }} // para que el cursor cambie al pasar por encima
-  >
-    <div className="col-12 container">
-      <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
-        <i className="bi bi-gift" style={{ fontSize: "3rem", color: "lightgreen" }}></i>
-        <h4 className="text-center">¡Canjea tus puntos por increíbles descuentos!</h4>
-        <p className="fs-6 text-center">No dejes pasar las oportunidad de obtener descuentos especiales solo para usuarios fieles. Revisa tu perfil y comienza a canjear tus cupones.</p>
-      </div>
-    </div>
-  </div>
-</Link>
+          <div
+            ref={refBannerRegalo}
+            className={`justify-content-center p-0 mb-5 mt-5 mt-lg-5 slide-up ${bannerRegaloInView ? "loaded" : ""}`}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="col-12 container">
+              <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+                <i className="bi bi-gift" style={{ fontSize: "3rem", color: "lightgreen" }}></i>
+                <h4 className="text-center">¡Canjea tus puntos por increíbles descuentos!</h4>
+                <p className="fs-6 text-center">No dejes pasar las oportunidad de obtener descuentos especiales solo para usuarios fieles. Revisa tu perfil y comienza a canjear tus cupones.</p>
+              </div>
+            </div>
+          </div>
+        </Link>
 
 
         <div

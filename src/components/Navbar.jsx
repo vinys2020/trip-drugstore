@@ -14,7 +14,7 @@ import CategoriasDropdown from "../components/CategoriasDropdown";
 
 import "./navbar.css";
 
-const adminEmail = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
+const adminEmail = ["faculez07@gmail.com", "tripdrusgtore@gmail.com","rodolfo@gmail.com"];
 const empleadosEmails = ["faculez1@gmail.com", "faculez2@gmail.com"];
 
 
