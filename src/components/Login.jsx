@@ -95,7 +95,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const correosAdmin = ["faculez07@gmail.com", "tripdrusgtore@gmail.com"];
+  const correosAdmin = ["faculez07@gmail.com", "tripdrusgtore@gmail.com", "rodolfo@gmail.com"];
   const correosEmpleado = ["faculez1@gmail.com"];
 
   useEffect(() => {

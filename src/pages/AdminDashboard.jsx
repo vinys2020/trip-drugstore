@@ -161,7 +161,8 @@ const AdminDashboard = () => {
                 <div className="w-100">
                   <div className="card  rounded-4 p-4 bg-primary">
                     <div className="mb-4">
-                      <h5 className="text-white mb-3">Elige una categoría:</h5>
+                    <h2 className="text-warning fw-bold mb-2 ">Paso 1</h2>
+                      <h5 className="text-white mb-3">Elige la categoría que deseas modificar:</h5>
                       <select
                         className="form-select form-select-lg"
                         value={categoriaSeleccionada}
@@ -182,13 +183,30 @@ const AdminDashboard = () => {
                 <i className="bi bi-gear"></i>
                 {categoriaSeleccionada}
               </h3>
+              <h2 className="text-warning fw-bold mb-2 ">Paso 2</h2>
+                <b></b>
               <hr className="bg-dark mb-4" />
+              
 
               <div className="row g-2 mb-4">
+                
                 <h4 className="text-black d-flex align-items-center gap-2 mb-3">
-                  <i className="bi bi-plus-circle"></i>
+                <i className="bi bi-plus-circle"></i>
                   Agregar producto
                 </h4>
+                <div className="alert alert-info" role="alert">
+  ⚠️ <strong>Importante:</strong> Asegurate de completar todos los datos del producto siguiendo el formato correcto. Solo se permite ingresar <strong>un producto a la vez</strong>.
+
+  <ul className="mt-2 mb-0">
+    <li>🔹 El <strong>nombre del producto</strong> debe tener la <strong>primera letra de cada palabra en mayúscula</strong>.</li>
+    <li>🔹 Los <strong>conectores</strong> como "de", "con", "y", etc., deben ir en <strong>minúscula</strong>.</li>
+    <li>🔹 Al final del nombre, se debe indicar la <strong>presentación</strong> con el formato <em>"xCantidad Unidad"</em>, por ejemplo: <code>x23 g</code>, <code>x1 L</code>, <code>x500 ml</code>, etc.</li>
+    <li>🔹 <strong>Ejemplo correcto:</strong> <em>Flow Cereal Mix de Frutas x23 g</em>, <em>Aquarius de Pomelo x1.5 Lts</em>.</li>
+    <li>🔹 Una vez que hayas completado correctamente todos los campos, presioná el botón <strong>"Agregar producto"</strong>.</li>
+    <li>🔹 <strong>No dejes campos en blanco.</strong> Si no sabés qué marca es, usá el <strong>buscador de la categoría</strong> para ver productos similares y tomarlo como referencia.</li>
+  </ul>
+</div>
+
 
 
                 {["nombre", "precio", "marca", "stock"].map((campo) => (
@@ -288,11 +306,25 @@ const AdminDashboard = () => {
                   </button>
                 </div>
               </div>
+              <hr className="bg-black"/>
+              <h2 className="text-warning fw-bold mb-2 ">Paso 3</h2>
+              
+
 
               <h4 className="mb-3 text-black d-flex align-items-center gap-2 mt-3">
                 <i className="bi bi-pencil-square"></i>
                 Modificar productos
               </h4>
+              <div className="alert alert-warning" role="alert">
+  🖼 <strong>Verificá la imagen del producto:</strong> Una vez que subas la imagen, usá el buscador para encontrar el producto y asegurate de que la imagen se visualice correctamente en la vista previa del panel de administrador.
+
+  <ul className="mt-2 mb-0">
+    <li>🔸 Si la imagen no aparece, aparece recortada o mal encuadrada, es posible que no sea compatible o no sea responsive.</li>
+    <li>🔸 En ese caso, preciona el boton "subir" al lado de la imagen y reemplazala por otra que se adapte bien al recuadro de vista previa.</li>
+    <li>🔸 <strong>No se recomienda usar imágenes de Mercado Libre</strong>, ya que muchas veces no permiten su descarga o son de mala calidad.</li>
+    <li>🔸 <strong>Recomendación:</strong> buscá imágenes en sitios oficiales de supermercados o marcas reconocidas como <strong>Arcor, Jumbo, Vea, Carrefour, etc.</strong></li>
+  </ul>
+</div>
 
               <div className="mb-3">
                 <input
